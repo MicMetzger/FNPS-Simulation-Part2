@@ -1,15 +1,13 @@
 package main.java.com.store;
+
 public interface State {
 
-	void enterState();
+  void enterState();
 
+  void exitState();
 
-	void exitState();
+  void nextState();
 
-
-	void nextState();
-
-
-	// void update(SimState state);
+  // void update(SimState state);
 
 }
