@@ -2,7 +2,8 @@ package main.java.com.store;
 
 import main.java.com.Utilities;
 import main.java.com.item.Item;
-import main.java.com.item.pet.Pet;
+import main.java.com.item.Pet;
+import main.java.com.staff.Watcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +114,7 @@ public class SimState {
 
 }
 
-class NewDay implements State {
+class NewDay implements State, Watcher {
   SimState simState;
 
   NewDay(SimState simState) {
@@ -146,6 +147,9 @@ class NewDay implements State {
     simState.setStoreState(simState.goStartDay());
     exitState();
   }
+
+  @Override
+  public void update(Object state) {}
 }
 
 /**
@@ -153,7 +157,7 @@ class NewDay implements State {
  *
  * <p>Daily route starting point.
  */
-class StartDay implements State {
+class StartDay implements State, Watcher {
   SimState simState;
 
   public StartDay(SimState simState) {
@@ -189,9 +193,12 @@ class StartDay implements State {
     simState.setStoreState(simState.goProcessDelivery());
     exitState();
   }
+
+  @Override
+  public void update(Object message) {}
 }
 
-class ProcessDelivery implements State {
+class ProcessDelivery implements State, Watcher {
 
   SimState simState;
 
@@ -219,11 +226,14 @@ class ProcessDelivery implements State {
   public void nextState() {
     System.out.println("The employee returns to finish his other activities.");
     simState.setStoreState(simState.goFeedAnimals());
-		exitState();
+    exitState();
   }
+
+  @Override
+  public void update(Object message) {}
 }
 
-class FeedAnimals implements State {
+class FeedAnimals implements State, Watcher {
   SimState simState;
 
   public FeedAnimals(SimState simState) {
@@ -252,10 +262,12 @@ class FeedAnimals implements State {
     simState.setStoreState(simState.goDoInventory());
     exitState();
   }
+
+  @Override
+  public void update(Object message) {}
 }
 
-
-class VisitBank implements State {
+class VisitBank implements State, Watcher {
   SimState simState;
 
   public VisitBank(SimState simState) {
@@ -271,17 +283,20 @@ class VisitBank implements State {
   @Override
   public void exitState() {
     // simState.update();
-    
+
   }
 
   @Override
   public void nextState() {
-	  simState.setStoreState(SimState.previousState);
-		exitState();
+    simState.setStoreState(SimState.previousState);
+    exitState();
   }
+
+  @Override
+  public void update(Object message) {}
 }
 
-class DoInventory implements State {
+class DoInventory implements State, Watcher {
   SimState simState;
 
   public DoInventory(SimState simState) {
@@ -311,9 +326,12 @@ class DoInventory implements State {
     simState.setStoreState(simState.goOpenStore());
     exitState();
   }
+
+  @Override
+  public void update(Object message) {}
 }
 
-class OpenStore implements State {
+class OpenStore implements State, Watcher {
   SimState simState;
 
   public OpenStore(SimState simState) {
@@ -340,9 +358,12 @@ class OpenStore implements State {
     simState.setStoreState(simState.goCleanStore());
     exitState();
   }
+
+  @Override
+  public void update(Object message) {}
 }
 
-class CleanStore implements State {
+class CleanStore implements State, Watcher {
   SimState simState;
 
   public CleanStore(SimState simState) {
@@ -370,6 +391,9 @@ class CleanStore implements State {
     simState.store.updateSickAnimal();
     exitState();
   }
+
+  @Override
+  public void update(Object message) {}
 }
 
 /**
@@ -377,7 +401,7 @@ class CleanStore implements State {
  *
  * <p>Clean-up and preparation for sequence restart.
  */
-class EndDay implements State {
+class EndDay implements State, Watcher {
   SimState simState;
 
   public EndDay(SimState simState) {
@@ -407,9 +431,12 @@ class EndDay implements State {
     // simState.setStoreState(simState.goEndDay());
     exitState();
   }
+
+  @Override
+  public void update(Object message) {}
 }
 
-class GoEndSimulation implements State {
+class GoEndSimulation implements State, Watcher {
   SimState simState;
 
   GoEndSimulation(SimState simState) {
@@ -421,32 +448,33 @@ class GoEndSimulation implements State {
     System.out.println("\n\n_______________ STATS _______________");
     System.out.println("Total Cash: $" + simState.store.cash);
     System.out.println("Total withdrawal: $" + simState.store.bankWithdrawal);
-    System.out.println("_____________________________________________");
+    System.out.println("_______________________________________________");
 
     System.out.println("\n\n_______________ Items Sold _______________");
     for (Item item : simState.store.getSoldItems()) {
       System.out.println(
           item.getName() + " $" + item.getSalePrice() + ", Sold on: DAY " + item.getDaySold());
     }
-    System.out.println("_____________________________________________");
+    System.out.println("_______________________________________________");
 
     System.out.println("\n\n_______________ Remaining Items _______________");
     for (Item item : simState.store.getInventory()) {
       System.out.println(item.getName() + ", Value: $" + item.getListPrice());
     }
-    System.out.println("_____________________________________________");
+    System.out.println("_______________________________________________");
 
     System.out.println("\n\n_______________ Remaining Sick Animals _______________");
     for (Pet item : simState.store.getSick()) {
       System.out.println(item.getBreed() + ", Value: $" + item.getListPrice());
     }
-    System.out.println("_____________________________________________");
+    System.out.println("_______________________________________________");
 
     nextState();
   }
 
   @Override
   public void exitState() {
+    System.out.println("\n\n ~Fin~");
     System.exit(0);
   }
 
@@ -454,4 +482,7 @@ class GoEndSimulation implements State {
   public void nextState() {
     exitState();
   }
+
+  @Override
+  public void update(Object message) {}
 }

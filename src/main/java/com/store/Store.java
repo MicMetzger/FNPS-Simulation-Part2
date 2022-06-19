@@ -1,8 +1,13 @@
 package main.java.com.store;
 
 import main.java.com.item.Item;
-import main.java.com.item.pet.*;
+import main.java.com.item.Pet;
+import main.java.com.item.pets.*;
+import main.java.com.item.pets.enums.Animal;
+import main.java.com.item.pets.enums.AnimalType;
+import main.java.com.item.pets.enums.Color;
 import main.java.com.item.supplies.*;
+import main.java.com.item.supplies.enums.Type;
 import main.java.com.staff.Clerk;
 import main.java.com.staff.Employee;
 import main.java.com.staff.Trainer;
@@ -83,14 +88,24 @@ public class Store {
             randomSelectionbool[new Random().nextInt(1)],
             randomSelectionbool[new Random().nextInt(1)]));
 
+    // (color, broken, purebred) / (breed, age, health)
+    inventory.add(
+        new Ferret(
+            colors.get(new Random().nextInt(colors.size())),
+            randomSelectionbool[new Random().nextInt(1)]));
+
+	  // (size) / (breed, age, health)
+	  inventory.add(new Snake(Double.parseDouble(sizeFormat.format(new Random().nextDouble(8)))));
+
     inventory.add(
         new Food(
             new Random().nextInt(100),
-            Animal.values()[new Random().nextInt(Animal.values().length)],
+            AnimalType.values()[new Random().nextInt(AnimalType.values().length)],
             Type.values()[new Random().nextInt(Type.values().length)]));
     inventory.add(new CatLitter(new Random().nextInt(100)));
-    inventory.add(new Toy(Animal.values()[new Random().nextInt(Animal.values().length)]));
-    inventory.add(new Leash(Animal.values()[new Random().nextInt(Animal.values().length)]));
+    inventory.add(new Toy(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
+    inventory.add(new Leash(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
+    inventory.add(new Treat(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
     // inventory.add()
 
   }

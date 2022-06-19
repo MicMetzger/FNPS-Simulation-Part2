@@ -1,6 +1,9 @@
-package main.java.com.item.pet;
+package main.java.com.item.pets;
 
-import java.security.SecureRandom;
+import main.java.com.item.Pet;
+import main.java.com.item.pets.enums.Animal;
+import main.java.com.item.pets.enums.Breed;
+import main.java.com.item.pets.enums.Color;
 
 import static java.lang.Math.round;
 
@@ -24,7 +27,7 @@ public class Dog extends Pet {
    * @param purchasePrice the purchase price
    * @param listPrice the list price
    * @param salePrice the sale price
-   * @param breed the breed
+   * @param animal the animaltype and the breed
    * @param age the age
    * @param healthy the healthy
    * @param size the size
@@ -39,14 +42,14 @@ public class Dog extends Pet {
       double purchasePrice,
       double listPrice,
       double salePrice,
-      Breed breed,
+      Animal animal,
       int age,
       boolean healthy,
       double size,
       Color color,
       boolean housebroken,
       boolean purebred) {
-    super(name, dayArrived, daySold, purchasePrice, listPrice, salePrice, breed, age, healthy);
+    super(name, dayArrived, daySold, purchasePrice, listPrice, salePrice, animal, age, healthy);
     this.size = size;
     this.color = color;
     this.housebroken = housebroken;
@@ -56,7 +59,7 @@ public class Dog extends Pet {
   /**
    * Instantiates a new Dog.
    *
-   * @param breed the breed
+   * @param animal the animaltype and the breed
    * @param age the age
    * @param healthy the healthy
    * @param size the size
@@ -65,14 +68,14 @@ public class Dog extends Pet {
    * @param purebred the purebred
    */
   public Dog(
-      Breed breed,
+      Animal animal,
       int age,
       boolean healthy,
       double size,
       Color color,
       boolean housebroken,
       boolean purebred) {
-    super(breed, age, healthy);
+    super(animal, age, healthy);
     this.size = size;
     this.color = color;
     this.housebroken = housebroken;
@@ -104,21 +107,21 @@ public class Dog extends Pet {
       double purchasePrice,
       double listPrice,
       double salePrice,
-      Breed breed,
+      Animal animal,
       int age,
       boolean healthy) {
-    super(name, dayArrived, daySold, purchasePrice, listPrice, salePrice, breed, age, healthy);
+    super(name, dayArrived, daySold, purchasePrice, listPrice, salePrice, animal, age, healthy);
   }
 
   /**
    * Instantiates a new Dog.
    *
-   * @param breed the breed
+   * @param animal the animal and it's breed
    * @param age the age
    * @param healthy the healthy
    */
-  public Dog(Breed breed, int age, boolean healthy) {
-    super(breed, age, healthy);
+  public Dog(Animal animal, int age, boolean healthy) {
+    super(animal, age, healthy);
   }
 
   /** Instantiates a new Dog. */

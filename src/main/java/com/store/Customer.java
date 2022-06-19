@@ -1,7 +1,7 @@
 package main.java.com.store;
 
 import main.java.com.item.Item;
-import main.java.com.item.supplies.PurchaseType;
+import main.java.com.item.PurchaseType;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import static java.lang.Math.round;

@@ -1,22 +1,21 @@
 package main.java.com.item.supplies;
 
-import main.java.com.item.pet.Animal;
-
-import java.security.SecureRandom;
+import main.java.com.item.pets.enums.Animal;
+import main.java.com.item.pets.enums.AnimalType;
 
 import static java.lang.Math.round;
 
 public class Leash extends Supplies {
 
   // The animal
-  private Animal animal;
+  private AnimalType animal;
 
   /**
    * Instantiates a new Leash
    *
    * @param animal the animal
    */
-  public Leash(Animal animal) {
+  public Leash(AnimalType animal) {
     super();
     super.setDayArrived(0);
     super.setName("Leash");
@@ -24,7 +23,7 @@ public class Leash extends Supplies {
   }
 
   public Leash(String animal) {
-    this.animal = Animal.valueOf(animal);
+    this.animal = AnimalType.valueOf(animal);
   }
 
   /** Default constructor */
@@ -35,7 +34,7 @@ public class Leash extends Supplies {
       double salePrice,
       int dayArrived,
       int daySold,
-      Animal animal) {
+      AnimalType animal) {
     super(name, purchasePrice, listPrice, salePrice, dayArrived, daySold);
     this.animal = animal;
   }
@@ -45,7 +44,7 @@ public class Leash extends Supplies {
    *
    * @return the animal
    */
-  public Animal getAnimal() {
+  public AnimalType getAnimal() {
     return animal;
   }
 
@@ -55,6 +54,6 @@ public class Leash extends Supplies {
    * @param animal the animal
    */
   public void setAnimal(String animal) {
-    this.animal = Animal.valueOf(animal);
+    this.animal = AnimalType.valueOf(animal);
   }
 }

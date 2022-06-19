@@ -1,13 +1,22 @@
-package main.java.com.item.pet;
+package main.java.com.item.pets;
+
+import main.java.com.item.Pet;
+import main.java.com.item.pets.enums.Animal;
+import main.java.com.item.pets.enums.AnimalType;
+import main.java.com.item.pets.enums.Breed;
 
 import java.security.SecureRandom;
 
 import static java.lang.Math.round;
+import static main.java.com.item.pets.enums.Animal.CATS;
 
-/** The type Cat. */
+/**
+ * The type Cat.
+ */
 public class Cat extends Pet {
+
   // The Color
-  public String color;
+  public String  color;
   // The Housebroken
   public boolean housebroken;
   // The Purebred
@@ -16,18 +25,18 @@ public class Cat extends Pet {
   /**
    * Constructor Instantiates a new Cat, aswell as it's parent classes.
    *
-   * @param name the name
-   * @param dayArrived the day arrived
-   * @param daySold the day sold
+   * @param name          the name
+   * @param dayArrived    the day arrived
+   * @param daySold       the day sold
    * @param purchasePrice the purchase price
-   * @param listPrice the list price
-   * @param salePrice the sale price
-   * @param breed the breed
-   * @param age the age
-   * @param healthy the healthy
-   * @param color the color
-   * @param housebroken the housebroken
-   * @param purebred the purebred
+   * @param listPrice     the list price
+   * @param salePrice     the sale price
+   * @param animal        the animal and it's breed
+   * @param age           the age
+   * @param healthy       the healthy
+   * @param color         the color
+   * @param housebroken   the housebroken
+   * @param purebred      the purebred
    */
   public Cat(
       String name,
@@ -36,71 +45,73 @@ public class Cat extends Pet {
       double purchasePrice,
       double listPrice,
       double salePrice,
-      Breed breed,
+      Animal animal,
       int age,
       boolean healthy,
       String color,
       boolean housebroken,
       boolean purebred) {
-    super(name, dayArrived, daySold, purchasePrice, listPrice, salePrice, breed, age, healthy);
-    this.color = color;
+    super(name, dayArrived, daySold, purchasePrice, listPrice, salePrice, animal, age, healthy);
+    this.color       = color;
     this.housebroken = housebroken;
-    this.purebred = purebred;
-    super.animalType = Animal.Cat;
+    this.purebred    = purebred;
+    super.animal     = CATS.get(new SecureRandom().nextInt(4));
   }
 
   /**
    * Constructor Instantiates a new Cat as well as it's parent class.
    *
-   * @param breed the breed
-   * @param age the age
-   * @param healthy the healthy
-   * @param color the color
+   * @param animal        the animal and it's breed
+   * @param age         the age
+   * @param healthy     the healthy
+   * @param color       the color
    * @param housebroken the housebroken
-   * @param purebred the purebred
+   * @param purebred    the purebred
    */
-  public Cat(
-      Breed breed, int age, boolean healthy, String color, boolean housebroken, boolean purebred) {
-    super(breed, age, healthy);
-    this.color = color;
+  public Cat(Animal animal, int age, boolean healthy, String color, boolean housebroken, boolean purebred) {
+    super(animal, age, healthy);
+    this.color       = color;
     this.housebroken = housebroken;
-    this.purebred = purebred;
-    super.animalType = Animal.Cat;
+    this.purebred    = purebred;
+    super.animal     = CATS.get(new SecureRandom().nextInt(4));
   }
 
   /**
    * Constructor Instantiates a new Cat, it's parent values are left null.
    *
-   * @param color the color
+   * @param color       the color
    * @param housebroken the housebroken
-   * @param purebred the purebred
+   * @param purebred    the purebred
    */
   public Cat(String color, boolean housebroken, boolean purebred) {
     super();
     super.setDayArrived(0);
     super.setName("Cat");
-    this.color = color;
+    this.color       = color;
     this.housebroken = housebroken;
-    this.purebred = purebred;
-    super.animalType = Animal.Cat;
+    this.purebred    = purebred;
+    super.animal     = CATS.get(new SecureRandom().nextInt(4));
   }
 
   /**
    * Constructor Instantiates a new Cat of state values null, and instantiates its parent class.
    *
-   * @param breed the breed
-   * @param age the age
+   * @param animal        the animal and it's breed
+   * @param age     the age
    * @param healthy the healthy
    */
-  public Cat(Breed breed, int age, boolean healthy) {
-    super(breed, age, healthy);
-    super.animalType = Animal.Cat;
+  public Cat(Animal animal, int age, boolean healthy) {
+    super(animal, age, healthy);
+    super.animal = CATS.get(new SecureRandom().nextInt(4));
   }
 
-  /** Default constructor of a Cat object. */
+  /**
+   * Default constructor of a Cat object.
+   */
   public Cat() {
     super();
-    super.animalType = Animal.Cat;
+    super.setAnimal(AnimalType.Cat);
+    super.setBreed(CATS.get(new SecureRandom().nextInt(4)).getType());
   }
 
   @Override

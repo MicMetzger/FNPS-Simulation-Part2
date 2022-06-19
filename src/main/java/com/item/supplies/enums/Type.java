@@ -1,4 +1,4 @@
-package main.java.com.item.supplies;
+package main.java.com.item.supplies.enums;
 
 public enum Type {
   Solid("Solid"),

@@ -7,7 +7,7 @@ public interface State {
   void exitState();
 
   void nextState();
-
+	
   // void update(SimState state);
 
 }

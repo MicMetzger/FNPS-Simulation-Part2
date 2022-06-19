@@ -1,10 +1,11 @@
-package main.java.com.item.pet;
+package main.java.com.item;
 
-import main.java.com.item.Item;
+import main.java.com.item.pets.enums.Animal;
+import main.java.com.item.pets.enums.AnimalType;
+import main.java.com.item.pets.enums.Breed;
 
 public abstract class Pet extends Item {
-  Breed breed;
-  Animal animalType;
+  protected Animal animal;
   int age;
   boolean healthy;
 
@@ -15,30 +16,28 @@ public abstract class Pet extends Item {
       double purchasePrice,
       double listPrice,
       double salePrice,
-      Breed breed,
+      Animal animal,
       int age,
       boolean healthy) {
     super(name, purchasePrice, listPrice, salePrice, dayArrived, daySold);
-    this.breed = breed;
+    this.animal = animal;
     this.age = age;
     this.healthy = healthy;
   }
 
-  public Pet(Breed breed, int age, boolean healthy) {
+  public Pet(Animal animal, int age, boolean healthy) {
     super();
-    this.breed = breed;
+    this.animal = animal;
     this.age = age;
     this.healthy = healthy;
   }
 
-  public Pet(Breed breed) {
+  public Pet(Animal animal) {
     super();
-    this.breed = breed;
+    this.animal = animal;
   }
 
-  public Pet() {
-    super();
-  }
+  public Pet() {}
 
   @Override
   public void setName(String name) {
@@ -68,11 +67,15 @@ public abstract class Pet extends Item {
   }
 
   public Breed getBreed() {
-    return breed;
+    return this.animal.breed;
   }
 
   public void setBreed(Breed breed) {
-    this.breed = breed;
+    this.animal.breed = breed;
+  }
+
+  public void setAnimal(AnimalType animal) {
+    this.animal.type = animal;
   }
 
   public int getAge() {
@@ -96,7 +99,7 @@ public abstract class Pet extends Item {
   public String toString() {
     return "Pet{"
         + "breed="
-        + breed
+        + animal.breed
         + ", age="
         + age
         + ", healthy="

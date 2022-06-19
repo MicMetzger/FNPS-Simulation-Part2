@@ -1,6 +1,7 @@
 package main.java.com.item.supplies;
 
 import main.java.com.item.Item;
+import main.java.com.item.supplies.enums.SupplyType;
 import java.util.Random;
 
 /** */

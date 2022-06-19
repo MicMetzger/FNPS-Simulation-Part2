@@ -1,4 +1,4 @@
-package main.java.com.item.pet;
+package main.java.com.item.pets.enums;
 
 public enum Color {
   Black("Black"),

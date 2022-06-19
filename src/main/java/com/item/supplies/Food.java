@@ -1,15 +1,18 @@
 package main.java.com.item.supplies;
 
-import main.java.com.item.pet.Animal;
+import main.java.com.item.pets.enums.Animal;
+import main.java.com.item.pets.enums.AnimalType;
+import main.java.com.item.supplies.enums.SupplyType;
+import main.java.com.item.supplies.enums.Type;
 
 import java.security.SecureRandom;
 
 import static java.lang.Math.round;
 
 public class Food extends Supplies {
-  private int size;
-  private Animal animal;
-  private Type type;
+  private int        size;
+  private AnimalType animal;
+  private Type       type;
 
   public Food(
       String name,
@@ -19,7 +22,7 @@ public class Food extends Supplies {
       int dayArrived,
       int daySold,
       int size,
-      Animal animal,
+      AnimalType animal,
       Type type) {
     super(name, purchasePrice, listPrice, salePrice, dayArrived, daySold);
     this.size = size;
@@ -28,10 +31,10 @@ public class Food extends Supplies {
   }
 
   public Food() {
-    super.supplyType = SupplyType.Food;
+	  super.supplyType = SupplyType.Food;
   }
 
-  public Food(int size, Animal animal, Type type) {
+  public Food(int size, AnimalType animal, Type type) {
     super(animal.toString() + " Food");
     double newPurchasePrice = round(new SecureRandom().nextDouble(100));
     super.setPurchasePrice(newPurchasePrice);
@@ -55,11 +58,11 @@ public class Food extends Supplies {
     return animal.toString();
   }
 
-  public Animal getAnimal() {
+  public AnimalType getAnimal() {
     return animal;
   }
 
-  public void setAnimal(Animal animal) {
+  public void setAnimal(AnimalType animal) {
     this.animal = animal;
   }
 

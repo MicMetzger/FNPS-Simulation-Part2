@@ -1,21 +1,35 @@
-package main.java.com.item.pet;
+package main.java.com.item.pets;
+
+import main.java.com.item.Pet;
+import main.java.com.item.pets.enums.Animal;
+import main.java.com.item.pets.enums.AnimalType;
+import main.java.com.item.pets.enums.Breed;
 
 import java.security.SecureRandom;
 
 import static java.lang.Math.round;
+import static main.java.com.item.pets.enums.Animal.BIRDS;
 
 public class Bird extends Pet {
 
-  /** the size */
+  /**
+   * the size
+   */
   public double size;
 
-  /** the mimicry */
+  /**
+   * the mimicry
+   */
   public boolean mimicry;
 
-  /** the exotic */
+  /**
+   * the exotic
+   */
   public boolean exotic;
 
-  /** the papers */
+  /**
+   * the papers
+   */
   public boolean papers;
 
   /**
@@ -27,7 +41,7 @@ public class Bird extends Pet {
    * @param purchasePrice
    * @param listPrice
    * @param salePrice
-   * @param breed
+   * @param animal        the animal and it's breed
    * @param age
    * @param healthy
    */
@@ -38,25 +52,25 @@ public class Bird extends Pet {
       double purchasePrice,
       double listPrice,
       double salePrice,
-      Breed breed,
+      Animal animal,
       int age,
       boolean healthy,
       double size,
       boolean mimicry,
       boolean exotic,
       boolean papers) {
-    super(name, dayArrived, daySold, purchasePrice, listPrice, salePrice, breed, age, healthy);
-    this.size = size;
+    super(name, dayArrived, daySold, purchasePrice, listPrice, salePrice, animal, age, healthy);
+    this.size    = size;
     this.mimicry = mimicry;
-    this.exotic = exotic;
-    this.papers = papers;
-    super.animalType = Animal.Bird;
+    this.exotic  = exotic;
+    this.papers  = papers;
+    super.animal = BIRDS.get(new SecureRandom().nextInt(4));
   }
 
   /**
    * Instantiates a new bird
    *
-   * @param breed
+   * @param animal  the animal and it's breed
    * @param age
    * @param healthy
    * @param size
@@ -65,19 +79,19 @@ public class Bird extends Pet {
    * @param papers
    */
   public Bird(
-      Breed breed,
+      Animal animal,
       int age,
       boolean healthy,
       double size,
       boolean mimicry,
       boolean exotic,
       boolean papers) {
-    super(breed, age, healthy);
-    this.size = size;
+    super(animal, age, healthy);
+    this.size    = size;
     this.mimicry = mimicry;
-    this.exotic = exotic;
-    this.papers = papers;
-    super.animalType = Animal.Bird;
+    this.exotic  = exotic;
+    this.papers  = papers;
+    super.animal = BIRDS.get(new SecureRandom().nextInt(4));
   }
 
   /**
@@ -92,18 +106,13 @@ public class Bird extends Pet {
     super();
     super.setDayArrived(0);
     super.setName("Bird");
-    this.size = size;
+    this.size    = size;
     this.mimicry = mimicry;
-    this.exotic = exotic;
-    this.papers = papers;
-    super.animalType = Animal.Bird;
+    this.exotic  = exotic;
+    this.papers  = papers;
+    super.animal = BIRDS.get(new SecureRandom().nextInt(4));
   }
 
-  /** Instantiates a new bird */
-  public Bird() {
-    super();
-    super.animalType = Animal.Bird;
-  }
 
   @Override
   public String toString() {
