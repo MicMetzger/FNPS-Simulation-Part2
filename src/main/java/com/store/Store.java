@@ -211,7 +211,7 @@ public class Store {
   }
 
   private void addWithdrawal() {
-    System.out.println("$1000.00 was withdrawn from the bank.");
+    System.out.println("$1000.00 was withdrawn from the bank.\n");
     cash += currentStaff.getCash();
     bankWithdrawal += 1000;
     System.out.println("Total withdrawal: " + bankWithdrawal);
@@ -236,6 +236,7 @@ public class Store {
   }
 
   public boolean checkRegister() {
+    currentStaff.checkRegister();
     return this.getCash() > 200;
   }
 

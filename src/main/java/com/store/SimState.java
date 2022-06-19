@@ -1,8 +1,8 @@
 package main.java.com.store;
 
+import main.java.com.Utilities;
 import main.java.com.item.Item;
 import main.java.com.item.pet.Pet;
-import org.xml.sax.helpers.AttributesImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,6 @@ public class SimState {
     endDay = new EndDay(this);
     feedAnimals = new FeedAnimals(this);
     visitBank = new VisitBank(this);
-    checkRegister = new CheckRegister(this);
     doInventory = new DoInventory(this);
     processDelivery = new ProcessDelivery(this);
     cleanStore = new CleanStore(this);
@@ -70,7 +69,6 @@ public class SimState {
   }
 
   public State goProcessDelivery() {
-    // previousState = currentState;
     return processDelivery;
   }
 
@@ -79,7 +77,7 @@ public class SimState {
   }
 
   public State goVisitBankState() {
-
+    previousState = currentState;
     return visitBank;
   }
 
@@ -124,7 +122,7 @@ class NewDay implements State {
 
   @Override
   public void enterState() {
-    System.out.println("\n##################################################");
+    System.out.println("\n**************************************************");
     if (simState.store.day == 30) {
       simState.setStoreState(simState.goEndSimulation());
       exitState();
@@ -132,22 +130,19 @@ class NewDay implements State {
 
     simState.store.day++;
     simState.store.selectStaff();
-    System.out.println("Day: " + simState.store.day + "\n");
+    System.out.println("Day: " + simState.store.day);
     nextState();
   }
 
   @Override
   public void exitState() {
-    System.out.println("##################################################\n");
-
-    // simState.startTheDay();
-    // TODO : temporary
+    System.out.println("**************************************************\n");
+    Utilities.gapTime();
     simState.goEnterState();
   }
 
   @Override
   public void nextState() {
-    // simState.update();
     simState.setStoreState(simState.goStartDay());
     exitState();
   }
@@ -168,19 +163,21 @@ class StartDay implements State {
   @Override
   public void enterState() {
     System.out.println("\n#################################################");
-
-    System.out.println("Total Store Cash: " + simState.store.getCash());
-    if (simState.store.cash < 200.0) {
+    if (!simState.store.checkRegister()) {
+      System.out.println("Register cash is low... ");
       simState.setStoreState(simState.goVisitBankState());
       simState.goEnterState();
+    } else {
+      System.out.println("Cash is sufficient.");
     }
+
     nextState();
   }
 
   @Override
   public void exitState() {
     System.out.println("##################################################\n");
-
+    Utilities.gapTime();
     simState.goEnterState();
 
     // TODO: update information and report. Afterwards, call nextState()
@@ -190,7 +187,6 @@ class StartDay implements State {
   public void nextState() {
     // simState.update();
     simState.setStoreState(simState.goProcessDelivery());
-    simState.goEnterState();
     exitState();
   }
 }
@@ -207,27 +203,23 @@ class ProcessDelivery implements State {
   public void enterState() {
     System.out.println("\n##################################################");
     simState.store.currentStaff.processDeliveries();
-    simState.setStoreState(SimState.previousState);
+    simState.store.updateMailBox();
+    simState.store.updateInventory();
     nextState();
   }
 
   @Override
   public void exitState() {
     System.out.println("##################################################\n");
-
-    simState.store.updateMailBox();
-    simState.store.updateInventory();
-    simState.setStoreState(simState.goFeedAnimals());
-    simState.goFeedAnimals();
-
-    // simState.setStoreState(SimState.previousState);
-
+    Utilities.gapTime();
+    simState.goEnterState();
   }
 
   @Override
   public void nextState() {
     System.out.println("The employee returns to finish his other activities.");
-    exitState();
+    simState.setStoreState(simState.goFeedAnimals());
+		exitState();
   }
 }
 
@@ -242,63 +234,26 @@ class FeedAnimals implements State {
   public void enterState() {
     System.out.println("\n##################################################");
     simState.store.currentStaff.feedAnimals();
+    simState.store.updateInventory();
+    simState.store.updateSickAnimal();
+    // simState.store.updateCash();
     nextState();
   }
 
   @Override
   public void exitState() {
-    simState.setStoreState(simState.goCheckRegister());
-    simState.goEnterState();
-    // TODO: update information and report. Afterwards, call nextState()
-  }
-
-  @Override
-  public void nextState() {
-    simState.store.updateInventory();
-    simState.store.updateSickAnimal();
-    simState.store.updateCash();
-    exitState();
-  }
-}
-
-class CheckRegister implements State {
-  SimState simState;
-  double totalWithdrawn = 0;
-
-  public CheckRegister(SimState simState) {
-    this.simState = simState;
-  }
-
-  @Override
-  public void enterState() {
     System.out.println("##################################################\n");
-    if (!simState.store.checkRegister()) {
-      System.out.println("Register cash is low... ");
-      simState.setStoreState(simState.goVisitBankState());
-      exitState();
-    } else {
-      System.out.println("Cash is sufficient.");
-      nextState();
-    }
-  }
-
-  @Override
-  public void exitState() {
-    System.out.println("##################################################\n");
-
-    // TODO: update information and report. Afterwards, call nextState()
+    Utilities.gapTime();
     simState.goEnterState();
   }
 
   @Override
   public void nextState() {
-    totalWithdrawn = simState.store.bankWithdrawal;
-    System.out.println("Total Bank Withdraw: " + totalWithdrawn);
-    System.out.println("Cash: " + simState.store.getCash());
     simState.setStoreState(simState.goDoInventory());
     exitState();
   }
 }
+
 
 class VisitBank implements State {
   SimState simState;
@@ -310,19 +265,20 @@ class VisitBank implements State {
   @Override
   public void enterState() {
     simState.store.goToBank();
-    exitState();
+    nextState();
   }
 
   @Override
   public void exitState() {
-    System.out.println("##################################################\n");
-
     // simState.update();
-    simState.setStoreState(SimState.previousState);
+    
   }
 
   @Override
-  public void nextState() {}
+  public void nextState() {
+	  simState.setStoreState(SimState.previousState);
+		exitState();
+  }
 }
 
 class DoInventory implements State {
@@ -336,12 +292,15 @@ class DoInventory implements State {
   public void enterState() {
     System.out.println("\n##################################################");
     simState.store.currentStaff.doInventory();
+    simState.store.updateCash();
+    simState.store.updateInventory();
     nextState();
   }
 
   @Override
   public void exitState() {
     System.out.println("##################################################\n");
+    Utilities.gapTime();
     simState.goEnterState();
 
     // TODO: update information and report. Afterwards, call nextState()
@@ -350,8 +309,6 @@ class DoInventory implements State {
   @Override
   public void nextState() {
     simState.setStoreState(simState.goOpenStore());
-    simState.store.updateCash();
-    simState.store.updateInventory();
     exitState();
   }
 }
@@ -367,18 +324,19 @@ class OpenStore implements State {
   public void enterState() {
     System.out.println("\n##################################################");
     simState.store.openStore();
+    simState.store.updateCash();
     nextState();
   }
 
   @Override
   public void exitState() {
     System.out.println("##################################################\n");
+    Utilities.gapTime();
     simState.goEnterState();
   }
 
   @Override
   public void nextState() {
-    simState.store.updateCash();
     simState.setStoreState(simState.goCleanStore());
     exitState();
   }
@@ -401,6 +359,7 @@ class CleanStore implements State {
   @Override
   public void exitState() {
     System.out.println("##################################################\n");
+    Utilities.gapTime();
     simState.setStoreState(simState.goEndDay());
     simState.goEnterState();
   }
@@ -438,7 +397,7 @@ class EndDay implements State {
   @Override
   public void exitState() {
     System.out.println("##################################################\n");
-
+    Utilities.gapTime();
     simState.goNewDay();
   }
 
@@ -451,7 +410,6 @@ class EndDay implements State {
 }
 
 class GoEndSimulation implements State {
-
   SimState simState;
 
   GoEndSimulation(SimState simState) {

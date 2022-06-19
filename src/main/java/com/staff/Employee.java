@@ -68,7 +68,15 @@ public class Employee {
 	}
 
 
+	public void checkRegister() {
+		String announcement = " checks the register...";
+		announce(announcement);
+	}
+	
+
 	public void feedAnimals() {
+		String announcement = " goes to feed the animals...";
+		announce(announcement);
 		ArrayList<Item> itemsToBeRemoved = new ArrayList<>();
 		inventory.forEach(item -> {
 			if (item.getClass().getCanonicalName().contains("pet")) {
