@@ -13,6 +13,7 @@ import main.java.com.item.pets.enums.Breed;
 import main.java.com.item.pets.enums.Color;
 import main.java.com.item.supplies.*;
 import main.java.com.item.supplies.enums.Type;
+import main.java.com.staff.task.TaskContext;
 import main.java.com.store.DeliveryPackage;
 import java.security.SecureRandom;
 import java.text.DecimalFormat;
@@ -21,20 +22,18 @@ import java.util.*;
 
 public class Employee {
 
-  private List<Watcher> watcher = new ArrayList<>();
-  private String        task;
-  private int           workedDays;
-  Employee        base;
-  ArrayList<Item> inventory;
-  ArrayList<Pet>  sick;
-
-  double cash;
-
+  //  private List<Watcher> watcher = new ArrayList<>();
+  private TaskContext task;
+  private int         workedDays;
+  Employee                   base;
+  ArrayList<Item>            inventory;
+  ArrayList<Pet>             sick;
+  double                     cash;
   ArrayList<DeliveryPackage> mailBox;
-
   static ArrayList<String> NAME_TEMPLATE = new ArrayList<String>(Arrays.asList("Kevin", "Andrew", "Michelle", "David", "Sarah"));
 
 
+  // TODO:
   public Employee(int workedDays) {
     this.workedDays = workedDays;
     inventory       = new ArrayList<>();
@@ -50,29 +49,28 @@ public class Employee {
     mailBox    = new ArrayList<>();
   }
 
-
-  /**
-   *
-   */
-  public void addWatcher(Watcher event) {
-    this.watcher.add(event);
-  }
-
-
-  /**
-   *
-   */
-  public void removeWatcher(Watcher event) {
-    this.watcher.remove(event);
-  }
-
-
-  public void setTask(String task) {
-    this.task = task;
-    for (Watcher watch : this.watcher) {
-      watch.update(this.task);
-    }
-  }
+//  /**
+//   *
+//   */
+//  public void addWatcher(Watcher event) {
+//    this.watcher.add(event);
+//  }
+//
+//
+//  /**
+//   *
+//   */
+//  public void removeWatcher(Watcher event) {
+//    this.watcher.remove(event);
+//  }
+//
+//
+//  public void setTask(String task) {
+//    this.task = task;
+//    for (Watcher watch : this.watcher) {
+//      watch.update(this.task);
+//    }
+//  }
 
 
   public String getName() {
