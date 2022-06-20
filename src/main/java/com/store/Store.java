@@ -110,37 +110,39 @@ public class Store {
 
   }
 
-  /** Select staff to man store for this day. */
+  /**
+   * TODO: each of the woker types need to be selected as currentStuff, so have an array to hold current Stuffs
+   * Select staff to main store for this day.
+   */
+
   void selectStaff() {
     int num = new Random().nextInt(4);
     currentStaff = staff.get(num);
 
-    if (currentStaff.getWorkDays() <= 2) {
+    if (currentStaff.getWorkDays() <= 3) {
       staff.forEach(
-          employee -> {
-            if (employee != currentStaff) {
-              employee.dayoff();
-            }
-          });
+        employee -> {
+          if (employee != currentStaff) {
+            employee.dayoff();
+          }
+        });
     } else {
-      if (currentStaff.getWorkDays() >= 3) {
-        staff.forEach(
-            employee -> {
-              if (employee != currentStaff) {
-                // currentStaff.dayoff();
-                currentStaff = employee;
-                currentStaff.incWorkDays();
-                currentStaff.arrival();
-                staff.forEach(
-                    restream -> {
-                      if (restream != currentStaff) {
-                        restream.dayoff();
-                      }
-                      return;
-                    });
-              }
-            });
-      }
+      staff.forEach(
+        employee -> {
+          if (employee != currentStaff) {
+            // currentStaff.dayoff();
+            currentStaff = employee;
+            currentStaff.incWorkDays();
+            currentStaff.arrival();
+            staff.forEach(
+              restream -> {
+                if (restream != currentStaff) {
+                  restream.dayoff();
+                }
+                return;
+              });
+          }
+        });
     }
 
     currentStaff.setInventory(this.inventory);
