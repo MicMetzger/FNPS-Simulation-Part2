@@ -129,8 +129,13 @@ public class Store
 
   Employee pickAvailableStaff(ArrayList<Employee> staffList) {
     SecureRandom rand = new SecureRandom();
+    boolean isSick = rand.nextInt(100) < 10;
     Employee potentialStaff = staffList.get(rand.nextInt(3));
     if(potentialStaff.getWorkDays() <= 3) {
+      if(isSick) {
+        System.out.println(potentialStaff.getName() + " is feeling sick today. Selecting another staff...");
+        return pickAvailableStaff(staffList);
+      }
       /* Passing store info to the staff */
       potentialStaff.setInventory(this.inventory);
       potentialStaff.setSickPet(this.sick);
