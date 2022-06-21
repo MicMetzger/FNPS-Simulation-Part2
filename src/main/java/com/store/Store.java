@@ -23,9 +23,12 @@ public class Store {
   ArrayList<Customer> customers;
   ArrayList<DeliveryPackage> mailBox;
   // The store's staff
-  ArrayList<Employee> staff;
+  ArrayList<Employee> clerks;
+
+  ArrayList<Employee> trainers;
   ArrayList<Item> soldItems;
-  Employee currentStaff;
+  Employee currentClerk;
+  Employee currentTrainer;
   // Money + day management
   double bankWithdrawal;
   double cash;
@@ -42,7 +45,8 @@ public class Store {
    * <p>Default constructor
    */
   public Store() {
-    staff = new ArrayList<Employee>();
+    clerks = new ArrayList<Employee>();
+    trainers = new ArrayList<Employee>();
     customers = new ArrayList<Customer>();
     inventory = new ArrayList<Item>();
     sick = new ArrayList<Pet>();
@@ -57,10 +61,12 @@ public class Store {
 
   /** Initiate starting objects. */
   public void initItemsAndStaff() {
-    staff.add(new Clerk());
-    staff.add(new Clerk());
-    staff.add(new Trainer());
-    staff.add(new Trainer());
+    clerks.add(new Clerk());
+    clerks.add(new Clerk());
+    clerks.add(new Clerk());
+    trainers.add(new Trainer("Haphazard"));
+    trainers.add(new Trainer("Negative"));
+    trainers.add(new Trainer("Positive"));
 
     // (size, color, broken, purebred) / (breed, age, health)
     inventory.add(
@@ -110,53 +116,45 @@ public class Store {
 
   }
 
-  /**
-   * TODO: each of the woker types need to be selected as currentStuff, so have an array to hold current Stuffs
-   * Select staff to main store for this day.
-   */
 
-  void selectStaff() {
-    int num = new Random().nextInt(4);
-    currentStaff = staff.get(num);
-
-    if (currentStaff.getWorkDays() <= 3) {
-      staff.forEach(
-        employee -> {
-          if (employee != currentStaff) {
-            employee.dayoff();
-          }
-        });
+  Employee pickAvailableStuff(ArrayList<Employee> staffList) {
+    SecureRandom rand = new SecureRandom();
+    Employee potentialStaff = staffList.get(rand.nextInt(3));
+    if(potentialStaff.getWorkDays() <= 3) {
+      /* Passing store info to the staff */
+      potentialStaff.setInventory(this.inventory);
+      potentialStaff.setSickPet(this.sick);
+      potentialStaff.setMailBox(this.mailBox);
+      potentialStaff.setCash(this.cash);
+      potentialStaff.incWorkDays();
+      potentialStaff.arrival();
+      // update work days of the staffs
+      for(Employee staff:staffList) {
+        if (staff != potentialStaff) {
+          staff.dayoff();
+        } else {
+          potentialStaff.incWorkDays();
+        }
+      }
+      return potentialStaff;
     } else {
-      staff.forEach(
-        employee -> {
-          if (employee != currentStaff) {
-            // currentStaff.dayoff();
-            currentStaff = employee;
-            currentStaff.incWorkDays();
-            currentStaff.arrival();
-            staff.forEach(
-              restream -> {
-                if (restream != currentStaff) {
-                  restream.dayoff();
-                }
-                return;
-              });
-          }
-        });
+      // randomly selected staff unable to work
+      return pickAvailableStuff(staffList);
     }
-
-    currentStaff.setInventory(this.inventory);
-    currentStaff.setSickPet(this.sick);
-    currentStaff.setMailBox(this.mailBox);
-    currentStaff.setCash(this.cash);
-    currentStaff.incWorkDays();
-    currentStaff.arrival();
   }
+
+  /** Select staff to man store for this day. */
+  void selectStaff() {
+    currentClerk = pickAvailableStuff(clerks);
+    currentTrainer = pickAvailableStuff(trainers);
+  }
+
+
 
   public void openStore() {
     int count = attractCustomers(new SecureRandom().nextInt(3, 10));
     System.out.println(
-        currentStaff.getName()
+        currentClerk.getName()
             + " opens the store. \nCurrent inventory: "
             + inventory.size()
             + " item(s)\nRegister: "
@@ -182,7 +180,7 @@ public class Store {
             soldItems.add(customer.obj);
           }
         });
-    currentStaff.setCash(cash);
+    currentClerk.setCash(cash);
     System.out.println("\nCurrent inventory: " + inventory.size() + " item(s)\nCash: " + cash);
   }
 
@@ -195,22 +193,20 @@ public class Store {
     return count;
   }
 
-  public void doInventory() {}
-
   public void updateInventory() {
-    this.inventory = currentStaff.getInventory();
+    this.inventory = currentClerk.getInventory();
   }
 
   public void updateSickAnimal() {
-    this.sick = currentStaff.getSickAnimal();
+    this.sick = currentClerk.getSickAnimal();
   }
 
   public void updateMailBox() {
-    this.mailBox = currentStaff.getMailBox();
+    this.mailBox = currentClerk.getMailBox();
   }
 
   public void updateCash() {
-    this.cash = currentStaff.getCash();
+    this.cash = currentClerk.getCash();
   }
 
   /**
@@ -223,13 +219,13 @@ public class Store {
   }
 
   public void goToBank() {
-    currentStaff.goToBank();
+    currentClerk.goToBank();
     addWithdrawal();
   }
 
   private void addWithdrawal() {
     System.out.println("$1000.00 was withdrawn from the bank.\n");
-    cash += currentStaff.getCash();
+    cash += currentClerk.getCash();
     bankWithdrawal += 1000;
     System.out.println("Total withdrawal: " + bankWithdrawal);
     System.out.println("Total cash: " + cash);
@@ -248,12 +244,9 @@ public class Store {
     }
   }
 
-  public double getCashOnHand() {
-    return currentStaff.checkCashOnHand();
-  }
 
   public boolean checkRegister() {
-    currentStaff.checkRegister();
+    currentClerk.checkRegister();
     return this.getCash() > 200;
   }
 

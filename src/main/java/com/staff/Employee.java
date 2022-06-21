@@ -13,7 +13,7 @@ import main.java.com.item.pets.enums.Breed;
 import main.java.com.item.pets.enums.Color;
 import main.java.com.item.supplies.*;
 import main.java.com.item.supplies.enums.Type;
-import main.java.com.staff.task.TaskContext;
+import main.java.com.staff.training.TrainerStrategy;
 import main.java.com.store.DeliveryPackage;
 import java.security.SecureRandom;
 import java.text.DecimalFormat;
@@ -30,7 +30,7 @@ public class Employee {
   ArrayList<Pet>             sick;
   double                     cash;
   ArrayList<DeliveryPackage> mailBox;
-  static ArrayList<String> NAME_TEMPLATE = new ArrayList<String>(Arrays.asList("Kevin", "Andrew", "Michelle", "David", "Sarah"));
+
 
 
   // TODO:
