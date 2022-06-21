@@ -18,14 +18,16 @@ public abstract class Pet extends Item {
       Animal animal,
       int age,
       boolean healthy) {
-    super(name, purchasePrice, listPrice, salePrice, dayArrived, daySold);
+    super(name, purchasePrice, listPrice, salePrice, dayArrived, daySold, true);
     this.animal = animal;
     this.age = age;
     this.healthy = healthy;
+    super.setAnimalIdentifier(true);
   }
 
   public Pet(Animal animal, int age, boolean healthy) {
     super();
+    super.setAnimalIdentifier(true);
     this.animal = animal;
     this.age = age;
     this.healthy = healthy;
@@ -33,10 +35,13 @@ public abstract class Pet extends Item {
 
   public Pet(Animal animal) {
     super();
+    super.setAnimalIdentifier(true);
     this.animal = animal;
   }
 
-  public Pet() {}
+  public Pet() {
+    super.setAnimalIdentifier(true);
+  }
 
   @Override
   public void setName(String name) {

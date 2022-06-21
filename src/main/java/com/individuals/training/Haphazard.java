@@ -15,7 +15,7 @@ public class Haphazard implements TrainerStrategy {
         boolean trained = rand.nextInt(100) < 10;
         //if trained, then result will be !houseBroken
         boolean result = trained != houseBroken;
-        System.out.println("The trainer performs Haphazard.");
+        System.out.println("The trainer performs Haphazard on " + animal.getName() + ".");
         if(trained) {
             System.out.println("[+] During the training, " + (result ? animal.getName() + " became housebroken" : "the animal failed to become housebroken"));
         } else {

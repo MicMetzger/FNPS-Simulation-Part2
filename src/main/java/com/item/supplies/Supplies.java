@@ -13,7 +13,7 @@ public class Supplies extends Item {
   }
 
   public Supplies(String name) {
-    super(name, 0.0, new Random().nextDouble(25.0), 0.0, 0, 0);
+    super(name, 0.0, new Random().nextDouble(25.0), 0.0, 0, 0, false);
   }
 
   /**
@@ -33,23 +33,23 @@ public class Supplies extends Item {
       double salePrice,
       int dayArrived,
       int daySold) {
-    super(name, purchasePrice, listPrice, salePrice, dayArrived, daySold);
+    super(name, purchasePrice, listPrice, salePrice, dayArrived, daySold, false);
   }
 
   public Supplies(String name, double pPrice) {
-    super(name, pPrice, new Random().nextDouble(25.0), 0.0, 0, 0);
+    super(name, pPrice, new Random().nextDouble(25.0), 0.0, 0, 0, false);
   }
 
   public Supplies(String name, double pPrice, double lPrice) {
-    super(name, pPrice, lPrice, 0.0, 0, 0);
+    super(name, pPrice, lPrice, 0.0, 0, 0, false);
   }
 
   public Supplies(String name, double pPrice, double lPrice, double sPrice) {
-    super(name, pPrice, lPrice, sPrice, 0, 0);
+    super(name, pPrice, lPrice, sPrice, 0, 0, false);
   }
 
   public Supplies(String name, double pPrice, double lPrice, double sPrice, int aDay) {
-    super(name, pPrice, lPrice, sPrice, aDay, 0);
+    super(name, pPrice, lPrice, sPrice, aDay, 0, false);
   }
 
   public Supplies(Item suppliesCopy, double purchasePrice, int soldDay) {
@@ -59,7 +59,8 @@ public class Supplies extends Item {
         suppliesCopy.getListPrice(),
         suppliesCopy.getSalePrice(),
         suppliesCopy.getDayArrived(),
-        soldDay);
+        soldDay,
+            false);
   }
 
   public SupplyType getSupplyType() {

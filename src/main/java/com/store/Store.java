@@ -104,7 +104,10 @@ public class Store
     // (color, broken, purebred) / (breed, age, health)
     inventory.add(
         new Ferret(
-            COLORS.get(new Random().nextInt(COLORS.size())),
+                Color.values()[
+                        new Random()
+                                .nextInt(
+                                        Color.values().length)],
             randomSelectionbool[new Random().nextInt(1)]));
 
     // (size) / (breed, age, health)

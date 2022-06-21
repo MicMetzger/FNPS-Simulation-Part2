@@ -14,7 +14,7 @@ public class NegativeReinforcement implements TrainerStrategy {
         boolean negative = rand.nextInt(100) < 20;
         boolean positive = rand.nextInt(100) < 40;
         boolean result = houseBroken ? !(negative) : positive;
-        System.out.println("The trainer performs Negative Reinforcement.");
+        System.out.println("The trainer performs Negative Reinforcement on " + animal.getName() + ".");
 
         if(houseBroken && negative) {
             System.out.println("[+] During the training, " + animal.getName() + " became unhousebroken.");

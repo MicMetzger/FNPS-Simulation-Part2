@@ -1,8 +1,7 @@
 package main.java.com.individuals;
 
-import static main.java.com.item.pets.enums.Animal.BIRDS;
-import static main.java.com.item.pets.enums.Animal.CATS;
-import static main.java.com.item.pets.enums.Animal.DOGS;
+import static main.java.com.Builders.sizeFormat;
+import static main.java.com.item.pets.enums.Animal.*;
 
 import main.java.com.item.Item;
 import main.java.com.item.Pet;
@@ -113,21 +112,18 @@ public class Employee implements Individual {
     ArrayList<Item> itemsToBeRemoved = new ArrayList<>();
     inventory.forEach(item -> {
       // TODO: this evaluation seems to fail, may be an issue when purchasing animals and initializing
-      if (item.getClass().getCanonicalName().contains("pet")) {
+      if (item.isPet()) {
         // 5% chance of getting sick
         /* = ((Pet) item).setHealthy(rand.nextInt(0,100) < 5);*/
-        int getsSick = new SecureRandom().nextInt(2);
-        switch (getsSick) {
-          case 0 -> {
-            ((Pet) item).setHealthy(false);
-            announce(" visits a " /*+ ((Pet) item).getBreed().name + " "*/ + ((Pet) item).getClass().getSimpleName() + ", and the pet got sick...");
-            sick.add(((Pet) item));
-            itemsToBeRemoved.add(item); // preventing error
-          }
-          case 1 -> {
-            announce(" visits a " /*+ ((Pet) item).getBreed().name + " "*/ + ((Pet) item).getClass().getSimpleName());
-            announce(" feeds the " /*+ ((Pet) item).getBreed().name + " "*/ + ((Pet) item).getClass().getSimpleName());
-          }
+        boolean getsSick = new SecureRandom().nextInt(100) < 5;
+        if (getsSick) {
+          ((Pet) item).setHealthy(false);
+          announce(" visits a " /*+ ((Pet) item).getBreed().name + " "*/ + ((Pet) item).getClass().getSimpleName() + ", and the pet got sick...");
+          sick.add(((Pet) item));
+          itemsToBeRemoved.add(item); // preventing error
+        } else {
+          announce(" visits a " /*+ ((Pet) item).getBreed().name + " "*/ + ((Pet) item).getClass().getSimpleName());
+          announce(" feeds the " /*+ ((Pet) item).getBreed().name + " "*/ + ((Pet) item).getClass().getSimpleName());
         }
       }
     });
@@ -148,18 +144,6 @@ public class Employee implements Individual {
       }
     }
     sick.removeAll(itemsToBeRemoved);
-  }
-
-
-  public void processInventory() {
-    String announcement = " goes through store inventory...";
-    announce(announcement);
-  }
-
-
-  public void CheckRegister() {
-    String announcement = " checks the register...";
-
   }
 
 
@@ -217,33 +201,55 @@ public class Employee implements Individual {
             DOGS.get(new Random().nextInt(4)), age, new Random().nextInt(2) == 1,
             Double.parseDouble(sizeFormat.format(new Random().nextDouble(50))), Color.values()[new Random().nextInt(Color.values().length)],
             new Random().nextInt(2) == 1, new Random().nextInt(2) == 1));
+        break;
       }
       case "Cat": {
         newPackage.setItem(new Cat(name, expectedDeliveryDate, daySold, purchasePrice, purchasePrice * 2, salePrice,
             CATS.get(new Random().nextInt(4)), age, new Random().nextInt(2) == 1, colors.get(new Random().nextInt(colors.size())),
             new Random().nextInt(2) == 1, new Random().nextInt(2) == 1));
+        break;
       }
       case "Bird": {
         newPackage.setItem(new Bird(name, expectedDeliveryDate, daySold, purchasePrice, purchasePrice * 2, salePrice,
             BIRDS.get(new Random().nextInt(4)), age, new Random().nextInt(2) == 1,
             Double.parseDouble(sizeFormat.format(new Random().nextDouble(8))), new Random().nextInt(2) == 1, new Random().nextInt(2) == 1,
             new Random().nextInt(2) == 1));
+        break;
       }
       case "Food": {
         newPackage.setItem(new Food(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate, new Random().nextInt(100),
             AnimalType.values()[new Random().nextInt(AnimalType.values().length)], Type.values()[new Random().nextInt(Type.values().length)]));
+        break;
       }
       case "Leash": {
         newPackage.setItem(new Leash(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate,
             AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
+        break;
       }
       case "Toy": {
         newPackage.setItem(new Toy(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate,
             AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
+        break;
       }
       case "CatLitter": {
         newPackage.setItem(
             new CatLitter(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate, new Random().nextInt(100)));
+        break;
+      }
+      case "Snake": {
+        newPackage.setItem(
+                new Snake(SNAKES.get(new Random().nextInt(4)), age, true, Double.parseDouble(sizeFormat.format(new Random().nextDouble(8))), name, 0, 0, purchasePrice, purchasePrice*2, 0));
+        break;
+      }
+      case "Ferret": {
+        newPackage.setItem(
+                new Ferret(FERRETS.get(new Random().nextInt(4)), age, true, Color.values()[new Random().nextInt(Color.values().length)], false, name, 0, 0, purchasePrice, purchasePrice*2, 0));
+        break;
+      }
+      case "Treat": {
+        newPackage.setItem(new Treat(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate,
+                AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
+        break;
       }
     }
     return newPackage;
@@ -260,7 +266,7 @@ public class Employee implements Individual {
 
     Random            rand                = new Random();
     ArrayList<String> itemToBeRemoved     = new ArrayList<String>();
-    ArrayList<String> ITEM_TO_ORDER       = new ArrayList<String>(Arrays.asList("Dog", "Cat", "Bird", "Food", "Leash", "Toy", "CatLitter"));
+    ArrayList<String> ITEM_TO_ORDER       = new ArrayList<String>(Arrays.asList("Dog", "Cat", "Bird", "Food", "Leash", "Toy", "CatLitter", "Snake", "Ferret", "Treat"));
     String            announcement        = " checking the inventory...";
     double            totalInventoryValue = 0.0;
 

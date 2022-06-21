@@ -58,10 +58,17 @@ public class Trainer extends Employee {
   }
 
   public void startTraining() {
-    String announcement = " trains the animals";
+    boolean animalExists = false;
+    for(Item animal: inventory) {
+      if (animal.isPet()) {
+        animalExists = true;
+        break;
+      }
+    }
+    String announcement = animalExists ? " trains the animals" : " checks the animals for training, but notices that the case is empty. Skipping training.";
     announce(announcement);
     for(Item animal: inventory) {
-      if (animal.getClass().getCanonicalName().contains("pet")) {
+      if (animal.isPet()) {
         ((Pet) animal).setHealthy(this.train(((Pet)animal).isHealthy(), ((Pet)animal)) );
       }
     }

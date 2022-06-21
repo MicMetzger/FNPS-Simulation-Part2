@@ -1,6 +1,5 @@
-import main.java.com.item.Pet;
-
 package main.java.com.individuals.training;
+import main.java.com.item.Pet;
 import java.security.SecureRandom;
 
 /**
@@ -13,7 +12,7 @@ public class PositiveReinforcement implements TrainerStrategy {
         SecureRandom rand = new SecureRandom();
         boolean trained = rand.nextInt(100) < 50;
         boolean result = houseBroken || trained;
-        System.out.println("The trainer performs Positive Reinforcement.");
+        System.out.println("The trainer performs Positive Reinforcement on " + animal.getName() + ".");
 
         if(!trained) {
             System.out.println("The training failed.");

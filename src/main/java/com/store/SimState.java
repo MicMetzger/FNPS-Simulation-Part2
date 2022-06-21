@@ -343,7 +343,7 @@ class TrainAnimals implements State {
   SimState simState;
   @Override
   public void enterState() {
-    System.out.println("\n########TRAINING##########################################");
+    System.out.println("\n##################################################");
     ((Trainer)simState.store.currentTrainer).startTraining();
     nextState();
   }

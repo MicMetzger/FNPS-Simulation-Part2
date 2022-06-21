@@ -13,6 +13,8 @@ public abstract class Item {
   private double listPrice;
   private double salePrice;
 
+  private boolean isPet;
+
   /**
    * Instantiates a new Item.
    *
@@ -29,13 +31,15 @@ public abstract class Item {
       double listPrice,
       double salePrice,
       int dayArrived,
-      int daySold) {
+      int daySold,
+      boolean isPet) {
     this.name = name;
     this.dayArrived = dayArrived;
     this.daySold = daySold;
     this.purchasePrice = purchasePrice;
     this.listPrice = listPrice;
     this.salePrice = salePrice;
+    this.isPet = isPet;
   }
 
   /** Default constructor of Item object. */
@@ -154,6 +158,11 @@ public abstract class Item {
     this.daySold = daySold;
   }
 
+  public boolean isPet() { return isPet; }
+
+  public void setAnimalIdentifier(boolean animal) {
+    isPet = animal;
+  };
   public void print() {
     System.out.println(
         "Item{"

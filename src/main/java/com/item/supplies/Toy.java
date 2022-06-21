@@ -27,6 +27,7 @@ public class Toy extends Supplies {
       int dayArrived,
       AnimalType animal) {
     super(name, purchasePrice, listPrice, salePrice, dayArrived, daySold);
+    super.setName("Toy");
     this.animal = animal;
   }
 
