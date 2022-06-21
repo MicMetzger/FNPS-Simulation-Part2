@@ -1,4 +1,4 @@
-package main.java.com.staff;
+package main.java.com.individuals;
 
 import static main.java.com.item.pets.enums.Animal.BIRDS;
 import static main.java.com.item.pets.enums.Animal.CATS;
@@ -7,24 +7,24 @@ import static main.java.com.item.pets.enums.Animal.DOGS;
 import main.java.com.item.Item;
 import main.java.com.item.Pet;
 import main.java.com.item.pets.*;
-import main.java.com.item.pets.enums.Animal;
 import main.java.com.item.pets.enums.AnimalType;
-import main.java.com.item.pets.enums.Breed;
 import main.java.com.item.pets.enums.Color;
 import main.java.com.item.supplies.*;
 import main.java.com.item.supplies.enums.Type;
-import main.java.com.staff.training.TrainerStrategy;
+import main.java.com.individuals.task.TaskObservable;
+import main.java.com.individuals.task.TaskObserver;
 import main.java.com.store.DeliveryPackage;
 import java.security.SecureRandom;
 import java.text.DecimalFormat;
 import java.util.*;
+import main.java.com.store.Store;
 
 
-public class Employee {
+
+public class Employee implements Individual {
 
   //  private List<Watcher> watcher = new ArrayList<>();
-  private TaskContext task;
-  private int         workedDays;
+  private int workedDays;
   Employee                   base;
   ArrayList<Item>            inventory;
   ArrayList<Pet>             sick;
@@ -32,9 +32,9 @@ public class Employee {
   ArrayList<DeliveryPackage> mailBox;
 
 
-
   // TODO:
   public Employee(int workedDays) {
+    super();
     this.workedDays = workedDays;
     inventory       = new ArrayList<>();
     cash            = 0;
@@ -388,4 +388,8 @@ public class Employee {
   }
 
 
+  @Override
+  public void update(Store subject, Item arg) {
+
+  }
 }

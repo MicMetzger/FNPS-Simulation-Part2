@@ -3,7 +3,7 @@ package main.java.com.store;
 import main.java.com.Utilities;
 import main.java.com.item.Item;
 import main.java.com.item.Pet;
-import main.java.com.staff.Watcher;
+import main.java.com.individuals.Watcher;
 
 import java.util.ArrayList;
 import java.util.List;

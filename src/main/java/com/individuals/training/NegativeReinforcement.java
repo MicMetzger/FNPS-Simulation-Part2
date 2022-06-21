@@ -1,4 +1,4 @@
-package main.java.com.staff.training;
+package main.java.com.individuals.training;
 import java.security.SecureRandom;
 
 /**

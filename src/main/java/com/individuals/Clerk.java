@@ -1,4 +1,4 @@
-package main.java.com.staff;
+package main.java.com.individuals;
 
 import java.util.ArrayList;
 import java.util.Arrays;

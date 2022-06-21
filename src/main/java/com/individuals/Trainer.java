@@ -1,19 +1,22 @@
-package main.java.com.staff;
+package main.java.com.individuals;
 
-import main.java.com.staff.training.Haphazard;
-import main.java.com.staff.training.NegativeReinforcement;
-import main.java.com.staff.training.PositiveReinforcement;
-import main.java.com.staff.training.TrainerStrategy;
+import static main.java.com.Builders.NAME_TEMPLATE;
+
+import main.java.com.individuals.training.Haphazard;
+import main.java.com.individuals.training.NegativeReinforcement;
+import main.java.com.individuals.training.PositiveReinforcement;
+import main.java.com.individuals.training.TrainerStrategy;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Random;
 
-public class Trainer extends Employee {
-  private String name = "";
-  public TrainerStrategy trainingType;
 
-  static ArrayList<String> NAME_TEMPLATE = new ArrayList<String>(Arrays.asList("Chris", "Paul", "Jack", "Alex", "John"));
+
+public class Trainer extends Employee {
+
+  private String          name = "";
+  public  TrainerStrategy trainingType;
+
 
   public Trainer(String trainingAlgo) {
     super();
@@ -56,6 +59,7 @@ public class Trainer extends Employee {
       }
     }
   }
+
   public boolean train(boolean houseBroken) {
     return trainingType.training(houseBroken);
   }

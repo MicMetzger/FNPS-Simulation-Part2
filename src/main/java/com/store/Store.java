@@ -1,43 +1,47 @@
 package main.java.com.store;
 
+import static main.java.com.Builders.COLORS;
+import static main.java.com.Builders.randomSelectionbool;
+import static main.java.com.Builders.sizeFormat;
+
+import main.java.com.individuals.Individual;
+import main.java.com.individuals.task.TaskObservable;
 import main.java.com.item.Item;
 import main.java.com.item.Pet;
 import main.java.com.item.pets.*;
-import main.java.com.item.pets.enums.Animal;
 import main.java.com.item.pets.enums.AnimalType;
 import main.java.com.item.pets.enums.Color;
 import main.java.com.item.supplies.*;
 import main.java.com.item.supplies.enums.Type;
-import main.java.com.staff.Clerk;
-import main.java.com.staff.Employee;
-import main.java.com.staff.Trainer;
+import main.java.com.individuals.Clerk;
+import main.java.com.individuals.Employee;
+import main.java.com.individuals.Trainer;
 
 import java.security.SecureRandom;
 import java.text.DecimalFormat;
 import java.util.*;
 
-public class Store {
+
+
+public class Store
+    extends TaskObservable<Store, Individual, Item> {
+
   // The store's Inventory.
-  ArrayList<Item> inventory;
-  ArrayList<Pet> sick;
-  ArrayList<Customer> customers;
+  ArrayList<Item>            inventory;
+  ArrayList<Pet>             sick;
+  ArrayList<Customer>        customers;
   ArrayList<DeliveryPackage> mailBox;
   // The store's staff
-  ArrayList<Employee> clerks;
-
-  ArrayList<Employee> trainers;
-  ArrayList<Item> soldItems;
-  Employee currentClerk;
-  Employee currentTrainer;
+  ArrayList<Employee>        clerks;
+  ArrayList<Employee>        trainers;
+  ArrayList<Item>            soldItems;
+  Employee                   currentClerk;
+  Employee                   currentTrainer;
   // Money + day management
-  double bankWithdrawal;
-  double cash;
-  int day;
-  // Data helpers
-  protected final ArrayList<String> colors =
-      new ArrayList<String>(Arrays.asList("Black", "Brown", "White", "Gray", "Red"));
-  protected final boolean[] randomSelectionbool = {true, false};
-  DecimalFormat sizeFormat = new DecimalFormat("#####.00");
+  double                     bankWithdrawal;
+  double                     cash;
+  int                        day;
+  
 
   /**
    * Instantiates a new Store. Main entry point.
@@ -45,21 +49,23 @@ public class Store {
    * <p>Default constructor
    */
   public Store() {
-    clerks = new ArrayList<Employee>();
-    trainers = new ArrayList<Employee>();
-    customers = new ArrayList<Customer>();
-    inventory = new ArrayList<Item>();
-    sick = new ArrayList<Pet>();
-    mailBox = new ArrayList<DeliveryPackage>();
-    soldItems = new ArrayList<Item>();
+    clerks         = new ArrayList<Employee>();
+    trainers       = new ArrayList<Employee>();
+    customers      = new ArrayList<Customer>();
+    inventory      = new ArrayList<Item>();
+    sick           = new ArrayList<Pet>();
+    mailBox        = new ArrayList<DeliveryPackage>();
+    soldItems      = new ArrayList<Item>();
     bankWithdrawal = 0;
-    cash = 0;
-    day = 0;
+    cash           = 0;
+    day            = 0;
     initItemsAndStaff();
     new SimState(this);
   }
 
-  /** Initiate starting objects. */
+  /**
+   * Initiate starting objects.
+   */
   public void initItemsAndStaff() {
     clerks.add(new Clerk());
     clerks.add(new Clerk());
@@ -82,7 +88,7 @@ public class Store {
     // (color, broken, purebred) / (breed, age, health)
     inventory.add(
         new Cat(
-            colors.get(new Random().nextInt(colors.size())),
+            COLORS.get(new Random().nextInt(COLORS.size())),
             randomSelectionbool[new Random().nextInt(1)],
             randomSelectionbool[new Random().nextInt(1)]));
 
@@ -97,11 +103,11 @@ public class Store {
     // (color, broken, purebred) / (breed, age, health)
     inventory.add(
         new Ferret(
-            colors.get(new Random().nextInt(colors.size())),
+            COLORS.get(new Random().nextInt(COLORS.size())),
             randomSelectionbool[new Random().nextInt(1)]));
 
-	  // (size) / (breed, age, health)
-	  inventory.add(new Snake(Double.parseDouble(sizeFormat.format(new Random().nextDouble(8)))));
+    // (size) / (breed, age, health)
+    inventory.add(new Snake(Double.parseDouble(sizeFormat.format(new Random().nextDouble(8)))));
 
     inventory.add(
         new Food(
@@ -118,9 +124,9 @@ public class Store {
 
 
   Employee pickAvailableStuff(ArrayList<Employee> staffList) {
-    SecureRandom rand = new SecureRandom();
-    Employee potentialStaff = staffList.get(rand.nextInt(3));
-    if(potentialStaff.getWorkDays() <= 3) {
+    SecureRandom rand           = new SecureRandom();
+    Employee     potentialStaff = staffList.get(rand.nextInt(3));
+    if (potentialStaff.getWorkDays() <= 3) {
       /* Passing store info to the staff */
       potentialStaff.setInventory(this.inventory);
       potentialStaff.setSickPet(this.sick);
@@ -129,7 +135,7 @@ public class Store {
       potentialStaff.incWorkDays();
       potentialStaff.arrival();
       // update work days of the staffs
-      for(Employee staff:staffList) {
+      for (Employee staff : staffList) {
         if (staff != potentialStaff) {
           staff.dayoff();
         } else {
@@ -143,12 +149,13 @@ public class Store {
     }
   }
 
-  /** Select staff to man store for this day. */
+  /**
+   * Select staff to man store for this day.
+   */
   void selectStaff() {
-    currentClerk = pickAvailableStuff(clerks);
+    currentClerk   = pickAvailableStuff(clerks);
     currentTrainer = pickAvailableStuff(trainers);
   }
-
 
 
   public void openStore() {
@@ -260,5 +267,9 @@ public class Store {
 
   public ArrayList<Item> getSoldItems() {
     return this.soldItems;
+  }
+
+  public void timePasses() {
+
   }
 }
