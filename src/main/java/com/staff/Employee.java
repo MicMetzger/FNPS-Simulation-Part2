@@ -23,7 +23,7 @@ import java.util.*;
 public class Employee {
 
   //  private List<Watcher> watcher = new ArrayList<>();
-  private TaskContext task;
+//  private TaskContext task;
   private int         workedDays;
   Employee                   base;
   ArrayList<Item>            inventory;

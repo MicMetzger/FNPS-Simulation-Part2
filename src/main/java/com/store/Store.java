@@ -117,7 +117,7 @@ public class Store {
   }
 
 
-  Employee pickAvailableStuff(ArrayList<Employee> staffList) {
+  Employee pickAvailableStaff(ArrayList<Employee> staffList) {
     SecureRandom rand = new SecureRandom();
     Employee potentialStaff = staffList.get(rand.nextInt(3));
     if(potentialStaff.getWorkDays() <= 3) {
@@ -139,14 +139,14 @@ public class Store {
       return potentialStaff;
     } else {
       // randomly selected staff unable to work
-      return pickAvailableStuff(staffList);
+      return pickAvailableStaff(staffList);
     }
   }
 
   /** Select staff to man store for this day. */
   void selectStaff() {
-    currentClerk = pickAvailableStuff(clerks);
-    currentTrainer = pickAvailableStuff(trainers);
+    currentClerk = pickAvailableStaff(clerks);
+    currentTrainer = pickAvailableStaff(trainers);
   }
 
 
