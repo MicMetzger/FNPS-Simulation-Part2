@@ -182,5 +182,7 @@ public abstract class Item {
             + '}');
   }
 
-  public abstract void announce();
+  public double getCost() {
+    return purchasePrice;
+  }
 }

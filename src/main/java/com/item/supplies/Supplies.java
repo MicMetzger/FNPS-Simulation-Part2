@@ -67,6 +67,4 @@ public class Supplies extends Item {
     return supplyType;
   }
 
-  @Override
-  public void announce() {}
 }

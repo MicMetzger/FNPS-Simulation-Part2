@@ -8,6 +8,9 @@ import main.java.com.individuals.Individual;
 import main.java.com.individuals.task.TaskObservable;
 import main.java.com.item.Item;
 import main.java.com.item.Pet;
+import main.java.com.item.addOns.Insurance;
+import main.java.com.item.addOns.Microchip;
+import main.java.com.item.addOns.VetCheckup;
 import main.java.com.item.pets.*;
 import main.java.com.item.pets.enums.Animal;
 import main.java.com.item.pets.enums.AnimalType;
@@ -177,9 +180,27 @@ public class Store
     return k - 1;
   }
 
+  public double addOnsHelper(ArrayList<String> addOns, int quantity, Item baseItem) {
+    if(quantity < 0) return baseItem.getSalePrice();
+
+    // adds decorators recursively until quantity is negative
+    return switch (addOns.get(quantity)) {
+      case "Insurance" -> addOnsHelper(addOns, quantity - 1, new Insurance(baseItem));
+      case "Vet" -> addOnsHelper(addOns, quantity - 1, new VetCheckup(baseItem));
+      case "Microchip" -> addOnsHelper(addOns, quantity - 1, new Microchip(baseItem));
+      default -> 0;
+    };
+
+  }
+  public double addRandomAddons(Item item) {
+    ArrayList<String> addOns = new ArrayList<String>(Arrays.asList("Insurance", "Vet", "Microchip"));
+    Collections.shuffle(addOns);
+    return addOnsHelper(addOns, new SecureRandom().nextInt( 3), item);
+  }
+
   public void openStore() {
     // Poisson distribution
-    int count = getPoissonValue(3.0);
+    int count = attractCustomers(getPoissonValue(3.0));
     System.out.println(
         currentClerk.getName()
             + " opens the store. \nCurrent inventory: "
@@ -187,7 +208,6 @@ public class Store
             + " item(s)\nRegister: "
             + cash);
     System.out.println(count + " potential customers enter the store...");
-    // boolean buyAtListPrice = new SecureRandom().nextInt(100) < 50;
 
     customers.forEach(
         customer -> {
@@ -195,14 +215,21 @@ public class Store
 
           if (selecting) {
             inventory.remove(customer.obj);
-            System.out.println("[+] The customer has made a selection!");
+            System.out.println("The customer has made a selection!");
             System.out.println(
                 "[+] The customer purchases "
                     + customer.obj.getName()
                     + " at $"
                     + customer.getPurchasePrice()
                     + (customer.discount ? " after a 10% discount" : ""));
-            cash += customer.getPurchasePrice();
+            if(customer.obj.isPet()) {
+              double total = addRandomAddons(customer.obj);
+              cash += total;
+              System.out.println(" ++ $" + total);
+            } else {
+              System.out.println(" ++ $" + customer.getPurchasePrice());
+              cash += customer.getPurchasePrice();
+            }
             customer.obj.setDaySold(day);
             soldItems.add(customer.obj);
           }

@@ -238,12 +238,14 @@ public class Employee implements Individual {
       }
       case "Snake": {
         newPackage.setItem(
-                new Snake(SNAKES.get(new Random().nextInt(4)), age, true, Double.parseDouble(sizeFormat.format(new Random().nextDouble(8))), name, 0, 0, purchasePrice, purchasePrice*2, 0));
+                new Snake(SNAKES.get(new Random().nextInt(4)), age, true, Double.parseDouble(sizeFormat.format(new Random().nextDouble(8))),
+                        name, 0, 0, purchasePrice, purchasePrice*2, 0));
         break;
       }
       case "Ferret": {
         newPackage.setItem(
-                new Ferret(FERRETS.get(new Random().nextInt(4)), age, true, Color.values()[new Random().nextInt(Color.values().length)], false, name, 0, 0, purchasePrice, purchasePrice*2, 0));
+                new Ferret(FERRETS.get(new Random().nextInt(4)), age, true, Color.values()[new Random().nextInt(Color.values().length)],
+                        false, name, 0, 0, purchasePrice, purchasePrice*2, 0));
         break;
       }
       case "Treat": {
