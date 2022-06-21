@@ -1,4 +1,6 @@
 package main.java.com.staff.training;
+import main.java.com.item.Pet;
+
 import java.security.SecureRandom;
 
 /**
@@ -7,7 +9,7 @@ import java.security.SecureRandom;
 public class NegativeReinforcement implements TrainerStrategy {
 
     @Override
-    public boolean training(boolean houseBroken) {
+    public boolean training(boolean houseBroken, Pet animal) {
         SecureRandom rand = new SecureRandom();
         boolean negative = rand.nextInt(100) < 20;
         boolean positive = rand.nextInt(100) < 40;
@@ -15,9 +17,9 @@ public class NegativeReinforcement implements TrainerStrategy {
         System.out.println("The trainer performs Negative Reinforcement.");
 
         if(houseBroken && negative) {
-            System.out.println("During the training, the animal became unhousebroken.");
+            System.out.println("[+] During the training, " + animal.getName() + " became unhousebroken.");
         } else if(!houseBroken && positive) {
-            System.out.println("During the training, the animal became housebroken.");
+            System.out.println("During the training, " + animal.getName() + " became housebroken.");
         } else {
             System.out.println("The training failed.");
         }

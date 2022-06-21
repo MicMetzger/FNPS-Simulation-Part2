@@ -1,5 +1,7 @@
 package main.java.com.staff;
 
+import main.java.com.item.Item;
+import main.java.com.item.Pet;
 import main.java.com.staff.training.Haphazard;
 import main.java.com.staff.training.NegativeReinforcement;
 import main.java.com.staff.training.PositiveReinforcement;
@@ -34,10 +36,6 @@ public class Trainer extends Employee {
     this.name = name;
   }
 
-  public boolean trainAnimal(boolean houseBroken) {
-    return trainingType.training(houseBroken);
-  }
-
   public void setTrainingType(String trainingAlgo) {
     // range of  1 - 3
     int roll = new SecureRandom().nextInt(3);
@@ -56,7 +54,18 @@ public class Trainer extends Employee {
       }
     }
   }
-  public boolean train(boolean houseBroken) {
-    return trainingType.training(houseBroken);
+
+  public void startTraining() {
+    String announcement = " trains the animals";
+    announce(announcement);
+    for(Item animal: inventory) {
+      if (animal.getClass().getCanonicalName().contains("pet")) {
+        ((Pet) animal).setHealthy(this.train(((Pet)animal).isHealthy(), ((Pet)animal)) );
+      }
+    }
+  }
+
+  public boolean train(boolean houseBroken, Pet animal) {
+    return trainingType.training(houseBroken, animal);
   }
 }

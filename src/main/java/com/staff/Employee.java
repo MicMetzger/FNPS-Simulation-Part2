@@ -111,6 +111,7 @@ public class Employee {
     announce(announcement);
     ArrayList<Item> itemsToBeRemoved = new ArrayList<>();
     inventory.forEach(item -> {
+      // TODO: this evaluation seems to fail, may be an issue when purchasing animals and initializing
       if (item.getClass().getCanonicalName().contains("pet")) {
         // 5% chance of getting sick
         /* = ((Pet) item).setHealthy(rand.nextInt(0,100) < 5);*/
@@ -248,10 +249,6 @@ public class Employee {
   }
 
 
-  public double checkCashOnHand() {
-    return this.cash;
-  }
-
 
   public void doInventory() {
     // String announcement = "places an order for ";  //TODO\
@@ -292,6 +289,7 @@ public class Employee {
     }
     ITEM_TO_ORDER.clear();
   }
+
 
 
   public void cleanStore() {
