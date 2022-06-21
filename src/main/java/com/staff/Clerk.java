@@ -1,10 +1,12 @@
 package main.java.com.staff;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Clerk extends Employee {
   private String name = "";
-
+  static ArrayList<String> NAME_TEMPLATE = new ArrayList<String>(Arrays.asList("Kevin", "Andrew", "Michelle", "David", "Sarah"));
   public Clerk(int workedDays, String name) {
     super(workedDays);
     this.name = name;

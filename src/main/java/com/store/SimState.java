@@ -18,6 +18,7 @@ public class SimState {
       visitBank,
       checkRegister,
       doInventory,
+      trainAnimals,
       openStore,
       cleanStore,
       goEndSimulation;
@@ -39,6 +40,7 @@ public class SimState {
     doInventory = new DoInventory(this);
     processDelivery = new ProcessDelivery(this);
     cleanStore = new CleanStore(this);
+    trainAnimals = new TrainAnimals(this);
     openStore = new OpenStore(this);
     goEndSimulation = new GoEndSimulation(this);
     // RUNNING = true;
@@ -89,6 +91,8 @@ public class SimState {
   public State goDoInventory() {
     return doInventory;
   }
+
+  public State goTrainAnimals() { return trainAnimals; }
 
   public State goOpenStore() {
     return openStore;
@@ -209,7 +213,7 @@ class ProcessDelivery implements State, Watcher {
   @Override
   public void enterState() {
     System.out.println("\n##################################################");
-    simState.store.currentStaff.processDeliveries();
+    simState.store.currentClerk.processDeliveries();
     simState.store.updateMailBox();
     simState.store.updateInventory();
     nextState();
@@ -243,7 +247,7 @@ class FeedAnimals implements State, Watcher {
   @Override
   public void enterState() {
     System.out.println("\n##################################################");
-    simState.store.currentStaff.feedAnimals();
+    simState.store.currentTrainer.feedAnimals();
     simState.store.updateInventory();
     simState.store.updateSickAnimal();
     // simState.store.updateCash();
@@ -306,7 +310,7 @@ class DoInventory implements State, Watcher {
   @Override
   public void enterState() {
     System.out.println("\n##################################################");
-    simState.store.currentStaff.doInventory();
+    simState.store.currentClerk.doInventory();
     simState.store.updateCash();
     simState.store.updateInventory();
     nextState();
@@ -323,12 +327,38 @@ class DoInventory implements State, Watcher {
 
   @Override
   public void nextState() {
-    simState.setStoreState(simState.goOpenStore());
+    simState.setStoreState(simState.goTrainAnimals());
     exitState();
   }
 
   @Override
   public void update(Object message) {}
+}
+
+class TrainAnimals implements State {
+  TrainAnimals(SimState simState) {
+    this.simState = simState;
+  }
+  SimState simState;
+  @Override
+  public void enterState() {
+    System.out.println("\n########TRAINING##########################################");
+    // TODO: simState.store.currentTrainer.startTraining(); for each animal
+    nextState();
+  }
+
+  @Override
+  public void exitState() {
+    System.out.println("\n##################################################");
+    Utilities.gapTime();
+    simState.goEnterState();
+  }
+
+  @Override
+  public void nextState() {
+    simState.setStoreState(simState.goOpenStore());
+    exitState();
+  }
 }
 
 class OpenStore implements State, Watcher {
@@ -373,7 +403,7 @@ class CleanStore implements State, Watcher {
   @Override
   public void enterState() {
     System.out.println("\n##################################################");
-    simState.store.currentStaff.cleanStore();
+    simState.store.currentClerk.cleanStore();
     nextState();
   }
 
