@@ -213,7 +213,7 @@ class ProcessDelivery implements State, Watcher {
   @Override
   public void enterState() {
     System.out.println("\n##################################################");
-    simState.store.currentStaff.processDeliveries();
+    simState.store.currentClerk.processDeliveries();
     simState.store.updateMailBox();
     simState.store.updateInventory();
     nextState();
@@ -247,7 +247,7 @@ class FeedAnimals implements State, Watcher {
   @Override
   public void enterState() {
     System.out.println("\n##################################################");
-    simState.store.currentStaff.feedAnimals();
+    simState.store.currentTrainer.feedAnimals();
     simState.store.updateInventory();
     simState.store.updateSickAnimal();
     // simState.store.updateCash();
@@ -310,7 +310,7 @@ class DoInventory implements State, Watcher {
   @Override
   public void enterState() {
     System.out.println("\n##################################################");
-    simState.store.currentStaff.doInventory();
+    simState.store.currentClerk.doInventory();
     simState.store.updateCash();
     simState.store.updateInventory();
     nextState();
@@ -403,7 +403,7 @@ class CleanStore implements State, Watcher {
   @Override
   public void enterState() {
     System.out.println("\n##################################################");
-    simState.store.currentStaff.cleanStore();
+    simState.store.currentClerk.cleanStore();
     nextState();
   }
 

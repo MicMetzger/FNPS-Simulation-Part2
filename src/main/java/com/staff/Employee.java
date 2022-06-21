@@ -33,7 +33,6 @@ public class Employee {
 
   ArrayList<DeliveryPackage> mailBox;
 
-  static ArrayList<String> NAME_TEMPLATE = new ArrayList<String>(Arrays.asList("Kevin", "Andrew", "Michelle", "David", "Sarah"));
 
 
   public Employee(int workedDays) {
