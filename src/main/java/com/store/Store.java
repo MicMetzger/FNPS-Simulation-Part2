@@ -9,6 +9,7 @@ import main.java.com.individuals.task.TaskObservable;
 import main.java.com.item.Item;
 import main.java.com.item.Pet;
 import main.java.com.item.pets.*;
+import main.java.com.item.pets.enums.Animal;
 import main.java.com.item.pets.enums.AnimalType;
 import main.java.com.item.pets.enums.Color;
 import main.java.com.item.supplies.*;
@@ -123,10 +124,10 @@ public class Store
   }
 
 
-  Employee pickAvailableStuff(ArrayList<Employee> staffList) {
-    SecureRandom rand           = new SecureRandom();
-    Employee     potentialStaff = staffList.get(rand.nextInt(3));
-    if (potentialStaff.getWorkDays() <= 3) {
+  Employee pickAvailableStaff(ArrayList<Employee> staffList) {
+    SecureRandom rand = new SecureRandom();
+    Employee potentialStaff = staffList.get(rand.nextInt(3));
+    if(potentialStaff.getWorkDays() <= 3) {
       /* Passing store info to the staff */
       potentialStaff.setInventory(this.inventory);
       potentialStaff.setSickPet(this.sick);
@@ -145,17 +146,16 @@ public class Store
       return potentialStaff;
     } else {
       // randomly selected staff unable to work
-      return pickAvailableStuff(staffList);
+      return pickAvailableStaff(staffList);
     }
   }
 
-  /**
-   * Select staff to man store for this day.
-   */
+  /** Select staff to man store for this day. */
   void selectStaff() {
-    currentClerk   = pickAvailableStuff(clerks);
-    currentTrainer = pickAvailableStuff(trainers);
+    currentClerk = pickAvailableStaff(clerks);
+    currentTrainer = pickAvailableStaff(trainers);
   }
+
 
 
   public void openStore() {

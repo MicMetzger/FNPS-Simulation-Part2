@@ -32,6 +32,7 @@ public class Employee implements Individual {
   ArrayList<DeliveryPackage> mailBox;
 
 
+
   // TODO:
   public Employee(int workedDays) {
     super();
@@ -111,6 +112,7 @@ public class Employee implements Individual {
     announce(announcement);
     ArrayList<Item> itemsToBeRemoved = new ArrayList<>();
     inventory.forEach(item -> {
+      // TODO: this evaluation seems to fail, may be an issue when purchasing animals and initializing
       if (item.getClass().getCanonicalName().contains("pet")) {
         // 5% chance of getting sick
         /* = ((Pet) item).setHealthy(rand.nextInt(0,100) < 5);*/

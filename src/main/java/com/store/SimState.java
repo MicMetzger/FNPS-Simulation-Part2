@@ -4,6 +4,7 @@ import main.java.com.Utilities;
 import main.java.com.item.Item;
 import main.java.com.item.Pet;
 import main.java.com.individuals.Watcher;
+import main.java.com.individuals.Trainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -343,7 +344,7 @@ class TrainAnimals implements State {
   @Override
   public void enterState() {
     System.out.println("\n########TRAINING##########################################");
-    // TODO: simState.store.currentTrainer.startTraining(); for each animal
+    ((Trainer)simState.store.currentTrainer).startTraining();
     nextState();
   }
 
