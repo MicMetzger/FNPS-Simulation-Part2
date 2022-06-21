@@ -119,7 +119,7 @@ public class Store
             AnimalType.values()[new Random().nextInt(AnimalType.values().length)],
             Type.values()[new Random().nextInt(Type.values().length)]));
     inventory.add(new CatLitter(new Random().nextInt(100)));
-    inventory.add(new Toy(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
+//    inventory.add(new Toy(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
     inventory.add(new Leash(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
     inventory.add(new Treat(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
     // inventory.add()
@@ -164,10 +164,22 @@ public class Store
     currentTrainer = pickAvailableStaff(trainers);
   }
 
-
+  /* Reference: http://en.wikipedia.org/wiki/Poisson_distribution#Generating_Poisson-distributed_random_variables */
+  public int getPoissonValue(double mean) {
+    SecureRandom r = new SecureRandom();
+    double L = Math.exp(-mean);
+    int k = 1;
+    double p = 1.0;
+    do {
+      p = p * r.nextDouble();
+      ++k;
+    } while (p > L);
+    return k - 1;
+  }
 
   public void openStore() {
-    int count = attractCustomers(new SecureRandom().nextInt(3, 10));
+    // Poisson distribution
+    int count = getPoissonValue(3.0);
     System.out.println(
         currentClerk.getName()
             + " opens the store. \nCurrent inventory: "

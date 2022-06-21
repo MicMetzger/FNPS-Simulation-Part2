@@ -226,11 +226,11 @@ public class Employee implements Individual {
             AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
         break;
       }
-      case "Toy": {
-        newPackage.setItem(new Toy(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate,
-            AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
-        break;
-      }
+//      case "Toy": {
+//        newPackage.setItem(new Toy(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate,
+//            AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
+//        break;
+//      }
       case "CatLitter": {
         newPackage.setItem(
             new CatLitter(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate, new Random().nextInt(100)));
@@ -266,7 +266,7 @@ public class Employee implements Individual {
 
     Random            rand                = new Random();
     ArrayList<String> itemToBeRemoved     = new ArrayList<String>();
-    ArrayList<String> ITEM_TO_ORDER       = new ArrayList<String>(Arrays.asList("Dog", "Cat", "Bird", "Food", "Leash", "Toy", "CatLitter", "Snake", "Ferret", "Treat"));
+    ArrayList<String> ITEM_TO_ORDER       = new ArrayList<String>(Arrays.asList("Dog", "Cat", "Bird", "Food", "Leash", "CatLitter", "Snake", "Ferret", "Treat"));
     String            announcement        = " checking the inventory...";
     double            totalInventoryValue = 0.0;
 
