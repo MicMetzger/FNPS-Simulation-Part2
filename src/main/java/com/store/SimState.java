@@ -494,9 +494,9 @@ class GoEndSimulation implements State, Watcher {
     }
     System.out.println("_______________________________________________");
 
-    System.out.println("\n\n_______________ Remaining Sick Animals _______________");
+    System.out.println("\n\n____________ Remaining Sick Animals ___________");
     for (Pet item : simState.store.getSick()) {
-      System.out.println(item.getBreed() + ", Value: $" + item.getListPrice());
+      System.out.println(item.getName() + ", Value: $" + item.getListPrice());
     }
     System.out.println("_______________________________________________");
 

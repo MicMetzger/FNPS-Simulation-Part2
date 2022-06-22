@@ -212,7 +212,6 @@ public class Store
     customers.forEach(
         customer -> {
           boolean selecting = customer.inspectInventory(inventory);
-
           if (selecting) {
             inventory.remove(customer.obj);
             System.out.println("The customer has made a selection!");
