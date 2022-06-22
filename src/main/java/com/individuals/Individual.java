@@ -1,12 +1,10 @@
 package main.java.com.individuals;
 
-import main.java.com.individuals.task.TaskObserver;
-import main.java.com.item.Item;
-import main.java.com.store.Store;
+import main.java.com.individuals.task.EventObserver;
 
 
 
-public interface Individual extends
-    TaskObserver<Store, Individual, Item> {
+
+public interface Individual extends EventObserver {
 
 }

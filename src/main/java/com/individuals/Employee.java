@@ -3,6 +3,7 @@ package main.java.com.individuals;
 import static main.java.com.Builders.sizeFormat;
 import static main.java.com.item.pets.enums.Animal.*;
 
+import main.java.com.individuals.task.EventObservable;
 import main.java.com.item.Item;
 import main.java.com.item.Pet;
 import main.java.com.item.pets.*;
@@ -10,13 +11,10 @@ import main.java.com.item.pets.enums.AnimalType;
 import main.java.com.item.pets.enums.Color;
 import main.java.com.item.supplies.*;
 import main.java.com.item.supplies.enums.Type;
-import main.java.com.individuals.task.TaskObservable;
-import main.java.com.individuals.task.TaskObserver;
 import main.java.com.store.DeliveryPackage;
 import java.security.SecureRandom;
 import java.text.DecimalFormat;
 import java.util.*;
-import main.java.com.store.Store;
 
 
 
@@ -399,7 +397,7 @@ public class Employee implements Individual {
 
 
   @Override
-  public void update(Store subject, Item arg) {
-
+  public void update(EventObservable watched, Object event) {
+    
   }
 }

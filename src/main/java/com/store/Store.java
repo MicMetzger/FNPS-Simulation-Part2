@@ -4,15 +4,16 @@ import static main.java.com.Builders.COLORS;
 import static main.java.com.Builders.randomSelectionbool;
 import static main.java.com.Builders.sizeFormat;
 
-import main.java.com.individuals.Individual;
-import main.java.com.individuals.task.TaskObservable;
+
+import main.java.com.individuals.task.EventObservable;
+import main.java.com.individuals.task.EventObserver;
+import main.java.com.individuals.task.EventState;
 import main.java.com.item.Item;
 import main.java.com.item.Pet;
 import main.java.com.item.addOns.Insurance;
 import main.java.com.item.addOns.Microchip;
 import main.java.com.item.addOns.VetCheckup;
 import main.java.com.item.pets.*;
-import main.java.com.item.pets.enums.Animal;
 import main.java.com.item.pets.enums.AnimalType;
 import main.java.com.item.pets.enums.Color;
 import main.java.com.item.supplies.*;
@@ -22,13 +23,11 @@ import main.java.com.individuals.Employee;
 import main.java.com.individuals.Trainer;
 
 import java.security.SecureRandom;
-import java.text.DecimalFormat;
 import java.util.*;
 
 
 
-public class Store
-    extends TaskObservable<Store, Individual, Item> {
+public class Store implements EventObservable {
 
   // The store's Inventory.
   ArrayList<Item>            inventory;
@@ -45,7 +44,7 @@ public class Store
   double                     bankWithdrawal;
   double                     cash;
   int                        day;
-  
+
 
   /**
    * Instantiates a new Store. Main entry point.
@@ -107,10 +106,10 @@ public class Store
     // (color, broken, purebred) / (breed, age, health)
     inventory.add(
         new Ferret(
-                Color.values()[
-                        new Random()
-                                .nextInt(
-                                        Color.values().length)],
+            Color.values()[
+                new Random()
+                    .nextInt(
+                        Color.values().length)],
             randomSelectionbool[new Random().nextInt(1)]));
 
     // (size) / (breed, age, health)
@@ -131,11 +130,11 @@ public class Store
 
 
   Employee pickAvailableStaff(ArrayList<Employee> staffList) {
-    SecureRandom rand = new SecureRandom();
-    boolean isSick = rand.nextInt(100) < 10;
-    Employee potentialStaff = staffList.get(rand.nextInt(3));
-    if(potentialStaff.getWorkDays() <= 3) {
-      if(isSick) {
+    SecureRandom rand           = new SecureRandom();
+    boolean      isSick         = rand.nextInt(100) < 10;
+    Employee     potentialStaff = staffList.get(rand.nextInt(3));
+    if (potentialStaff.getWorkDays() <= 3) {
+      if (isSick) {
         System.out.println(potentialStaff.getName() + " is feeling sick today. Selecting another staff...");
         return pickAvailableStaff(staffList);
       }
@@ -161,18 +160,20 @@ public class Store
     }
   }
 
-  /** Select staff to man store for this day. */
+  /**
+   * Select staff to man store for this day.
+   */
   void selectStaff() {
-    currentClerk = pickAvailableStaff(clerks);
+    currentClerk   = pickAvailableStaff(clerks);
     currentTrainer = pickAvailableStaff(trainers);
   }
 
   /* Reference: http://en.wikipedia.org/wiki/Poisson_distribution#Generating_Poisson-distributed_random_variables */
   public int getPoissonValue(double mean) {
     SecureRandom r = new SecureRandom();
-    double L = Math.exp(-mean);
-    int k = 1;
-    double p = 1.0;
+    double       L = Math.exp(-mean);
+    int          k = 1;
+    double       p = 1.0;
     do {
       p = p * r.nextDouble();
       ++k;
@@ -181,7 +182,9 @@ public class Store
   }
 
   public double addOnsHelper(ArrayList<String> addOns, int quantity, Item baseItem) {
-    if(quantity < 0) return baseItem.getSalePrice();
+    if (quantity < 0) {
+      return baseItem.getSalePrice();
+    }
 
     // adds decorators recursively until quantity is negative
     return switch (addOns.get(quantity)) {
@@ -192,10 +195,11 @@ public class Store
     };
 
   }
+
   public double addRandomAddons(Item item) {
     ArrayList<String> addOns = new ArrayList<String>(Arrays.asList("Insurance", "Vet", "Microchip"));
     Collections.shuffle(addOns);
-    return addOnsHelper(addOns, new SecureRandom().nextInt( 3), item);
+    return addOnsHelper(addOns, new SecureRandom().nextInt(3), item);
   }
 
   public void openStore() {
@@ -221,7 +225,7 @@ public class Store
                     + " at $"
                     + customer.getPurchasePrice()
                     + (customer.discount ? " after a 10% discount" : ""));
-            if(customer.obj.isPet()) {
+            if (customer.obj.isPet()) {
               double total = addRandomAddons(customer.obj);
               cash += total;
               System.out.println(" ++ $" + total);
@@ -303,19 +307,41 @@ public class Store
     return this.getCash() > 200;
   }
 
+  
   public ArrayList<Item> getInventory() {
     return inventory;
   }
 
+  
   public ArrayList<Pet> getSick() {
     return sick;
   }
 
+  
   public ArrayList<Item> getSoldItems() {
     return this.soldItems;
   }
 
+  
   public void timePasses() {
+
+  }
+
+  
+  @Override
+  public void addObserver(EventObserver observer) {
+
+  }
+
+  
+  @Override
+  public void removeObserver(EventObserver observer) {
+
+  }
+
+
+  @Override
+  public void warnObservers(Object argument) {
 
   }
 }
