@@ -28,6 +28,18 @@ public class Employee implements Individual {
   double                     cash;
   ArrayList<DeliveryPackage> mailBox;
 
+  
+  private enum employeeState {
+    AVAILABLE("Available"),
+    OCCUPIED("Occupied");
+    
+    private String state;
+    
+    employeeState(String state) {
+      this.state = state;
+    }
+    
+  }
 
 
   // TODO:

@@ -7,7 +7,6 @@ import static main.java.com.Builders.sizeFormat;
 
 import main.java.com.individuals.task.EventObservable;
 import main.java.com.individuals.task.EventObserver;
-import main.java.com.individuals.task.EventState;
 import main.java.com.item.Item;
 import main.java.com.item.Pet;
 import main.java.com.item.addOns.Insurance;
@@ -21,7 +20,6 @@ import main.java.com.item.supplies.enums.Type;
 import main.java.com.individuals.Clerk;
 import main.java.com.individuals.Employee;
 import main.java.com.individuals.Trainer;
-
 import java.security.SecureRandom;
 import java.util.*;
 
@@ -37,6 +35,7 @@ public class Store implements EventObservable {
   // The store's staff
   ArrayList<Employee>        clerks;
   ArrayList<Employee>        trainers;
+  ArrayList<EventObserver>   observers;
   ArrayList<Item>            soldItems;
   Employee                   currentClerk;
   Employee                   currentTrainer;
@@ -44,7 +43,7 @@ public class Store implements EventObservable {
   double                     bankWithdrawal;
   double                     cash;
   int                        day;
-
+  SimState                   stateMachine;
 
   /**
    * Instantiates a new Store. Main entry point.
@@ -63,7 +62,7 @@ public class Store implements EventObservable {
     cash           = 0;
     day            = 0;
     initItemsAndStaff();
-    new SimState(this);
+    stateMachine = new SimState(this);
   }
 
   /**
@@ -76,6 +75,8 @@ public class Store implements EventObservable {
     trainers.add(new Trainer("Haphazard"));
     trainers.add(new Trainer("Negative"));
     trainers.add(new Trainer("Positive"));
+    observers.addAll(clerks);
+    observers.addAll(trainers);
 
     // (size, color, broken, purebred) / (breed, age, health)
     inventory.add(
@@ -121,7 +122,7 @@ public class Store implements EventObservable {
             AnimalType.values()[new Random().nextInt(AnimalType.values().length)],
             Type.values()[new Random().nextInt(Type.values().length)]));
     inventory.add(new CatLitter(new Random().nextInt(100)));
-//    inventory.add(new Toy(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
+    //    inventory.add(new Toy(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
     inventory.add(new Leash(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
     inventory.add(new Treat(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
     // inventory.add()
@@ -301,47 +302,50 @@ public class Store implements EventObservable {
     }
   }
 
-
   public boolean checkRegister() {
     currentClerk.checkRegister();
     return this.getCash() > 200;
   }
 
-  
   public ArrayList<Item> getInventory() {
     return inventory;
   }
 
-  
   public ArrayList<Pet> getSick() {
     return sick;
   }
 
-  
   public ArrayList<Item> getSoldItems() {
     return this.soldItems;
   }
 
-  
   public void timePasses() {
+    day++;
+    System.out.println("\nDay " + day);
 
   }
 
-  
   @Override
   public void addObserver(EventObserver observer) {
-
+    //    assert observer != null;
+    if (observer != null) {
+      if (!observers.contains(observer)) {
+        observers.add(observer);
+      }
+    } else {
+      throw new IllegalArgumentException("Observer cannot be null.");
+    }
   }
 
-  
   @Override
   public void removeObserver(EventObserver observer) {
 
   }
 
-
   @Override
   public void warnObservers(Object argument) {
-
+    for (EventObserver observer : observers) {
+      observer.update(this, argument);
+    }
   }
 }
