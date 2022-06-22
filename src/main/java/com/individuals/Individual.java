@@ -8,6 +8,4 @@ public interface Individual extends EventObserver {
   void setName(String name);
 
   String getName();
-
-  
 }

@@ -1,6 +1,5 @@
 package main.java.com.individuals;
 
-import static main.java.com.Builders.sizeFormat;
 import static main.java.com.item.pets.enums.Animal.*;
 
 import main.java.com.individuals.task.EmployeeTask;

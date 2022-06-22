@@ -1,13 +1,16 @@
 package main.java.com.store;
 
 import main.java.com.Utilities;
+import main.java.com.individuals.task.EmployeeTask;
+import main.java.com.individuals.task.EventState;
 import main.java.com.item.Item;
 import main.java.com.item.Pet;
-import main.java.com.individuals.Watcher;
 import main.java.com.individuals.Trainer;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class SimState {
   // Package level access, static, state control variables
@@ -23,26 +26,26 @@ public class SimState {
       openStore,
       cleanStore,
       goEndSimulation;
-  static State currentState;
-  static State endState;
-  static State previousState;
+  static State       currentState;
+  static State       endState;
+  static State       previousState;
   static List<State> stateList;
-  static boolean RUNNING;
+  static boolean     RUNNING;
   Store store;
 
   public SimState(Store sim) {
-    stateList = new ArrayList<State>();
-    store = sim;
-    newDay = new NewDay(this);
-    startDay = new StartDay(this);
-    endDay = new EndDay(this);
-    feedAnimals = new FeedAnimals(this);
-    visitBank = new VisitBank(this);
-    doInventory = new DoInventory(this);
+    stateList       = new ArrayList<State>();
+    store           = sim;
+    newDay          = new NewDay(this);
+    startDay        = new StartDay(this);
+    endDay          = new EndDay(this);
+    feedAnimals     = new FeedAnimals(this);
+    visitBank       = new VisitBank(this);
+    doInventory     = new DoInventory(this);
     processDelivery = new ProcessDelivery(this);
-    cleanStore = new CleanStore(this);
-    trainAnimals = new TrainAnimals(this);
-    openStore = new OpenStore(this);
+    cleanStore      = new CleanStore(this);
+    trainAnimals    = new TrainAnimals(this);
+    openStore       = new OpenStore(this);
     goEndSimulation = new GoEndSimulation(this);
     // RUNNING = true;
 
@@ -60,7 +63,7 @@ public class SimState {
 
   public void setStoreState(State state) {
     previousState = currentState;
-    currentState = state;
+    currentState  = state;
   }
 
   public void goNewDay() {
@@ -93,7 +96,9 @@ public class SimState {
     return doInventory;
   }
 
-  public State goTrainAnimals() { return trainAnimals; }
+  public State goTrainAnimals() {
+    return trainAnimals;
+  }
 
   public State goOpenStore() {
     return openStore;
@@ -119,15 +124,23 @@ public class SimState {
 
 }
 
-class NewDay implements State, Watcher {
-  SimState simState;
+
+
+class NewDay extends EmployeeTask implements State {
+  SimState   simState;
+  EventState status;
+
 
   NewDay(SimState simState) {
     this.simState = simState;
+    status        = EventState.valueOf("Open");
+
   }
 
   @Override
   public void enterState() {
+    status = EventState.valueOf("Active");
+
     System.out.println("\n**************************************************");
     if (simState.store.day == 30) {
       simState.setStoreState(simState.goEndSimulation());
@@ -153,24 +166,29 @@ class NewDay implements State, Watcher {
     exitState();
   }
 
-  @Override
-  public void update(Object state) {}
+  //  @Override
+  //  public void update(Object state) {}
 }
+
+
 
 /**
  * Start day.
  *
  * <p>Daily route starting point.
  */
-class StartDay implements State, Watcher {
-  SimState simState;
+class StartDay extends EmployeeTask implements State {
+  SimState   simState;
+  EventState status;
 
   public StartDay(SimState simState) {
     this.simState = simState;
+    status        = EventState.valueOf("Open");
   }
 
   @Override
   public void enterState() {
+    status = EventState.valueOf("Active");
     System.out.println("\n#################################################");
     if (!simState.store.checkRegister()) {
       System.out.println("Register cash is low... ");
@@ -199,20 +217,27 @@ class StartDay implements State, Watcher {
     exitState();
   }
 
-  @Override
-  public void update(Object message) {}
+  //  @Override
+  //  public void update(Object message) {}
 }
 
-class ProcessDelivery implements State, Watcher {
 
-  SimState simState;
+
+class ProcessDelivery extends EmployeeTask implements State {
+  SimState   simState;
+  EventState status;
+
 
   public ProcessDelivery(SimState simState) {
     this.simState = simState;
+    status        = EventState.valueOf("Open");
+
   }
 
   @Override
   public void enterState() {
+    status = EventState.valueOf("Active");
+
     System.out.println("\n##################################################");
     simState.store.currentClerk.processDeliveries();
     simState.store.updateMailBox();
@@ -234,19 +259,27 @@ class ProcessDelivery implements State, Watcher {
     exitState();
   }
 
-  @Override
-  public void update(Object message) {}
+  //  @Override
+  //  public void update(Object message) {}
 }
 
-class FeedAnimals implements State, Watcher {
-  SimState simState;
+
+
+class FeedAnimals extends EmployeeTask implements State {
+  SimState   simState;
+  EventState status;
+
 
   public FeedAnimals(SimState simState) {
     this.simState = simState;
+    status        = EventState.valueOf("Open");
+
   }
 
   @Override
   public void enterState() {
+    status = EventState.valueOf("Active");
+
     System.out.println("\n##################################################");
     simState.store.currentTrainer.feedAnimals();
     simState.store.updateInventory();
@@ -268,19 +301,27 @@ class FeedAnimals implements State, Watcher {
     exitState();
   }
 
-  @Override
-  public void update(Object message) {}
+  //  @Override
+  //  public void update(Object message) {}
 }
 
-class VisitBank implements State, Watcher {
-  SimState simState;
+
+
+class VisitBank extends EmployeeTask implements State {
+  SimState   simState;
+  EventState status;
+
 
   public VisitBank(SimState simState) {
     this.simState = simState;
+    status        = EventState.valueOf("Open");
+
   }
 
   @Override
   public void enterState() {
+    status = EventState.valueOf("Active");
+
     simState.store.goToBank();
     nextState();
   }
@@ -297,19 +338,27 @@ class VisitBank implements State, Watcher {
     exitState();
   }
 
-  @Override
-  public void update(Object message) {}
+  //  @Override
+  //  public void update(Object message) {}
 }
 
-class DoInventory implements State, Watcher {
-  SimState simState;
+
+
+class DoInventory extends EmployeeTask implements State {
+  SimState   simState;
+  EventState status;
+
 
   public DoInventory(SimState simState) {
     this.simState = simState;
+    status        = EventState.valueOf("Open");
+
   }
 
   @Override
   public void enterState() {
+    status = EventState.valueOf("Active");
+
     System.out.println("\n##################################################");
     simState.store.currentClerk.doInventory();
     simState.store.updateCash();
@@ -332,19 +381,29 @@ class DoInventory implements State, Watcher {
     exitState();
   }
 
-  @Override
-  public void update(Object message) {}
+  //  @Override
+  //  public void update(Object message) {}
 }
 
+
+
 class TrainAnimals implements State {
+  SimState   simState;
+  EventState status;
+
+
   TrainAnimals(SimState simState) {
     this.simState = simState;
+    status        = EventState.valueOf("Open");
+
   }
-  SimState simState;
+
   @Override
   public void enterState() {
+    status = EventState.valueOf("Active");
+
     System.out.println("\n##################################################");
-    ((Trainer)simState.store.currentTrainer).startTraining();
+    ((Trainer) simState.store.currentTrainer).startTraining();
     nextState();
   }
 
@@ -362,15 +421,23 @@ class TrainAnimals implements State {
   }
 }
 
-class OpenStore implements State, Watcher {
-  SimState simState;
+
+
+class OpenStore extends EmployeeTask implements State {
+  SimState   simState;
+  EventState status;
+
 
   public OpenStore(SimState simState) {
     this.simState = simState;
+    status        = EventState.valueOf("Open");
+
   }
 
   @Override
   public void enterState() {
+    status = EventState.valueOf("Active");
+
     System.out.println("\n##################################################");
     simState.store.openStore();
     simState.store.updateCash();
@@ -390,19 +457,27 @@ class OpenStore implements State, Watcher {
     exitState();
   }
 
-  @Override
-  public void update(Object message) {}
+  //  @Override
+  //  public void update(Object message) {}
 }
 
-class CleanStore implements State, Watcher {
-  SimState simState;
+
+
+class CleanStore extends EmployeeTask implements State {
+  SimState   simState;
+  EventState status;
+
 
   public CleanStore(SimState simState) {
     this.simState = simState;
+    status        = EventState.valueOf("Open");
+
   }
 
   @Override
   public void enterState() {
+    status = EventState.valueOf("Active");
+
     System.out.println("\n##################################################");
     simState.store.currentClerk.cleanStore();
     nextState();
@@ -423,24 +498,32 @@ class CleanStore implements State, Watcher {
     exitState();
   }
 
-  @Override
-  public void update(Object message) {}
+  //  @Override
+  //  public void update(Object message) {}
 }
+
+
 
 /**
  * End day. Completion of daily route.
  *
  * <p>Clean-up and preparation for sequence restart.
  */
-class EndDay implements State, Watcher {
-  SimState simState;
+class EndDay extends EmployeeTask implements State {
+  SimState   simState;
+  EventState status;
+
 
   public EndDay(SimState simState) {
     this.simState = simState;
+    status        = EventState.valueOf("Open");
+
   }
 
   @Override
   public void enterState() {
+    status = EventState.valueOf("Active");
+
     System.out.println("\n##################################################");
     System.out.println("The workday comes to an end...");
     // TODO: 4
@@ -463,19 +546,27 @@ class EndDay implements State, Watcher {
     exitState();
   }
 
-  @Override
-  public void update(Object message) {}
+  //  @Override
+  //  public void update(Object message) {}
 }
 
-class GoEndSimulation implements State, Watcher {
-  SimState simState;
+
+
+class GoEndSimulation extends EmployeeTask implements State {
+  SimState   simState;
+  EventState status;
+
 
   GoEndSimulation(SimState simState) {
     this.simState = simState;
+    status        = EventState.valueOf("Open");
+
   }
 
   @Override
   public void enterState() {
+    status = EventState.valueOf("Active");
+
     System.out.println("\n\n_______________ STATS _______________");
     System.out.println("Total Cash: $" + simState.store.cash);
     System.out.println("Total withdrawal: $" + simState.store.bankWithdrawal);
@@ -514,6 +605,6 @@ class GoEndSimulation implements State, Watcher {
     exitState();
   }
 
-  @Override
-  public void update(Object message) {}
+  //  @Override
+  //  public void update(Object message) {}
 }
