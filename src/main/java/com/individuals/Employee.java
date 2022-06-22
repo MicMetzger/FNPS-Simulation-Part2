@@ -3,6 +3,7 @@ package main.java.com.individuals;
 import static main.java.com.Builders.sizeFormat;
 import static main.java.com.item.pets.enums.Animal.*;
 
+import main.java.com.individuals.task.EmployeeTask;
 import main.java.com.individuals.task.EventObservable;
 import main.java.com.item.Item;
 import main.java.com.item.Pet;
@@ -21,36 +22,42 @@ import java.util.*;
 public class Employee implements Individual {
 
   //  private List<Watcher> watcher = new ArrayList<>();
-  private int workedDays;
-  Employee                   base;
   ArrayList<Item>            inventory;
   ArrayList<Pet>             sick;
-  double                     cash;
   ArrayList<DeliveryPackage> mailBox;
+  Employee                   base;
+  double                     cash;
+  int                        workedDays;
 
-  
-  private enum employeeState {
+  EmployeeState state;
+
+  EmployeeTask  task;
+
+
+  public enum EmployeeState {
     AVAILABLE("Available"),
+    ACTIVE("Active"),
     OCCUPIED("Occupied");
-    
-    private String state;
-    
-    employeeState(String state) {
-      this.state = state;
+
+    private String name;
+
+    EmployeeState(String state) {
+      this.name = state;
     }
-    
+
+
   }
 
-
   // TODO:
+
   public Employee(int workedDays) {
     super();
     this.workedDays = workedDays;
     inventory       = new ArrayList<>();
     cash            = 0;
     mailBox         = new ArrayList<>();
+    state           = EmployeeState.AVAILABLE;
   }
-
 
   public Employee() {
     workedDays = 0;
@@ -59,62 +66,73 @@ public class Employee implements Individual {
     mailBox    = new ArrayList<>();
   }
 
-//  /**
-//   *
-//   */
-//  public void addWatcher(Watcher event) {
-//    this.watcher.add(event);
-//  }
-//
-//
-//  /**
-//   *
-//   */
-//  public void removeWatcher(Watcher event) {
-//    this.watcher.remove(event);
-//  }
-//
-//
-//  public void setTask(String task) {
-//    this.task = task;
-//    for (Watcher watch : this.watcher) {
-//      watch.update(this.task);
-//    }
-//  }
+  public EmployeeState getState() {
+    return state;
+  }
 
+  public void setState(EmployeeState state) {
+    this.state = state;
+  }
 
+  public EmployeeTask getTask() {
+    return task;
+  }
+
+  public void setTask(EmployeeTask task) {
+    this.task = task;
+  }
+
+  //  /**
+  //   *
+  //   */
+  //  public void addWatcher(Watcher event) {
+  //    this.watcher.add(event);
+  //  }
+  //
+  //
+  //  /**
+  //   *
+  //   */
+  //  public void removeWatcher(Watcher event) {
+  //    this.watcher.remove(event);
+  //  }
+  //
+  //
+  //  public void setTask(String task) {
+  //    this.task = task;
+  //    for (Watcher watch : this.watcher) {
+  //      watch.update(this.task);
+  //    }
+  //  }
+
+  @Override
   public String getName() {
     return base.getName();
   }
 
-
+  @Override
   public void setName(String name) {
     base.setName(name);
   }
 
-
   public void announce(String announcement) {
     System.out.println(getName() + announcement);
   }
-
 
   public void arrival() {
     String announcement = " enters the store...";
     announce(announcement);
   }
 
-
   private void leave() {
     String announcement = " leaves the store...";
     announce(announcement);
   }
 
-
   public void checkRegister() {
     String announcement = " checks the register...";
     announce(announcement);
   }
-
 
   public void feedAnimals() {
     String announcement = " goes to feed the animals...";
@@ -156,14 +174,12 @@ public class Employee implements Individual {
     sick.removeAll(itemsToBeRemoved);
   }
 
-
   public void goToBank() {
     String announcement = " goes to the bank...";
     announce(announcement);
 
     cash += 1000;
   }
-
 
   public void processDeliveries() {
     String announcement = " goes through today's deliveries...";
@@ -236,11 +252,11 @@ public class Employee implements Individual {
             AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
         break;
       }
-//      case "Toy": {
-//        newPackage.setItem(new Toy(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate,
-//            AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
-//        break;
-//      }
+      //      case "Toy": {
+      //        newPackage.setItem(new Toy(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate,
+      //            AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
+      //        break;
+      //      }
       case "CatLitter": {
         newPackage.setItem(
             new CatLitter(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate, new Random().nextInt(100)));
@@ -248,19 +264,19 @@ public class Employee implements Individual {
       }
       case "Snake": {
         newPackage.setItem(
-                new Snake(SNAKES.get(new Random().nextInt(4)), age, true, Double.parseDouble(sizeFormat.format(new Random().nextDouble(8))),
-                        name, 0, 0, purchasePrice, purchasePrice*2, 0));
+            new Snake(SNAKES.get(new Random().nextInt(4)), age, true, Double.parseDouble(sizeFormat.format(new Random().nextDouble(8))),
+                name, 0, 0, purchasePrice, purchasePrice * 2, 0));
         break;
       }
       case "Ferret": {
         newPackage.setItem(
-                new Ferret(FERRETS.get(new Random().nextInt(4)), age, true, Color.values()[new Random().nextInt(Color.values().length)],
-                        false, name, 0, 0, purchasePrice, purchasePrice*2, 0));
+            new Ferret(FERRETS.get(new Random().nextInt(4)), age, true, Color.values()[new Random().nextInt(Color.values().length)],
+                false, name, 0, 0, purchasePrice, purchasePrice * 2, 0));
         break;
       }
       case "Treat": {
         newPackage.setItem(new Treat(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate,
-                AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
+            AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
         break;
       }
     }
@@ -276,11 +292,12 @@ public class Employee implements Individual {
   public void doInventory() {
     // String announcement = "places an order for ";  //TODO\
 
-    Random            rand                = new Random();
-    ArrayList<String> itemToBeRemoved     = new ArrayList<String>();
-    ArrayList<String> ITEM_TO_ORDER       = new ArrayList<String>(Arrays.asList("Dog", "Cat", "Bird", "Food", "Leash", "CatLitter", "Snake", "Ferret", "Treat"));
-    String            announcement        = " checking the inventory...";
-    double            totalInventoryValue = 0.0;
+    Random            rand            = new Random();
+    ArrayList<String> itemToBeRemoved = new ArrayList<String>();
+    ArrayList<String> ITEM_TO_ORDER = new ArrayList<String>(
+        Arrays.asList("Dog", "Cat", "Bird", "Food", "Leash", "CatLitter", "Snake", "Ferret", "Treat"));
+    String announcement        = " checking the inventory...";
+    double totalInventoryValue = 0.0;
 
     announce(announcement);
     for (Item item : inventory) {
@@ -410,6 +427,6 @@ public class Employee implements Individual {
 
   @Override
   public void update(EventObservable watched, Object event) {
-    
+
   }
 }

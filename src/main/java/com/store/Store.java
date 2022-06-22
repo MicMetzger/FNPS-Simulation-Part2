@@ -5,6 +5,7 @@ import static main.java.com.Builders.randomSelectionbool;
 import static main.java.com.Builders.sizeFormat;
 
 
+import main.java.com.individuals.Employee.EmployeeState;
 import main.java.com.individuals.task.EventObservable;
 import main.java.com.individuals.task.EventObserver;
 import main.java.com.item.Item;
@@ -165,8 +166,13 @@ public class Store implements EventObservable {
    * Select staff to man store for this day.
    */
   void selectStaff() {
-    currentClerk   = pickAvailableStaff(clerks);
+    currentClerk = pickAvailableStaff(clerks);
+    currentClerk.setState(EmployeeState.ACTIVE);
+    currentClerk.setTask(null);
+
     currentTrainer = pickAvailableStaff(trainers);
+    currentTrainer.setState(EmployeeState.ACTIVE);
+    currentTrainer.setTask(null);
   }
 
   /* Reference: http://en.wikipedia.org/wiki/Poisson_distribution#Generating_Poisson-distributed_random_variables */
@@ -208,10 +214,10 @@ public class Store implements EventObservable {
     int count = attractCustomers(getPoissonValue(3.0));
     System.out.println(
         currentClerk.getName()
-            + " opens the store. \nCurrent inventory: "
-            + inventory.size()
-            + " item(s)\nRegister: "
-            + cash);
+        + " opens the store. \nCurrent inventory: "
+        + inventory.size()
+        + " item(s)\nRegister: "
+        + cash);
     System.out.println(count + " potential customers enter the store...");
 
     customers.forEach(
@@ -222,10 +228,10 @@ public class Store implements EventObservable {
             System.out.println("The customer has made a selection!");
             System.out.println(
                 "[+] The customer purchases "
-                    + customer.obj.getName()
-                    + " at $"
-                    + customer.getPurchasePrice()
-                    + (customer.discount ? " after a 10% discount" : ""));
+                + customer.obj.getName()
+                + " at $"
+                + customer.getPurchasePrice()
+                + (customer.discount ? " after a 10% discount" : ""));
             if (customer.obj.isPet()) {
               double total = addRandomAddons(customer.obj);
               cash += total;
