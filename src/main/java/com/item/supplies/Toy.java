@@ -1,12 +1,10 @@
 package main.java.com.item.supplies;
 
-import main.java.com.item.pets.enums.Animal;
-import main.java.com.item.pets.enums.AnimalType;
-import main.java.com.item.supplies.enums.SupplyType;
+import static java.lang.Math.round;
 
 import java.security.SecureRandom;
-
-import static java.lang.Math.round;
+import main.java.com.item.pets.enums.AnimalType;
+import main.java.com.item.supplies.enums.SupplyType;
 
 public class Toy extends Supplies {
 

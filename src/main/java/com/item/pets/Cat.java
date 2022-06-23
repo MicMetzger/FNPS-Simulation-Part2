@@ -1,14 +1,11 @@
 package main.java.com.item.pets;
 
+import static main.java.com.item.pets.enums.Animal.CATS;
+
+import java.security.SecureRandom;
 import main.java.com.item.Pet;
 import main.java.com.item.pets.enums.Animal;
 import main.java.com.item.pets.enums.AnimalType;
-import main.java.com.item.pets.enums.Breed;
-
-import java.security.SecureRandom;
-
-import static java.lang.Math.round;
-import static main.java.com.item.pets.enums.Animal.CATS;
 
 /**
  * The type Cat.

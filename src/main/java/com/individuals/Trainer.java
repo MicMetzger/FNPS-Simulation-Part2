@@ -1,15 +1,15 @@
 package main.java.com.individuals;
 
 import static main.java.com.Builders.NAME_TEMPLATE;
-import main.java.com.item.Item;
-import main.java.com.item.Pet;
+
+import java.security.SecureRandom;
+import java.util.Random;
 import main.java.com.individuals.training.Haphazard;
 import main.java.com.individuals.training.NegativeReinforcement;
 import main.java.com.individuals.training.PositiveReinforcement;
 import main.java.com.individuals.training.TrainerStrategy;
-import java.security.SecureRandom;
-
-import java.util.Random;
+import main.java.com.item.Item;
+import main.java.com.item.Pet;
 
 
 

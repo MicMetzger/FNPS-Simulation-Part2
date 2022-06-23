@@ -4,8 +4,15 @@ import static main.java.com.Builders.COLORS;
 import static main.java.com.Builders.randomSelectionbool;
 import static main.java.com.Builders.sizeFormat;
 
-
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Random;
+import main.java.com.individuals.Clerk;
+import main.java.com.individuals.Employee;
 import main.java.com.individuals.Employee.EmployeeState;
+import main.java.com.individuals.Trainer;
 import main.java.com.individuals.task.EventObservable;
 import main.java.com.individuals.task.EventObserver;
 import main.java.com.item.Item;
@@ -13,16 +20,18 @@ import main.java.com.item.Pet;
 import main.java.com.item.addOns.Insurance;
 import main.java.com.item.addOns.Microchip;
 import main.java.com.item.addOns.VetCheckup;
-import main.java.com.item.pets.*;
+import main.java.com.item.pets.Bird;
+import main.java.com.item.pets.Cat;
+import main.java.com.item.pets.Dog;
+import main.java.com.item.pets.Ferret;
+import main.java.com.item.pets.Snake;
 import main.java.com.item.pets.enums.AnimalType;
 import main.java.com.item.pets.enums.Color;
-import main.java.com.item.supplies.*;
+import main.java.com.item.supplies.CatLitter;
+import main.java.com.item.supplies.Food;
+import main.java.com.item.supplies.Leash;
+import main.java.com.item.supplies.Treat;
 import main.java.com.item.supplies.enums.Type;
-import main.java.com.individuals.Clerk;
-import main.java.com.individuals.Employee;
-import main.java.com.individuals.Trainer;
-import java.security.SecureRandom;
-import java.util.*;
 
 
 

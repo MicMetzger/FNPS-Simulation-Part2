@@ -1,8 +1,7 @@
 package main.java.com.item.addOns;
 
-import main.java.com.item.Item;
-
 import java.security.SecureRandom;
+import main.java.com.item.Item;
 
 public class VetCheckup extends ItemDecorator {
     // 1 - 4 checkups

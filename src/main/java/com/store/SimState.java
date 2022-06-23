@@ -1,14 +1,12 @@
 package main.java.com.store;
 
-import main.java.com.Utilities;
-import main.java.com.individuals.task.EmployeeTask;
-import main.java.com.individuals.task.EventState;
-import main.java.com.item.Item;
-import main.java.com.item.Pet;
-import main.java.com.individuals.Trainer;
-
 import java.util.ArrayList;
 import java.util.List;
+import main.java.com.Utilities;
+import main.java.com.individuals.Trainer;
+import main.java.com.individuals.task.EmployeeTask;
+import main.java.com.item.Item;
+import main.java.com.item.Pet;
 
 
 
@@ -126,21 +124,16 @@ public class SimState {
 
 
 
-class NewDay extends EmployeeTask implements State {
+class NewDay  implements State {
   SimState   simState;
-  EventState status;
-
 
   NewDay(SimState simState) {
     this.simState = simState;
-    status        = EventState.valueOf("Open");
 
   }
 
   @Override
   public void enterState() {
-    status = EventState.valueOf("Active");
-
     System.out.println("\n**************************************************");
     if (simState.store.day == 30) {
       simState.setStoreState(simState.goEndSimulation());
@@ -166,8 +159,6 @@ class NewDay extends EmployeeTask implements State {
     exitState();
   }
 
-  //  @Override
-  //  public void update(Object state) {}
 }
 
 
@@ -179,16 +170,16 @@ class NewDay extends EmployeeTask implements State {
  */
 class StartDay extends EmployeeTask implements State {
   SimState   simState;
-  EventState status;
 
+  
   public StartDay(SimState simState) {
+    super(TaskType.TASK_OPENING);
     this.simState = simState;
-    status        = EventState.valueOf("Open");
   }
 
   @Override
   public void enterState() {
-    status = EventState.valueOf("Active");
+    super.status = TaskStatus.valueOf("Active");
     System.out.println("\n#################################################");
     if (!simState.store.checkRegister()) {
       System.out.println("Register cash is low... ");
@@ -217,26 +208,23 @@ class StartDay extends EmployeeTask implements State {
     exitState();
   }
 
-  //  @Override
-  //  public void update(Object message) {}
 }
 
 
 
 class ProcessDelivery extends EmployeeTask implements State {
   SimState   simState;
-  EventState status;
 
 
   public ProcessDelivery(SimState simState) {
+    super(TaskType.TASK_PROCESSING);
     this.simState = simState;
-    status        = EventState.valueOf("Open");
 
   }
 
   @Override
   public void enterState() {
-    status = EventState.valueOf("Active");
+    super.status = TaskStatus.ACTIVE;
 
     System.out.println("\n##################################################");
     simState.store.currentClerk.processDeliveries();
@@ -259,26 +247,21 @@ class ProcessDelivery extends EmployeeTask implements State {
     exitState();
   }
 
-  //  @Override
-  //  public void update(Object message) {}
 }
 
 
 
 class FeedAnimals extends EmployeeTask implements State {
   SimState   simState;
-  EventState status;
-
 
   public FeedAnimals(SimState simState) {
+    super(TaskType.TASK_FEEDING);
     this.simState = simState;
-    status        = EventState.valueOf("Open");
-
   }
 
   @Override
   public void enterState() {
-    status = EventState.valueOf("Active");
+    super.status = TaskStatus.ACTIVE;
 
     System.out.println("\n##################################################");
     simState.store.currentTrainer.feedAnimals();
@@ -301,26 +284,22 @@ class FeedAnimals extends EmployeeTask implements State {
     exitState();
   }
 
-  //  @Override
-  //  public void update(Object message) {}
 }
 
 
 
 class VisitBank extends EmployeeTask implements State {
   SimState   simState;
-  EventState status;
 
 
   public VisitBank(SimState simState) {
+    super(TaskType.TASK_BANKING);
     this.simState = simState;
-    status        = EventState.valueOf("Open");
-
   }
 
   @Override
   public void enterState() {
-    status = EventState.valueOf("Active");
+    super.status = TaskStatus.ACTIVE;
 
     simState.store.goToBank();
     nextState();
@@ -338,26 +317,21 @@ class VisitBank extends EmployeeTask implements State {
     exitState();
   }
 
-  //  @Override
-  //  public void update(Object message) {}
 }
 
 
 
 class DoInventory extends EmployeeTask implements State {
   SimState   simState;
-  EventState status;
-
 
   public DoInventory(SimState simState) {
+    super(TaskType.TASK_INVENTORY);
     this.simState = simState;
-    status        = EventState.valueOf("Open");
-
   }
 
   @Override
   public void enterState() {
-    status = EventState.valueOf("Active");
+    super.status = TaskStatus.ACTIVE;
 
     System.out.println("\n##################################################");
     simState.store.currentClerk.doInventory();
@@ -381,26 +355,22 @@ class DoInventory extends EmployeeTask implements State {
     exitState();
   }
 
-  //  @Override
-  //  public void update(Object message) {}
 }
 
 
 
-class TrainAnimals implements State {
+class TrainAnimals extends EmployeeTask implements State {
   SimState   simState;
-  EventState status;
 
 
   TrainAnimals(SimState simState) {
+    super(TaskType.TASK_TRAINING);
     this.simState = simState;
-    status        = EventState.valueOf("Open");
-
   }
 
   @Override
   public void enterState() {
-    status = EventState.valueOf("Active");
+    super.status = TaskStatus.ACTIVE;
 
     System.out.println("\n##################################################");
     ((Trainer) simState.store.currentTrainer).startTraining();
@@ -425,19 +395,17 @@ class TrainAnimals implements State {
 
 class OpenStore extends EmployeeTask implements State {
   SimState   simState;
-  EventState status;
 
 
   public OpenStore(SimState simState) {
+    super(TaskType.TASK_OPENING);
     this.simState = simState;
-    status        = EventState.valueOf("Open");
-
   }
 
   @Override
   public void enterState() {
-    status = EventState.valueOf("Active");
-
+    super.status = TaskStatus.ACTIVE;
+    
     System.out.println("\n##################################################");
     simState.store.openStore();
     simState.store.updateCash();
@@ -457,26 +425,22 @@ class OpenStore extends EmployeeTask implements State {
     exitState();
   }
 
-  //  @Override
-  //  public void update(Object message) {}
 }
 
 
 
 class CleanStore extends EmployeeTask implements State {
   SimState   simState;
-  EventState status;
-
 
   public CleanStore(SimState simState) {
+    super(TaskType.TASK_CLEANING);
     this.simState = simState;
-    status        = EventState.valueOf("Open");
 
   }
 
   @Override
   public void enterState() {
-    status = EventState.valueOf("Active");
+    super.status = TaskStatus.ACTIVE;
 
     System.out.println("\n##################################################");
     simState.store.currentClerk.cleanStore();
@@ -498,8 +462,6 @@ class CleanStore extends EmployeeTask implements State {
     exitState();
   }
 
-  //  @Override
-  //  public void update(Object message) {}
 }
 
 
@@ -511,18 +473,16 @@ class CleanStore extends EmployeeTask implements State {
  */
 class EndDay extends EmployeeTask implements State {
   SimState   simState;
-  EventState status;
 
 
   public EndDay(SimState simState) {
+    super(TaskType.TASK_CLOSING);
     this.simState = simState;
-    status        = EventState.valueOf("Open");
-
   }
 
   @Override
   public void enterState() {
-    status = EventState.valueOf("Active");
+    super.status = TaskStatus.ACTIVE;
 
     System.out.println("\n##################################################");
     System.out.println("The workday comes to an end...");
@@ -546,26 +506,20 @@ class EndDay extends EmployeeTask implements State {
     exitState();
   }
 
-  //  @Override
-  //  public void update(Object message) {}
 }
 
 
 
-class GoEndSimulation extends EmployeeTask implements State {
+class GoEndSimulation implements State {
   SimState   simState;
-  EventState status;
 
 
   GoEndSimulation(SimState simState) {
     this.simState = simState;
-    status        = EventState.valueOf("Open");
-
   }
 
   @Override
   public void enterState() {
-    status = EventState.valueOf("Active");
 
     System.out.println("\n\n_______________ STATS _______________");
     System.out.println("Total Cash: $" + simState.store.cash);
@@ -605,6 +559,5 @@ class GoEndSimulation extends EmployeeTask implements State {
     exitState();
   }
 
-  //  @Override
-  //  public void update(Object message) {}
+
 }

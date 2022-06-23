@@ -1,14 +1,10 @@
 package main.java.com.item.pets;
 
-import main.java.com.item.Pet;
-import main.java.com.item.pets.enums.Animal;
-import main.java.com.item.pets.enums.AnimalType;
-import main.java.com.item.pets.enums.Breed;
+import static main.java.com.item.pets.enums.Animal.SNAKES;
 
 import java.security.SecureRandom;
-import java.util.Random;
-
-import static main.java.com.item.pets.enums.Animal.SNAKES;
+import main.java.com.item.Pet;
+import main.java.com.item.pets.enums.Animal;
 
 
 public class Snake extends Pet {

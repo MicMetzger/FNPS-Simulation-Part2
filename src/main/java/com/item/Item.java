@@ -1,8 +1,8 @@
 package main.java.com.item;
 
-import java.security.SecureRandom;
-
 import static java.lang.Math.round;
+
+import java.security.SecureRandom;
 
 /** */
 public abstract class Item {
@@ -162,7 +162,8 @@ public abstract class Item {
 
   public void setAnimalIdentifier(boolean animal) {
     isPet = animal;
-  };
+  }
+
   public void print() {
     System.out.println(
         "Item{"

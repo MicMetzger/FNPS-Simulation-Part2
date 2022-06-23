@@ -1,10 +1,11 @@
 package main.java.com.store;
 
-import main.java.com.item.Item;
-import main.java.com.item.PurchaseType;
+import static java.lang.Math.round;
+
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import static java.lang.Math.round;
+import main.java.com.item.Item;
+import main.java.com.item.PurchaseType;
 
 public class Customer {
   PurchaseType desire;

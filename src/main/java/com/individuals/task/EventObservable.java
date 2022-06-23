@@ -1,8 +1,5 @@
 package main.java.com.individuals.task;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 /**
  * @param <Sub>  Subject
  * @param <Obs>  Observer

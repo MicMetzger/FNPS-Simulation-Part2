@@ -1,8 +1,8 @@
 package main.java.com.item.supplies;
 
+import java.util.Random;
 import main.java.com.item.Item;
 import main.java.com.item.supplies.enums.SupplyType;
-import java.util.Random;
 
 /** */
 public class Supplies extends Item {

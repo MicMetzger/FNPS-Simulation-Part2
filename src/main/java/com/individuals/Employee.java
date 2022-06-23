@@ -1,20 +1,33 @@
 package main.java.com.individuals;
 
-import static main.java.com.item.pets.enums.Animal.*;
+import static main.java.com.item.pets.enums.Animal.BIRDS;
+import static main.java.com.item.pets.enums.Animal.CATS;
+import static main.java.com.item.pets.enums.Animal.DOGS;
+import static main.java.com.item.pets.enums.Animal.FERRETS;
+import static main.java.com.item.pets.enums.Animal.SNAKES;
 
+import java.security.SecureRandom;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 import main.java.com.individuals.task.EmployeeTask;
 import main.java.com.individuals.task.EventObservable;
 import main.java.com.item.Item;
 import main.java.com.item.Pet;
-import main.java.com.item.pets.*;
+import main.java.com.item.pets.Bird;
+import main.java.com.item.pets.Cat;
+import main.java.com.item.pets.Dog;
+import main.java.com.item.pets.Ferret;
+import main.java.com.item.pets.Snake;
 import main.java.com.item.pets.enums.AnimalType;
 import main.java.com.item.pets.enums.Color;
-import main.java.com.item.supplies.*;
+import main.java.com.item.supplies.CatLitter;
+import main.java.com.item.supplies.Food;
+import main.java.com.item.supplies.Leash;
+import main.java.com.item.supplies.Treat;
 import main.java.com.item.supplies.enums.Type;
 import main.java.com.store.DeliveryPackage;
-import java.security.SecureRandom;
-import java.text.DecimalFormat;
-import java.util.*;
 
 
 
@@ -47,7 +60,6 @@ public class Employee implements Individual {
 
   }
 
-  // TODO:
 
   public Employee(int workedDays) {
     super();

@@ -1,8 +1,8 @@
 package main.java.com.item.supplies;
 
-import java.security.SecureRandom;
-
 import static java.lang.Math.round;
+
+import java.security.SecureRandom;
 
 /** The type Cat liter. */
 public class CatLitter extends Supplies {

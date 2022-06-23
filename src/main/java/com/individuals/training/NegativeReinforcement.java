@@ -1,7 +1,7 @@
 package main.java.com.individuals.training;
-import main.java.com.item.Pet;
 
 import java.security.SecureRandom;
+import main.java.com.item.Pet;
 
 /**
  * 20% chance of house broken changing from True to False; 40% chance of changing from False to True

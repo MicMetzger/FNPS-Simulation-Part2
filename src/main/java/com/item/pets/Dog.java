@@ -2,10 +2,7 @@ package main.java.com.item.pets;
 
 import main.java.com.item.Pet;
 import main.java.com.item.pets.enums.Animal;
-import main.java.com.item.pets.enums.Breed;
 import main.java.com.item.pets.enums.Color;
-
-import static java.lang.Math.round;
 
 /** The type Dog. */
 public class Dog extends Pet {
