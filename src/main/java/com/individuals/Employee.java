@@ -404,8 +404,13 @@ public class Employee implements Individual {
 
   synchronized private void execute() {
     if (task != null && task.getStatus() == EventStatus.INCOMPLETE) {
-
+      state = EmployeeState.OCCUPIED;
       task.run();
+    }
+    else if (task != null && task.getStatus() == EventStatus.COMPLETE) {
+      state = EmployeeState.IDLE;
+      System.out.println("[-] " + base.getName() + " is done with the task of " + task.getTaskType().taskname() + ".");
+      task = null;
     }
   }
 
@@ -413,9 +418,7 @@ public class Employee implements Individual {
   synchronized public void update(EventObservable watched, Object event) {
     if (event instanceof State) {
       if (((State) event).hasTask() && ACTIVE && getState() == EmployeeState.IDLE) {
-        state = EmployeeState.OCCUPIED;
         task  = ((State) event).getTask(this);
-        // ((EmployeeTask) event).setEmployee(this);
         execute();
       }
     }

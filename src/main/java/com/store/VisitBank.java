@@ -5,13 +5,13 @@ import static main.java.com.events.EventStatus.*;
 import main.java.com.events.*;
 import main.java.com.events.task.*;
 import main.java.com.individuals.*;
+import main.java.com.individuals.Employee.*;
 
 
 
 public class VisitBank implements State {
   Store storeState;
   EventStatus status;
-  EmployeeTask task;
   
   VisitBank(Store store) {
     this.storeState = store;
@@ -37,6 +37,7 @@ public class VisitBank implements State {
 
     public void end() {
       super.statusChange(COMPLETE);
+      getEmployee().setState(EmployeeState.IDLE);
     }
   }
   

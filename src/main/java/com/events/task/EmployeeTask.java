@@ -36,7 +36,7 @@ public abstract class EmployeeTask {
     return this;
   }
 
-  protected enum TaskType {
+  public enum TaskType {
     TASK_SELLING("Selling"),
     TASK_OPENING("Opening"),
     TASK_CLOSING("Closing"),
@@ -47,11 +47,11 @@ public abstract class EmployeeTask {
     TASK_BANKING("Banking"),
     TASK_FEEDING("Feeding");
 
-    private String getName() {
+    private final String name;
+
+    public String taskname() {
       return name;
     }
-
-    private final String name;
 
     TaskType(String name) {
       this.name = name;
