@@ -1,6 +1,6 @@
 package main.java.com.item.supplies;
 
-import main.java.com.item.pets.enums.AnimalType;
+import main.java.com.item.pets.enums.*;
 
 public class Leash extends Supplies {
 

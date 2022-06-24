@@ -1,11 +1,10 @@
 package main.java.com.item.supplies;
 
-import static java.lang.Math.round;
+import static java.lang.Math.*;
 
-import java.security.SecureRandom;
-import main.java.com.item.pets.enums.AnimalType;
-import main.java.com.item.supplies.enums.SupplyType;
-import main.java.com.item.supplies.enums.Type;
+import java.security.*;
+import main.java.com.item.pets.enums.*;
+import main.java.com.item.supplies.enums.*;
 
 public class Food extends Supplies {
   private int        size;

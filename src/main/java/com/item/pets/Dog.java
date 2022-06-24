@@ -1,8 +1,7 @@
 package main.java.com.item.pets;
 
-import main.java.com.item.Pet;
-import main.java.com.item.pets.enums.Animal;
-import main.java.com.item.pets.enums.Color;
+import main.java.com.item.*;
+import main.java.com.item.pets.enums.*;
 
 /** The type Dog. */
 public class Dog extends Pet {

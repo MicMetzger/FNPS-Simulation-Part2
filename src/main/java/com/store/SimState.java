@@ -1,164 +1,73 @@
 package main.java.com.store;
 
-import java.util.ArrayList;
-import java.util.List;
-import main.java.com.Utilities;
-import main.java.com.individuals.Trainer;
-import main.java.com.individuals.task.EmployeeTask;
-import main.java.com.item.Item;
-import main.java.com.item.Pet;
+
+import static main.java.com.events.EventStatus.*;
+
+import main.java.com.*;
+import main.java.com.events.*;
+import main.java.com.events.task.*;
+import main.java.com.individuals.*;
+import main.java.com.item.*;
 
 
 
-public class SimState {
-  // Package level access, static, state control variables
-  static State newDay,
-      startDay,
-      endDay,
-      processDelivery,
-      feedAnimals,
-      visitBank,
-      checkRegister,
-      doInventory,
-      trainAnimals,
-      openStore,
-      cleanStore,
-      goEndSimulation;
-  static State       currentState;
-  static State       endState;
-  static State       previousState;
-  static List<State> stateList;
-  static boolean     RUNNING;
-  Store store;
+class NewDay implements State {
+  Store       state;
+  EventStatus status;
 
-  public SimState(Store sim) {
-    stateList       = new ArrayList<State>();
-    store           = sim;
-    newDay          = new NewDay(this);
-    startDay        = new StartDay(this);
-    endDay          = new EndDay(this);
-    feedAnimals     = new FeedAnimals(this);
-    visitBank       = new VisitBank(this);
-    doInventory     = new DoInventory(this);
-    processDelivery = new ProcessDelivery(this);
-    cleanStore      = new CleanStore(this);
-    trainAnimals    = new TrainAnimals(this);
-    openStore       = new OpenStore(this);
-    goEndSimulation = new GoEndSimulation(this);
-    // RUNNING = true;
-
-    stateList.add(startDay);
-    stateList.add(endDay);
-    stateList.add(feedAnimals);
-    stateList.add(visitBank);
-    stateList.add(checkRegister);
-    stateList.add(doInventory);
-    stateList.add(openStore);
-    stateList.add(cleanStore);
-    stateList.add(goEndSimulation);
-    goNewDay();
-  }
-
-  public void setStoreState(State state) {
-    previousState = currentState;
-    currentState  = state;
-  }
-
-  public void goNewDay() {
-    currentState = newDay;
-    currentState.enterState();
-  }
-
-  public State goStartDay() {
-    return startDay;
-  }
-
-  public State goProcessDelivery() {
-    return processDelivery;
-  }
-
-  public State goCheckRegister() {
-    return checkRegister;
-  }
-
-  public State goVisitBankState() {
-    previousState = currentState;
-    return visitBank;
-  }
-
-  public State goFeedAnimals() {
-    return feedAnimals;
-  }
-
-  public State goDoInventory() {
-    return doInventory;
-  }
-
-  public State goTrainAnimals() {
-    return trainAnimals;
-  }
-
-  public State goOpenStore() {
-    return openStore;
-  }
-
-  public State goCleanStore() {
-    return cleanStore;
-  }
-
-  public State goEndDay() {
-    return endDay;
-  }
-
-  public State goEndSimulation() {
-    return goEndSimulation;
-  }
-
-  public void goEnterState() {
-    currentState.enterState();
-  }
-
-  // public void update() {stateList.forEach(state -> state.update(this));}
-
-}
-
-
-
-class NewDay  implements State {
-  SimState   simState;
-
-  NewDay(SimState simState) {
-    this.simState = simState;
-
+  NewDay(Store store) {
+    this.state = store;
+    this.status = INCOMPLETE;
   }
 
   @Override
   public void enterState() {
+    this.status = RUNNING;
+
     System.out.println("\n**************************************************");
-    if (simState.store.day == 30) {
-      simState.setStoreState(simState.goEndSimulation());
+    if (state.day == 30) {
+      state.goEndSimulation();
       exitState();
     }
 
-    simState.store.day++;
-    simState.store.selectStaff();
-    System.out.println("Day: " + simState.store.day);
+    state.day++;
+    state.selectStaff();
+    System.out.println("Day: " + state.day);
     nextState();
   }
 
   @Override
   public void exitState() {
+    this.status = COMPLETE;
+
     System.out.println("**************************************************\n");
     Utilities.gapTime();
-    simState.goEnterState();
+    state.goEnterState();
   }
 
   @Override
   public void nextState() {
-    simState.setStoreState(simState.goStartDay());
+    state.setStoreState(state.goStartDay());
     exitState();
   }
 
+  @Override
+  public boolean hasTask() {
+    return false;
+  }
+
+  @Override
+  public EmployeeTask getTask() {
+    return null;
+  }
+
+  @Override
+  public EmployeeTask getTask(Employee employee) {
+    return null;
+  }
+
+  public void update(Object state) {
+  }
 }
 
 
@@ -168,23 +77,24 @@ class NewDay  implements State {
  *
  * <p>Daily route starting point.
  */
-class StartDay extends EmployeeTask implements State {
-  SimState   simState;
+class StartDay implements State {
+  Store       state;
+  EventStatus status;
 
-  
-  public StartDay(SimState simState) {
-    super(TaskType.TASK_OPENING);
-    this.simState = simState;
+  public StartDay(Store store) {
+    this.state  = store;
+    this.status = INCOMPLETE;
   }
 
   @Override
   public void enterState() {
-    super.status = TaskStatus.valueOf("Active");
+    this.status = RUNNING;
+
     System.out.println("\n#################################################");
-    if (!simState.store.checkRegister()) {
+    if (!state.checkRegister()) {
       System.out.println("Register cash is low... ");
-      simState.setStoreState(simState.goVisitBankState());
-      simState.goEnterState();
+      state.setStoreState(state.goVisitBankState());
+      state.goEnterState();
     } else {
       System.out.println("Cash is sufficient.");
     }
@@ -194,274 +104,379 @@ class StartDay extends EmployeeTask implements State {
 
   @Override
   public void exitState() {
+    this.status = COMPLETE;
+
     System.out.println("##################################################\n");
     Utilities.gapTime();
-    simState.goEnterState();
+    state.goEnterState();
 
     // TODO: update information and report. Afterwards, call nextState()
   }
 
   @Override
   public void nextState() {
-    // simState.update();
-    simState.setStoreState(simState.goProcessDelivery());
+    // update();
+    state.setStoreState(state.goProcessDelivery());
     exitState();
   }
 
+  @Override
+  public boolean hasTask() {
+    return false;
+  }
+
+  @Override
+  public EmployeeTask getTask() {
+    return null;
+  }
+
+  @Override
+  public EmployeeTask getTask(Employee employee) {
+    return null;
+  }
+
+  public void update(Object message) {
+  }
 }
 
 
 
-class ProcessDelivery extends EmployeeTask implements State {
-  SimState   simState;
+class ProcessDelivery implements State {
+  Store state;
 
+  EventStatus status;
 
-  public ProcessDelivery(SimState simState) {
-    super(TaskType.TASK_PROCESSING);
-    this.simState = simState;
-
+  public ProcessDelivery(Store store) {
+    this.state = store;
+    this.status = INCOMPLETE;
   }
 
   @Override
   public void enterState() {
-    super.status = TaskStatus.ACTIVE;
+    this.status = RUNNING;
 
     System.out.println("\n##################################################");
-    simState.store.currentClerk.processDeliveries();
-    simState.store.updateMailBox();
-    simState.store.updateInventory();
+    state.currentClerk.processDeliveries();
+    state.updateMailBox();
+    state.updateInventory();
     nextState();
   }
 
   @Override
   public void exitState() {
+    this.status = COMPLETE;
+
     System.out.println("##################################################\n");
     Utilities.gapTime();
-    simState.goEnterState();
+    state.goEnterState();
   }
 
   @Override
   public void nextState() {
     System.out.println("The employee returns to finish his other activities.");
-    simState.setStoreState(simState.goFeedAnimals());
+    state.setStoreState(state.goFeedAnimals());
     exitState();
   }
 
+  @Override
+  public boolean hasTask() {
+    return false;
+  }
+
+  @Override
+  public EmployeeTask getTask() {
+    return null;
+  }
+
+  @Override
+  public EmployeeTask getTask(Employee employee) {
+    return null;
+  }
+
+  public void update(Object message) {
+  }
 }
 
 
 
-class FeedAnimals extends EmployeeTask implements State {
-  SimState   simState;
+class FeedAnimals implements State {
+  Store state;
 
-  public FeedAnimals(SimState simState) {
-    super(TaskType.TASK_FEEDING);
-    this.simState = simState;
+  EventStatus status;
+
+  public FeedAnimals(Store store) {
+    this.state = store;
+    this.status = INCOMPLETE;
   }
 
   @Override
   public void enterState() {
-    super.status = TaskStatus.ACTIVE;
+    this.status = RUNNING;
 
     System.out.println("\n##################################################");
-    simState.store.currentTrainer.feedAnimals();
-    simState.store.updateInventory();
-    simState.store.updateSickAnimal();
-    // simState.store.updateCash();
+    state.currentTrainer.feedAnimals();
+    state.updateInventory();
+    state.updateSickAnimal();
+    // updateCash();
     nextState();
   }
 
   @Override
   public void exitState() {
+    this.status = COMPLETE;
+
     System.out.println("##################################################\n");
     Utilities.gapTime();
-    simState.goEnterState();
+    state.goEnterState();
   }
 
   @Override
   public void nextState() {
-    simState.setStoreState(simState.goDoInventory());
+    state.setStoreState(state.goDoInventory());
     exitState();
   }
 
+  @Override
+  public boolean hasTask() {
+    return false;
+  }
+
+  @Override
+  public EmployeeTask getTask() {
+    return null;
+  }
+
+  @Override
+  public EmployeeTask getTask(Employee employee) {
+    return null;
+  }
+
+  public void update(Object message) {
+  }
 }
 
 
 
-class VisitBank extends EmployeeTask implements State {
-  SimState   simState;
+class DoInventory implements State {
+  Store state;
 
+  EventStatus status;
 
-  public VisitBank(SimState simState) {
-    super(TaskType.TASK_BANKING);
-    this.simState = simState;
+  public DoInventory(Store store) {
+    this.state = store;
+    this.status = INCOMPLETE;
   }
 
   @Override
   public void enterState() {
-    super.status = TaskStatus.ACTIVE;
-
-    simState.store.goToBank();
-    nextState();
-  }
-
-  @Override
-  public void exitState() {
-    // simState.update();
-
-  }
-
-  @Override
-  public void nextState() {
-    simState.setStoreState(SimState.previousState);
-    exitState();
-  }
-
-}
-
-
-
-class DoInventory extends EmployeeTask implements State {
-  SimState   simState;
-
-  public DoInventory(SimState simState) {
-    super(TaskType.TASK_INVENTORY);
-    this.simState = simState;
-  }
-
-  @Override
-  public void enterState() {
-    super.status = TaskStatus.ACTIVE;
+    this.status = RUNNING;
 
     System.out.println("\n##################################################");
-    simState.store.currentClerk.doInventory();
-    simState.store.updateCash();
-    simState.store.updateInventory();
+    state.currentClerk.doInventory();
+    state.updateCash();
+    state.updateInventory();
     nextState();
   }
 
   @Override
   public void exitState() {
+    this.status = COMPLETE;
+
     System.out.println("##################################################\n");
     Utilities.gapTime();
-    simState.goEnterState();
+    state.goEnterState();
 
     // TODO: update information and report. Afterwards, call nextState()
   }
 
   @Override
   public void nextState() {
-    simState.setStoreState(simState.goTrainAnimals());
+    state.setStoreState(state.goTrainAnimals());
     exitState();
   }
 
+  @Override
+  public boolean hasTask() {
+    return false;
+  }
+
+  @Override
+  public EmployeeTask getTask() {
+    return null;
+  }
+
+  @Override
+  public EmployeeTask getTask(Employee employee) {
+    return null;
+  }
+
+  public void update(Object message) {
+  }
 }
 
 
 
-class TrainAnimals extends EmployeeTask implements State {
-  SimState   simState;
+class TrainAnimals implements State {
+  Store state;
 
+  EventStatus status;
 
-  TrainAnimals(SimState simState) {
-    super(TaskType.TASK_TRAINING);
-    this.simState = simState;
+  TrainAnimals(Store store) {
+    this.state = store;
+    this.status = INCOMPLETE;
   }
 
   @Override
   public void enterState() {
-    super.status = TaskStatus.ACTIVE;
+    this.status = RUNNING;
 
     System.out.println("\n##################################################");
-    ((Trainer) simState.store.currentTrainer).startTraining();
+    ((Trainer) state.currentTrainer).startTraining();
     nextState();
   }
 
   @Override
   public void exitState() {
+    this.status = COMPLETE;
+
     System.out.println("\n##################################################");
     Utilities.gapTime();
-    simState.goEnterState();
+    state.goEnterState();
   }
 
   @Override
   public void nextState() {
-    simState.setStoreState(simState.goOpenStore());
+    state.setStoreState(state.goOpenStore());
     exitState();
+  }
+
+  @Override
+  public boolean hasTask() {
+    return false;
+  }
+
+  @Override
+  public EmployeeTask getTask() {
+    return null;
+  }
+
+  @Override
+  public EmployeeTask getTask(Employee employee) {
+    return null;
   }
 }
 
 
 
-class OpenStore extends EmployeeTask implements State {
-  SimState   simState;
+class OpenStore implements State {
+  Store state;
 
+  EventStatus status;
 
-  public OpenStore(SimState simState) {
-    super(TaskType.TASK_OPENING);
-    this.simState = simState;
+  public OpenStore(Store store) {
+    this.state = store;
+    this.status = INCOMPLETE;
   }
 
   @Override
   public void enterState() {
-    super.status = TaskStatus.ACTIVE;
-    
+    this.status = RUNNING;
+
     System.out.println("\n##################################################");
-    simState.store.openStore();
-    simState.store.updateCash();
+    state.openStore();
+    state.updateCash();
     nextState();
   }
 
   @Override
   public void exitState() {
+    this.status = COMPLETE;
+
     System.out.println("##################################################\n");
     Utilities.gapTime();
-    simState.goEnterState();
+    state.goEnterState();
   }
 
   @Override
   public void nextState() {
-    simState.setStoreState(simState.goCleanStore());
+    state.setStoreState(state.goCleanStore());
     exitState();
   }
 
+  @Override
+  public boolean hasTask() {
+    return false;
+  }
+
+  @Override
+  public EmployeeTask getTask() {
+    return null;
+  }
+
+  @Override
+  public EmployeeTask getTask(Employee employee) {
+    return null;
+  }
+
+  public void update(Object message) {
+  }
 }
 
 
 
-class CleanStore extends EmployeeTask implements State {
-  SimState   simState;
+class CleanStore implements State {
+  Store state;
 
-  public CleanStore(SimState simState) {
-    super(TaskType.TASK_CLEANING);
-    this.simState = simState;
+  EventStatus status;
 
+  public CleanStore(Store store) {
+    this.state = store;
+    this.status = INCOMPLETE;
   }
 
   @Override
   public void enterState() {
-    super.status = TaskStatus.ACTIVE;
+    this.status = RUNNING;
 
     System.out.println("\n##################################################");
-    simState.store.currentClerk.cleanStore();
+    state.currentClerk.cleanStore();
     nextState();
   }
 
   @Override
   public void exitState() {
+    this.status = COMPLETE;
+
     System.out.println("##################################################\n");
     Utilities.gapTime();
-    simState.setStoreState(simState.goEndDay());
-    simState.goEnterState();
+    state.setStoreState(state.goEndDay());
+    state.goEnterState();
   }
 
   @Override
   public void nextState() {
-    simState.store.updateInventory();
-    simState.store.updateSickAnimal();
+    state.updateInventory();
+    state.updateSickAnimal();
     exitState();
   }
 
+  @Override
+  public boolean hasTask() {
+    return false;
+  }
+
+  @Override
+  public EmployeeTask getTask() {
+    return null;
+  }
+
+  @Override
+  public EmployeeTask getTask(Employee employee) {
+    return null;
+  }
+
+  public void update(Object message) {
+  }
 }
 
 
@@ -471,76 +486,98 @@ class CleanStore extends EmployeeTask implements State {
  *
  * <p>Clean-up and preparation for sequence restart.
  */
-class EndDay extends EmployeeTask implements State {
-  SimState   simState;
+class EndDay implements State {
+  Store state;
 
+  EventStatus status;
 
-  public EndDay(SimState simState) {
-    super(TaskType.TASK_CLOSING);
-    this.simState = simState;
+  public EndDay(Store store) {
+    this.state = store;
+    this.status = INCOMPLETE;
   }
 
   @Override
   public void enterState() {
-    super.status = TaskStatus.ACTIVE;
+    this.status = RUNNING;
 
     System.out.println("\n##################################################");
     System.out.println("The workday comes to an end...");
     // TODO: 4
     // empty register and store cash in Store
-    simState.store.updateCash();
+    state.updateCash();
     nextState();
   }
 
   @Override
   public void exitState() {
+    this.status = COMPLETE;
+
     System.out.println("##################################################\n");
     Utilities.gapTime();
-    simState.goNewDay();
+    state.goNewDay();
   }
 
   @Override
   public void nextState() {
 
-    // simState.setStoreState(simState.goEndDay());
+    // stateMachine.setStoreState(stateMachine.goEndDay());
     exitState();
   }
 
+  @Override
+  public boolean hasTask() {
+    return false;
+  }
+
+  @Override
+  public EmployeeTask getTask() {
+    return null;
+  }
+
+  @Override
+  public EmployeeTask getTask(Employee employee) {
+    return null;
+  }
+
+  public void update(Object message) {
+  }
 }
 
 
 
 class GoEndSimulation implements State {
-  SimState   simState;
+  Store       state;
+  EventStatus status;
 
-
-  GoEndSimulation(SimState simState) {
-    this.simState = simState;
+  GoEndSimulation(Store store) {
+    this.state = store;
+    this.status = INCOMPLETE;
   }
 
   @Override
   public void enterState() {
+    this.status = RUNNING;
 
     System.out.println("\n\n_______________ STATS _______________");
-    System.out.println("Total Cash: $" + simState.store.cash);
-    System.out.println("Total withdrawal: $" + simState.store.bankWithdrawal);
+    System.out.println("Total Cash: $" + state.cash);
+    System.out.println("Total withdrawal: $" + state.bankWithdrawal);
     System.out.println("_______________________________________________");
 
     System.out.println("\n\n_______________ Items Sold _______________");
-    for (Item item : simState.store.getSoldItems()) {
+    for (Item item : state.getSoldItems()) {
       System.out.println(
           item.getName() + " $" + item.getSalePrice() + ", Sold on: DAY " + item.getDaySold());
     }
     System.out.println("_______________________________________________");
 
     System.out.println("\n\n_______________ Remaining Items _______________");
-    for (Item item : simState.store.getInventory()) {
+    for (Item item : state.getInventory()) {
       System.out.println(item.getName() + ", Value: $" + item.getListPrice());
     }
     System.out.println("_______________________________________________");
 
     System.out.println("\n\n____________ Remaining Sick Animals ___________");
-    for (Pet item : simState.store.getSick()) {
+    for (Pet item : state.getSick()) {
       System.out.println(item.getName() + ", Value: $" + item.getListPrice());
     }
     System.out.println("_______________________________________________");
@@ -550,6 +587,8 @@ class GoEndSimulation implements State {
 
   @Override
   public void exitState() {
+    this.status = COMPLETE;
+
     System.out.println("\n\n ~Fin~");
     System.exit(0);
   }
@@ -559,5 +598,21 @@ class GoEndSimulation implements State {
     exitState();
   }
 
+  @Override
+  public boolean hasTask() {
+    return false;
+  }
 
+  @Override
+  public EmployeeTask getTask() {
+    return null;
+  }
+
+  @Override
+  public EmployeeTask getTask(Employee employee) {
+    return null;
+  }
+
+  public void update(Object message) {
+  }
 }

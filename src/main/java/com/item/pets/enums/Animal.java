@@ -1,7 +1,7 @@
 package main.java.com.item.pets.enums;
 
 
-import java.util.List;
+import java.util.*;
 
 
 public enum Animal implements AnimalInterface {

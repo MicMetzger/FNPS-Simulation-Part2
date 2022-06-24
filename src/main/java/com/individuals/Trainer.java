@@ -1,20 +1,16 @@
 package main.java.com.individuals;
 
+
 import static main.java.com.Builders.NAME_TEMPLATE;
 
-import java.security.SecureRandom;
-import java.util.Random;
-import main.java.com.individuals.training.Haphazard;
-import main.java.com.individuals.training.NegativeReinforcement;
-import main.java.com.individuals.training.PositiveReinforcement;
-import main.java.com.individuals.training.TrainerStrategy;
-import main.java.com.item.Item;
-import main.java.com.item.Pet;
+import java.security.*;
+import java.util.*;
+import main.java.com.individuals.training.*;
+import main.java.com.item.*;
 
 
 
 public class Trainer extends Employee {
-
   private String          name = "";
   public  TrainerStrategy trainingType;
 
@@ -25,6 +21,8 @@ public class Trainer extends Employee {
     this.name = NAME_TEMPLATE.get(num);
     NAME_TEMPLATE.remove(num);
     super.base = this;
+    super.ACTIVE = false;
+    super.state = EmployeeState.IDLE;
     setTrainingType(trainingAlgo);
   }
 
@@ -59,17 +57,18 @@ public class Trainer extends Employee {
 
   public void startTraining() {
     boolean animalExists = false;
-    for(Item animal: inventory) {
+    for (Item animal : inventory) {
       if (animal.isPet()) {
         animalExists = true;
         break;
       }
     }
-    String announcement = animalExists ? " trains the animals" : " checks the animals for training, but notices that the case is empty. Skipping training.";
+    String announcement =
+        animalExists ? " trains the animals" : " checks the animals for training, but notices that the case is empty. Skipping training.";
     announce(announcement);
-    for(Item animal: inventory) {
+    for (Item animal : inventory) {
       if (animal.isPet()) {
-        ((Pet) animal).setHealthy(this.train(((Pet)animal).isHealthy(), ((Pet)animal)) );
+        ((Pet) animal).setHealthy(this.train(((Pet) animal).isHealthy(), ((Pet) animal)));
       }
     }
   }

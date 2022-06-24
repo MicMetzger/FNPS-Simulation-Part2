@@ -1,7 +1,7 @@
 package main.java.com.individuals.training;
 
-import java.security.SecureRandom;
-import main.java.com.item.Pet;
+import java.security.*;
+import main.java.com.item.*;
 
 
 /**

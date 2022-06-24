@@ -1,5 +1,6 @@
 package main.java.com.item.addOns;
-import main.java.com.item.Item;
+
+import main.java.com.item.*;
 
 
 public class Microchip extends ItemDecorator{

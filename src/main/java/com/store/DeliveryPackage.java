@@ -1,6 +1,6 @@
 package main.java.com.store;
 
-import main.java.com.item.Item;
+import main.java.com.item.*;
 
 public class DeliveryPackage {
   private Item item;

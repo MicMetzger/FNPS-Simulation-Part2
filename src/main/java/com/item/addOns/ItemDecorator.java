@@ -1,5 +1,6 @@
 package main.java.com.item.addOns;
-import main.java.com.item.Item;
+
+import main.java.com.item.*;
 
 abstract public class ItemDecorator extends Item {
     protected Item concreteItem;

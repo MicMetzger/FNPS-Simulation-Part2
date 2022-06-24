@@ -1,7 +1,6 @@
 package main.java.com.item;
-import main.java.com.item.pets.enums.Animal;
-import main.java.com.item.pets.enums.AnimalType;
-import main.java.com.item.pets.enums.Breed;
+
+import main.java.com.item.pets.enums.*;
 
 public abstract class Pet extends Item {
   protected Animal animal;

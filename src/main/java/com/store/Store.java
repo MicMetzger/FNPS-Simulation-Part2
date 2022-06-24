@@ -1,41 +1,40 @@
 package main.java.com.store;
 
-import static main.java.com.Builders.COLORS;
-import static main.java.com.Builders.randomSelectionbool;
-import static main.java.com.Builders.sizeFormat;
+import static main.java.com.Builders.*;
 
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Random;
-import main.java.com.individuals.Clerk;
-import main.java.com.individuals.Employee;
-import main.java.com.individuals.Employee.EmployeeState;
-import main.java.com.individuals.Trainer;
-import main.java.com.individuals.task.EventObservable;
-import main.java.com.individuals.task.EventObserver;
-import main.java.com.item.Item;
-import main.java.com.item.Pet;
-import main.java.com.item.addOns.Insurance;
-import main.java.com.item.addOns.Microchip;
-import main.java.com.item.addOns.VetCheckup;
-import main.java.com.item.pets.Bird;
-import main.java.com.item.pets.Cat;
-import main.java.com.item.pets.Dog;
-import main.java.com.item.pets.Ferret;
-import main.java.com.item.pets.Snake;
-import main.java.com.item.pets.enums.AnimalType;
-import main.java.com.item.pets.enums.Color;
-import main.java.com.item.supplies.CatLitter;
-import main.java.com.item.supplies.Food;
-import main.java.com.item.supplies.Leash;
-import main.java.com.item.supplies.Treat;
-import main.java.com.item.supplies.enums.Type;
+import java.security.*;
+import java.util.*;
+import main.java.com.*;
+import main.java.com.events.*;
+import main.java.com.individuals.*;
+import main.java.com.item.*;
+import main.java.com.item.addOns.*;
+import main.java.com.item.pets.*;
+import main.java.com.item.pets.enums.*;
+import main.java.com.item.supplies.*;
+import main.java.com.item.supplies.enums.*;
 
 
 
 public class Store implements EventObservable {
+  private       Logger logger  = Logger.getLogger(Store.class);
+  private final Object MONITOR = new Object();
+  static        State  newDay,
+      startDay,
+      endDay,
+      processDelivery,
+      feedAnimals,
+      visitBank,
+      checkRegister,
+      doInventory,
+      trainAnimals,
+      openStore,
+      cleanStore,
+      goEndSimulation,
+      currentState,
+      endState,
+      previousState;
+  static List<State> stateList;
 
   // The store's Inventory.
   ArrayList<Item>            inventory;
@@ -53,7 +52,16 @@ public class Store implements EventObservable {
   double                     bankWithdrawal;
   double                     cash;
   int                        day;
-  SimState                   stateMachine;
+
+
+
+  private static final class InstanceHolder {
+    private static final Store instance = new Store();
+  }
+
+  public static Store getInstance() {
+    return InstanceHolder.instance;
+  }
 
   /**
    * Instantiates a new Store. Main entry point.
@@ -71,8 +79,10 @@ public class Store implements EventObservable {
     bankWithdrawal = 0;
     cash           = 0;
     day            = 0;
+
     initItemsAndStaff();
-    stateMachine = new SimState(this);
+    initStates();
+    goNewDay();
   }
 
   /**
@@ -85,8 +95,7 @@ public class Store implements EventObservable {
     trainers.add(new Trainer("Haphazard"));
     trainers.add(new Trainer("Negative"));
     trainers.add(new Trainer("Positive"));
-    observers.addAll(clerks);
-    observers.addAll(trainers);
+   
 
     // (size, color, broken, purebred) / (breed, age, health)
     inventory.add(
@@ -135,8 +144,33 @@ public class Store implements EventObservable {
     //    inventory.add(new Toy(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
     inventory.add(new Leash(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
     inventory.add(new Treat(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
-    // inventory.add()
 
+  }
+
+  private void initStates() {
+    stateList       = new ArrayList<State>();
+    newDay          = new NewDay(this);
+    startDay        = new StartDay(this);
+    endDay          = new EndDay(this);
+    feedAnimals     = new FeedAnimals(this);
+    visitBank       = new VisitBank(this);
+    doInventory     = new DoInventory(this);
+    processDelivery = new ProcessDelivery(this);
+    cleanStore      = new CleanStore(this);
+    trainAnimals    = new TrainAnimals(this);
+    openStore       = new OpenStore(this);
+    goEndSimulation = new GoEndSimulation(this);
+    // RUNNING = true;
+
+    stateList.add(startDay);
+    stateList.add(endDay);
+    stateList.add(feedAnimals);
+    stateList.add(visitBank);
+    stateList.add(checkRegister);
+    stateList.add(doInventory);
+    stateList.add(openStore);
+    stateList.add(cleanStore);
+    stateList.add(goEndSimulation);
   }
 
 
@@ -174,14 +208,17 @@ public class Store implements EventObservable {
   /**
    * Select staff to man store for this day.
    */
-  void selectStaff() {
+  public void selectStaff() {
     currentClerk = pickAvailableStaff(clerks);
-    currentClerk.setState(EmployeeState.ACTIVE);
+    currentClerk.setACTIVE(true);
     currentClerk.setTask(null);
 
     currentTrainer = pickAvailableStaff(trainers);
-    currentTrainer.setState(EmployeeState.ACTIVE);
+    currentTrainer.setACTIVE(true);
     currentTrainer.setTask(null);
+    
+    addObserver(currentClerk);
+    addObserver(currentTrainer);
   }
 
   /* Reference: http://en.wikipedia.org/wiki/Poisson_distribution#Generating_Poisson-distributed_random_variables */
@@ -291,8 +328,8 @@ public class Store implements EventObservable {
     return this.mailBox;
   }
 
-  public void goToBank() {
-    currentClerk.goToBank();
+  public void goToBank(Employee employee) {
+    employee.goToBank();
     addWithdrawal();
   }
 
@@ -340,27 +377,134 @@ public class Store implements EventObservable {
 
   }
 
+  public void closeStore() {
+    System.out.println(
+        currentClerk.getName()
+        + " closes the store. \nCurrent inventory: "
+        + inventory.size()
+        + " item(s)\nRegister: "
+        + cash);
+    System.out.println("\nCurrent inventory: " + inventory.size() + " item(s)\nCash: " + cash);
+  }
+
+
+  public void setStoreState(State state) {
+    previousState = currentState;
+    currentState  = state;
+  }
+
+  public void goNewDay() {
+    currentState = newDay;
+    currentState.enterState();
+  }
+
+  public State goStartDay() {
+    return startDay;
+  }
+
+  public State goProcessDelivery() {
+    return processDelivery;
+  }
+
+  public State goCheckRegister() {
+    return checkRegister;
+  }
+
+  public State goVisitBankState() {
+    previousState = currentState;
+    return visitBank;
+  }
+
+  public State goFeedAnimals() {
+    return feedAnimals;
+  }
+
+  public State goDoInventory() {
+    return doInventory;
+  }
+
+  public State goTrainAnimals() {
+    return trainAnimals;
+  }
+
+  public State goOpenStore() {
+    return openStore;
+  }
+
+  public State goCleanStore() {
+    return cleanStore;
+  }
+
+  public State goEndDay() {
+    return endDay;
+  }
+
+  public void goEndSimulation() {
+    currentState = goEndSimulation;
+  }
+
+  public void goEnterState() {
+    currentState.enterState();
+  }
+
+  /**
+   * Add observer.
+   *
+   * @param observer the observer to add if it is not already added.
+   */
   @Override
   public void addObserver(EventObserver observer) {
     //    assert observer != null;
     if (observer != null) {
-      if (!observers.contains(observer)) {
-        observers.add(observer);
+      synchronized (this) {
+        if (observers == null) {
+          observers = new ArrayList<EventObserver>(1);
+        }
+        if (!observers.contains(observer)) {
+          observers.add(observer);
+        }
       }
     } else {
       throw new IllegalArgumentException("Observer cannot be null.");
     }
+
   }
 
+
+  /**
+   * Remove observer.
+   *
+   * @param observer the observer to be removed if it is registered.
+   */
   @Override
   public void removeObserver(EventObserver observer) {
+    if (observer != null) {
+      synchronized (this) {
+        if (observers != null && observers.remove(observer) && observers.isEmpty()) {
+          observers = new ArrayList<>(1);
+        }
+      }
+    }
 
   }
 
+  /**
+   * Notify observers.
+   *
+   * @param argument the Runnable to run
+   */
   @Override
-  public void warnObservers(Object argument) {
-    for (EventObserver observer : observers) {
-      observer.update(this, argument);
+  public void notifyObservers(Object argument) {
+    ArrayList<EventObserver> observersLocal;
+
+    if (observers != null) {
+      synchronized (this) {
+        observersLocal = new ArrayList<EventObserver>(observers);
+      }
+      for (EventObserver observer : observersLocal) {
+        observer.update(this, argument);
+      }
     }
+
   }
 }

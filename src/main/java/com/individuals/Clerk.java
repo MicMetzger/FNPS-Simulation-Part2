@@ -1,12 +1,16 @@
 package main.java.com.individuals;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
+
+import static main.java.com.Builders.NAME_TEMPLATE;
+
+import java.security.*;
+
+
 
 public class Clerk extends Employee {
   private String name = "";
-  static ArrayList<String> NAME_TEMPLATE = new ArrayList<String>(Arrays.asList("Kevin", "Andrew", "Michelle", "David", "Sarah"));
+  
+
   public Clerk(int workedDays, String name) {
     super(workedDays);
     this.name = name;
@@ -19,10 +23,12 @@ public class Clerk extends Employee {
 
   public Clerk() {
     super();
-    int num = new Random().nextInt(NAME_TEMPLATE.size());
+    int num = new SecureRandom().nextInt(NAME_TEMPLATE.size());
     this.name = NAME_TEMPLATE.get(num);
     NAME_TEMPLATE.remove(num);
     super.base = this;
+    super.ACTIVE = false;
+    super.state = EmployeeState.IDLE;
   }
 
   @Override

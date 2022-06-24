@@ -1,5 +1,10 @@
 package main.java.com.store;
 
+import main.java.com.events.task.*;
+import main.java.com.individuals.*;
+
+
+
 public interface State {
 
   void enterState();
@@ -7,7 +12,10 @@ public interface State {
   void exitState();
 
   void nextState();
-	
-  // void update(SimState state);
 
+  boolean hasTask();
+
+  EmployeeTask getTask();
+
+  EmployeeTask getTask(Employee employee);
 }

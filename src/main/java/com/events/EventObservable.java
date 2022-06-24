@@ -1,4 +1,4 @@
-package main.java.com.individuals.task;
+package main.java.com.events;
 
 /**
  * @param <Sub>  Subject
@@ -11,6 +11,6 @@ public interface EventObservable {
 
   void removeObserver(EventObserver observer);
 
-  void warnObservers(Object argument);
+  void notifyObservers(Object argument);
 
 }

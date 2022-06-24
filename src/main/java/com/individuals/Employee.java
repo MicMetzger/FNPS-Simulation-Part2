@@ -1,37 +1,24 @@
 package main.java.com.individuals;
 
-import static main.java.com.item.pets.enums.Animal.BIRDS;
-import static main.java.com.item.pets.enums.Animal.CATS;
-import static main.java.com.item.pets.enums.Animal.DOGS;
-import static main.java.com.item.pets.enums.Animal.FERRETS;
-import static main.java.com.item.pets.enums.Animal.SNAKES;
+import static main.java.com.item.pets.enums.Animal.*;
 
-import java.security.SecureRandom;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-import main.java.com.individuals.task.EmployeeTask;
-import main.java.com.individuals.task.EventObservable;
-import main.java.com.item.Item;
-import main.java.com.item.Pet;
-import main.java.com.item.pets.Bird;
-import main.java.com.item.pets.Cat;
-import main.java.com.item.pets.Dog;
-import main.java.com.item.pets.Ferret;
-import main.java.com.item.pets.Snake;
-import main.java.com.item.pets.enums.AnimalType;
-import main.java.com.item.pets.enums.Color;
-import main.java.com.item.supplies.CatLitter;
-import main.java.com.item.supplies.Food;
-import main.java.com.item.supplies.Leash;
-import main.java.com.item.supplies.Treat;
-import main.java.com.item.supplies.enums.Type;
-import main.java.com.store.DeliveryPackage;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import main.java.com.*;
+import main.java.com.events.*;
+import main.java.com.events.task.*;
+import main.java.com.item.*;
+import main.java.com.item.pets.*;
+import main.java.com.item.pets.enums.*;
+import main.java.com.item.supplies.*;
+import main.java.com.item.supplies.enums.*;
+import main.java.com.store.*;
 
 
 
 public class Employee implements Individual {
+  private Logger logger = Logger.getLogger(Employee.class);
 
   //  private List<Watcher> watcher = new ArrayList<>();
   ArrayList<Item>            inventory;
@@ -40,24 +27,23 @@ public class Employee implements Individual {
   Employee                   base;
   double                     cash;
   int                        workedDays;
+  double                     cashWithdrawn;
+  EmployeeTask               task;
+  EmployeeState              state;
+  boolean                    ACTIVE;
 
-  EmployeeState state;
-
-  EmployeeTask  task;
 
 
   public enum EmployeeState {
-    AVAILABLE("Available"),
-    ACTIVE("Active"),
-    OCCUPIED("Occupied");
+    IDLE("Idle"),
+    OCCUPIED("Occupied"),
+    UNAVAILABLE("Unavailable");
 
     private String name;
 
     EmployeeState(String state) {
       this.name = state;
     }
-
-
   }
 
 
@@ -67,7 +53,8 @@ public class Employee implements Individual {
     inventory       = new ArrayList<>();
     cash            = 0;
     mailBox         = new ArrayList<>();
-    state           = EmployeeState.AVAILABLE;
+    state           = EmployeeState.IDLE;
+    ACTIVE          = false;
   }
 
   public Employee() {
@@ -75,6 +62,8 @@ public class Employee implements Individual {
     inventory  = new ArrayList<>();
     cash       = 0;
     mailBox    = new ArrayList<>();
+    state      = EmployeeState.IDLE;
+    ACTIVE     = false;
   }
 
   public EmployeeState getState() {
@@ -93,28 +82,19 @@ public class Employee implements Individual {
     this.task = task;
   }
 
-  //  /**
-  //   *
-  //   */
-  //  public void addWatcher(Watcher event) {
-  //    this.watcher.add(event);
-  //  }
-  //
-  //
-  //  /**
-  //   *
-  //   */
-  //  public void removeWatcher(Watcher event) {
-  //    this.watcher.remove(event);
-  //  }
-  //
-  //
-  //  public void setTask(String task) {
-  //    this.task = task;
-  //    for (Watcher watch : this.watcher) {
-  //      watch.update(this.task);
-  //    }
-  //  }
+  /**
+   * @return the ACTIVE
+   */
+  public boolean isACTIVE() {
+    return ACTIVE;
+  }
+
+  /**
+   * @param aCTIVE the aCTIVE to set
+   */
+  public void setACTIVE(boolean ACTIVE) {
+    this.ACTIVE = ACTIVE;
+  }
 
   @Override
   public String getName() {
@@ -176,7 +156,7 @@ public class Employee implements Individual {
             " feeds a sick " /*+ ((Pet) item).getBreed().name + " "*/ + pet.getClass().getSimpleName() + " and the pet remains ill...");
         case 1 -> {
           announce(" feeds a sick " /*+ ((Pet) item).getBreed().name + " "*/ + pet.getClass().getSimpleName()
-              + " and the pet recovered from its sickness...");
+                   + " and the pet recovered from its sickness...");
           inventory.add(pet);
           itemsToBeRemoved.add(pet); // preventing error
         }
@@ -185,11 +165,21 @@ public class Employee implements Individual {
     sick.removeAll(itemsToBeRemoved);
   }
 
-  public void goToBank() {
+  public void goToBank(double cashWithdrawal) {
+    if (cashWithdrawal <= 0) {cashWithdrawal = 1000;}
     String announcement = " goes to the bank...";
     announce(announcement);
 
-    cash += 1000;
+    this.cash += 1000;
+    cashWithdrawn += 1000;
+  }
+
+  public void goToBank() {
+    String announcement = " goes to the bank, and withdraws $1000.00";
+    announce(announcement);
+
+    this.cash += 1000;
+    cashWithdrawn += 1000;
   }
 
   public void processDeliveries() {
@@ -233,63 +223,38 @@ public class Employee implements Individual {
     announce(announcement);
 
     switch (name) {
-      case "Dog": {
-        newPackage.setItem(new Dog(name, expectedDeliveryDate, daySold, purchasePrice, purchasePrice * 2, salePrice,
-            DOGS.get(new Random().nextInt(4)), age, new Random().nextInt(2) == 1,
-            Double.parseDouble(sizeFormat.format(new Random().nextDouble(50))), Color.values()[new Random().nextInt(Color.values().length)],
-            new Random().nextInt(2) == 1, new Random().nextInt(2) == 1));
-        break;
-      }
-      case "Cat": {
-        newPackage.setItem(new Cat(name, expectedDeliveryDate, daySold, purchasePrice, purchasePrice * 2, salePrice,
-            CATS.get(new Random().nextInt(4)), age, new Random().nextInt(2) == 1, colors.get(new Random().nextInt(colors.size())),
-            new Random().nextInt(2) == 1, new Random().nextInt(2) == 1));
-        break;
-      }
-      case "Bird": {
-        newPackage.setItem(new Bird(name, expectedDeliveryDate, daySold, purchasePrice, purchasePrice * 2, salePrice,
-            BIRDS.get(new Random().nextInt(4)), age, new Random().nextInt(2) == 1,
-            Double.parseDouble(sizeFormat.format(new Random().nextDouble(8))), new Random().nextInt(2) == 1, new Random().nextInt(2) == 1,
-            new Random().nextInt(2) == 1));
-        break;
-      }
-      case "Food": {
-        newPackage.setItem(new Food(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate, new Random().nextInt(100),
-            AnimalType.values()[new Random().nextInt(AnimalType.values().length)], Type.values()[new Random().nextInt(Type.values().length)]));
-        break;
-      }
-      case "Leash": {
-        newPackage.setItem(new Leash(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate,
-            AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
-        break;
-      }
+      case "Dog" -> newPackage.setItem(new Dog(name, expectedDeliveryDate, daySold, purchasePrice, purchasePrice * 2, salePrice,
+          DOGS.get(new Random().nextInt(4)), age, new Random().nextInt(2) == 1,
+          Double.parseDouble(sizeFormat.format(new Random().nextDouble(50))), Color.values()[new Random().nextInt(Color.values().length)],
+          new Random().nextInt(2) == 1, new Random().nextInt(2) == 1));
+      case "Cat" -> newPackage.setItem(new Cat(name, expectedDeliveryDate, daySold, purchasePrice, purchasePrice * 2, salePrice,
+          CATS.get(new Random().nextInt(4)), age, new Random().nextInt(2) == 1, colors.get(new Random().nextInt(colors.size())),
+          new Random().nextInt(2) == 1, new Random().nextInt(2) == 1));
+      case "Bird" -> newPackage.setItem(new Bird(name, expectedDeliveryDate, daySold, purchasePrice, purchasePrice * 2, salePrice,
+          BIRDS.get(new Random().nextInt(4)), age, new Random().nextInt(2) == 1,
+          Double.parseDouble(sizeFormat.format(new Random().nextDouble(8))), new Random().nextInt(2) == 1, new Random().nextInt(2) == 1,
+          new Random().nextInt(2) == 1));
+      case "Food" -> newPackage.setItem(
+          new Food(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate, new Random().nextInt(100),
+              AnimalType.values()[new Random().nextInt(AnimalType.values().length)], Type.values()[new Random().nextInt(Type.values().length)]));
+      case "Leash" -> newPackage.setItem(new Leash(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate,
+          AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
+
       //      case "Toy": {
       //        newPackage.setItem(new Toy(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate,
       //            AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
       //        break;
       //      }
-      case "CatLitter": {
-        newPackage.setItem(
-            new CatLitter(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate, new Random().nextInt(100)));
-        break;
-      }
-      case "Snake": {
-        newPackage.setItem(
-            new Snake(SNAKES.get(new Random().nextInt(4)), age, true, Double.parseDouble(sizeFormat.format(new Random().nextDouble(8))),
-                name, 0, 0, purchasePrice, purchasePrice * 2, 0));
-        break;
-      }
-      case "Ferret": {
-        newPackage.setItem(
-            new Ferret(FERRETS.get(new Random().nextInt(4)), age, true, Color.values()[new Random().nextInt(Color.values().length)],
-                false, name, 0, 0, purchasePrice, purchasePrice * 2, 0));
-        break;
-      }
-      case "Treat": {
-        newPackage.setItem(new Treat(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate,
-            AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
-        break;
-      }
+      case "CatLitter" -> newPackage.setItem(
+          new CatLitter(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate, new Random().nextInt(100)));
+      case "Snake" -> newPackage.setItem(
+          new Snake(SNAKES.get(new Random().nextInt(4)), age, true, Double.parseDouble(sizeFormat.format(new Random().nextDouble(8))),
+              name, 0, 0, purchasePrice, purchasePrice * 2, 0));
+      case "Ferret" -> newPackage.setItem(
+          new Ferret(FERRETS.get(new Random().nextInt(4)), age, true, Color.values()[new Random().nextInt(Color.values().length)],
+              false, name, 0, 0, purchasePrice, purchasePrice * 2, 0));
+      case "Treat" -> newPackage.setItem(new Treat(name, purchasePrice, purchasePrice * 2, salePrice, daySold, expectedDeliveryDate,
+          AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
     }
     return newPackage;
   }
@@ -393,6 +358,8 @@ public class Employee implements Individual {
 
   public void dayoff() {
     workedDays = 0;
+    state      = EmployeeState.UNAVAILABLE;
+    ACTIVE     = false;
   }
 
 
@@ -435,9 +402,24 @@ public class Employee implements Individual {
     return inventory;
   }
 
+  synchronized private void execute() {
+    if (task != null && task.getStatus() == EventStatus.INCOMPLETE) {
+
+      task.run();
+    }
+  }
 
   @Override
-  public void update(EventObservable watched, Object event) {
+  synchronized public void update(EventObservable watched, Object event) {
+    if (event instanceof State) {
+      if (((State) event).hasTask() && ACTIVE && getState() == EmployeeState.IDLE) {
+        state = EmployeeState.OCCUPIED;
+        task  = ((State) event).getTask(this);
+        // ((EmployeeTask) event).setEmployee(this);
+        execute();
+      }
+    }
 
   }
 }
+

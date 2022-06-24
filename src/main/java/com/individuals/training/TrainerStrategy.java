@@ -1,6 +1,6 @@
 package main.java.com.individuals.training;
 
-import main.java.com.item.Pet;
+import main.java.com.item.*;
 
 /**
  * 50% chance of changing from False to True
