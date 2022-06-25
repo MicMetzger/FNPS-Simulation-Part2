@@ -1,0 +1,213 @@
+NewDay
+Day: 1
+Jack, the Clerk, opens the store. 
+Current inventory: 9 item(s)
+Register: 1000.0
+
+
+
+Day: 2
+Kevin, the Clerk, opens the store. 
+Current inventory: 4 item(s)
+Register: 914.0
+
+
+
+Day: 3
+Paul, the Clerk, opens the store. 
+Current inventory: 3 item(s)
+Register: 967.0
+
+
+
+Day: 4
+Jack, the Clerk, opens the store. 
+Current inventory: 6 item(s)
+Register: 1024.0
+
+
+
+Day: 5
+Jack, the Clerk, opens the store. 
+Current inventory: 9 item(s)
+Register: 1243.0
+
+
+
+Day: 6
+Paul, the Clerk, opens the store. 
+Current inventory: 8 item(s)
+Register: 1228.0
+
+
+
+Day: 7
+Jack, the Clerk, opens the store. 
+Current inventory: 4 item(s)
+Register: 1548.0
+
+
+
+Day: 8
+Jack, the Clerk, opens the store. 
+Current inventory: 6 item(s)
+Register: 1509.0
+
+
+
+Day: 9
+Kevin, the Clerk, opens the store. 
+Current inventory: 4 item(s)
+Register: 1653.0
+
+
+
+Day: 10
+Paul, the Clerk, opens the store. 
+Current inventory: 3 item(s)
+Register: 1577.0
+
+
+
+Day: 11
+Paul, the Clerk, opens the store. 
+Current inventory: 8 item(s)
+Register: 1626.0
+
+
+
+Day: 12
+Jack, the Clerk, opens the store. 
+Current inventory: 7 item(s)
+Register: 1474.0
+
+
+
+Day: 13
+Paul, the Clerk, opens the store. 
+Current inventory: 6 item(s)
+Register: 1312.0
+
+
+
+Day: 14
+Kevin, the Clerk, opens the store. 
+Current inventory: 8 item(s)
+Register: 1525.0
+
+
+
+Day: 15
+Kevin, the Clerk, opens the store. 
+Current inventory: 8 item(s)
+Register: 1475.0
+
+
+
+Day: 16
+Paul, the Clerk, opens the store. 
+Current inventory: 8 item(s)
+Register: 1634.0
+
+
+
+Day: 17
+Paul, the Clerk, opens the store. 
+Current inventory: 6 item(s)
+Register: 2076.0
+
+
+
+Day: 18
+Jack, the Clerk, opens the store. 
+Current inventory: 3 item(s)
+Register: 2023.0
+
+
+
+Day: 19
+Jack, the Clerk, opens the store. 
+Current inventory: 5 item(s)
+Register: 2276.0
+
+
+
+Day: 20
+Paul, the Clerk, opens the store. 
+Current inventory: 5 item(s)
+Register: 2128.0
+
+
+
+Day: 21
+Paul, the Clerk, opens the store. 
+Current inventory: 8 item(s)
+Register: 2198.0
+
+
+
+Day: 22
+Kevin, the Clerk, opens the store. 
+Current inventory: 8 item(s)
+Register: 2527.0
+
+
+
+Day: 23
+Paul, the Clerk, opens the store. 
+Current inventory: 5 item(s)
+Register: 2538.0
+
+
+
+Day: 24
+Jack, the Clerk, opens the store. 
+Current inventory: 6 item(s)
+Register: 2568.0
+
+
+
+Day: 25
+Paul, the Clerk, opens the store. 
+Current inventory: 6 item(s)
+Register: 2696.0
+
+
+
+Day: 26
+Jack, the Clerk, opens the store. 
+Current inventory: 6 item(s)
+Register: 2716.0
+
+
+
+Day: 27
+Paul, the Clerk, opens the store. 
+Current inventory: 6 item(s)
+Register: 2887.0
+
+
+
+Day: 28
+Kevin, the Clerk, opens the store. 
+Current inventory: 4 item(s)
+Register: 3129.0
+
+
+
+Day: 29
+Jack, the Clerk, opens the store. 
+Current inventory: 3 item(s)
+Register: 3270.0
+
+
+
+Day: 30
+Jack, the Clerk, opens the store. 
+Current inventory: 14 item(s)
+Register: 3237.0
+
+
+
+
+
