@@ -66,8 +66,16 @@ class NewDay implements State {
     return null;
   }
 
-  public void update(Object state) {
+  @Override
+  public EventStatus getStatus() {
+    return null;
   }
+
+  @Override
+  public EventStatus setStatus(EventStatus status) {
+    return null;
+  }
+
 }
 
 
@@ -135,6 +143,16 @@ class StartDay implements State {
     return null;
   }
 
+  @Override
+  public EventStatus getStatus() {
+    return null;
+  }
+
+  @Override
+  public EventStatus setStatus(EventStatus status) {
+    return null;
+  }
+
   public void update(Object message) {
   }
 }
@@ -190,6 +208,16 @@ class ProcessDelivery implements State {
 
   @Override
   public EmployeeTask getTask(Employee employee) {
+    return null;
+  }
+
+  @Override
+  public EventStatus getStatus() {
+    return null;
+  }
+
+  @Override
+  public EventStatus setStatus(EventStatus status) {
     return null;
   }
 
@@ -251,6 +279,16 @@ class FeedAnimals implements State {
     return null;
   }
 
+  @Override
+  public EventStatus getStatus() {
+    return null;
+  }
+
+  @Override
+  public EventStatus setStatus(EventStatus status) {
+    return null;
+  }
+
   public void update(Object message) {
   }
 }
@@ -259,7 +297,7 @@ class FeedAnimals implements State {
 
 class DoInventory implements State {
   Store state;
-
+  EmployeeTask task;
   EventStatus status;
 
   public DoInventory(Store store) {
@@ -310,6 +348,16 @@ class DoInventory implements State {
     return null;
   }
 
+  @Override
+  public EventStatus getStatus() {
+    return null;
+  }
+
+  @Override
+  public EventStatus setStatus(EventStatus status) {
+    return null;
+  }
+
   public void update(Object message) {
   }
 }
@@ -318,7 +366,7 @@ class DoInventory implements State {
 
 class TrainAnimals implements State {
   Store state;
-
+  EmployeeTask task;
   EventStatus status;
 
   TrainAnimals(Store store) {
@@ -364,13 +412,23 @@ class TrainAnimals implements State {
   public EmployeeTask getTask(Employee employee) {
     return null;
   }
+
+  @Override
+  public EventStatus getStatus() {
+    return null;
+  }
+
+  @Override
+  public EventStatus setStatus(EventStatus status) {
+    return null;
+  }
 }
 
 
 
 class OpenStore implements State {
   Store state;
-
+  EmployeeTask task;
   EventStatus status;
 
   public OpenStore(Store store) {
@@ -418,6 +476,16 @@ class OpenStore implements State {
     return null;
   }
 
+  @Override
+  public EventStatus getStatus() {
+    return null;
+  }
+
+  @Override
+  public EventStatus setStatus(EventStatus status) {
+    return null;
+  }
+
   public void update(Object message) {
   }
 }
@@ -426,7 +494,7 @@ class OpenStore implements State {
 
 class CleanStore implements State {
   Store state;
-
+  EmployeeTask task;
   EventStatus status;
 
   public CleanStore(Store store) {
@@ -475,6 +543,16 @@ class CleanStore implements State {
     return null;
   }
 
+  @Override
+  public EventStatus getStatus() {
+    return null;
+  }
+
+  @Override
+  public EventStatus setStatus(EventStatus status) {
+    return null;
+  }
+
   public void update(Object message) {
   }
 }
@@ -488,7 +566,7 @@ class CleanStore implements State {
  */
 class EndDay implements State {
   Store state;
-
+  EmployeeTask task;
   EventStatus status;
 
   public EndDay(Store store) {
@@ -536,6 +614,16 @@ class EndDay implements State {
 
   @Override
   public EmployeeTask getTask(Employee employee) {
+    return null;
+  }
+
+  @Override
+  public EventStatus getStatus() {
+    return null;
+  }
+
+  @Override
+  public EventStatus setStatus(EventStatus status) {
     return null;
   }
 
@@ -610,6 +698,16 @@ class GoEndSimulation implements State {
 
   @Override
   public EmployeeTask getTask(Employee employee) {
+    return null;
+  }
+
+  @Override
+  public EventStatus getStatus() {
+    return null;
+  }
+
+  @Override
+  public EventStatus setStatus(EventStatus status) {
     return null;
   }
 

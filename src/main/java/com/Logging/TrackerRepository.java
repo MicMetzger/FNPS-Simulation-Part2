@@ -1,4 +1,4 @@
-package main.java.com;
+package main.java.com.Logging;
 
 import java.io.*;
 import java.util.*;

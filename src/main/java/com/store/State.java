@@ -1,12 +1,12 @@
 package main.java.com.store;
 
+import main.java.com.events.*;
 import main.java.com.events.task.*;
 import main.java.com.individuals.*;
 
 
 
-public interface State {
-
+public interface State {  
   void enterState();
 
   void exitState();
@@ -18,4 +18,8 @@ public interface State {
   EmployeeTask getTask();
 
   EmployeeTask getTask(Employee employee);
+
+  EventStatus getStatus();
+  
+  EventStatus setStatus(EventStatus status);
 }

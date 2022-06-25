@@ -10,19 +10,19 @@ import main.java.com.individuals.Employee.*;
 
 
 public class VisitBank implements State {
-  Store storeState;
-  EventStatus status;
-  
+  Store        storeState;
+  EventStatus  status;
+  EmployeeTask task;
+    
   VisitBank(Store store) {
     this.storeState = store;
-    this.status = INCOMPLETE;
-
+    this.status     = INCOMPLETE;
   }
 
   // public VisitBank(Employee employee, Store store) {
   class Banking extends EmployeeTask {
-    Banking(Employee employee, Store store) {
-      super(TaskType.TASK_BANKING, INCOMPLETE, employee);
+    Banking(Employee employee, Store store, VisitBank visitBank) {
+      super(TaskType.TASK_BANKING, INCOMPLETE, employee, visitBank);
       instance = store;
     }
 
@@ -37,10 +37,12 @@ public class VisitBank implements State {
 
     public void end() {
       super.statusChange(COMPLETE);
+      super.getStatus().setAssigned(false);
+      getEmployee().setTask(null);
       getEmployee().setState(EmployeeState.IDLE);
     }
   }
-  
+
   @Override
   public void enterState() {
     storeState.notifyObservers(this);
@@ -64,10 +66,21 @@ public class VisitBank implements State {
 
   @Override
   public EmployeeTask getTask() {
-    return new Banking(null, storeState);
+    return task = new Banking(null, storeState, this);
   }
 
   public EmployeeTask getTask(Employee employee) {
-    return new Banking(employee, storeState);
+    return task = new Banking(employee, storeState, this);
+  }
+
+  @Override
+  public EventStatus getStatus() {
+    return status;
+  }
+
+  @Override
+  public EventStatus setStatus(EventStatus status) {
+    this.status = status;
+    return status;
   }
 }

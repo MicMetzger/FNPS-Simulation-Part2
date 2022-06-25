@@ -5,7 +5,7 @@ import static main.java.com.item.pets.enums.Animal.*;
 import java.security.*;
 import java.text.*;
 import java.util.*;
-import main.java.com.*;
+import main.java.com.Logging.*;
 import main.java.com.events.*;
 import main.java.com.events.task.*;
 import main.java.com.item.*;
@@ -406,8 +406,7 @@ public class Employee implements Individual {
     if (task != null && task.getStatus() == EventStatus.INCOMPLETE) {
       state = EmployeeState.OCCUPIED;
       task.run();
-    }
-    else if (task != null && task.getStatus() == EventStatus.COMPLETE) {
+    } else if (task != null && task.getStatus() == EventStatus.COMPLETE) {
       state = EmployeeState.IDLE;
       System.out.println("[-] " + base.getName() + " is done with the task of " + task.getTaskType().taskname() + ".");
       task = null;
@@ -417,12 +416,15 @@ public class Employee implements Individual {
   @Override
   synchronized public void update(EventObservable watched, Object event) {
     if (event instanceof State) {
-      if (((State) event).hasTask() && ACTIVE && getState() == EmployeeState.IDLE) {
-        task  = ((State) event).getTask(this);
-        execute();
+      if (((State) event).hasTask()) {
+        if ((((State) event).getStatus() == EventStatus.INCOMPLETE) && !(((State) event).getStatus().isAssigned()) && ACTIVE && getState() == EmployeeState.IDLE) {
+          task = ((State) event).getTask(this);
+          ((State) event).getStatus().setAssigned(true);
+          execute();
+        }
       }
-    }
 
+    }
   }
 }
 

@@ -10,18 +10,29 @@ public abstract class EmployeeTask {
   private   TaskType    taskType;
   protected EventStatus eventStatus;
   private   Employee    employee;
+  private   State       eventInstance;
   public    Store       instance;
 
-  public EmployeeTask(TaskType taskType) {
-    this.taskType    = taskType;
-    this.eventStatus = EventStatus.INCOMPLETE;
-    this.employee    = null;
+  private State getEventInstance() {
+    return eventInstance;
   }
 
-  public EmployeeTask(TaskType taskType, EventStatus eventStatus, Employee employee) {
-    this.taskType    = taskType;
-    this.eventStatus = eventStatus;
-    this.employee    = employee;
+  private void setEventInstance(State eventInstance) {
+    this.eventInstance = eventInstance;
+  }
+
+  public EmployeeTask(TaskType taskType, State eventInstance) {
+    this.taskType      = taskType;
+    this.eventStatus   = EventStatus.INCOMPLETE;
+    this.employee      = null;
+    this.eventInstance = eventInstance;
+  }
+
+  public EmployeeTask(TaskType taskType, EventStatus eventStatus, Employee employee, State eventInstance) {
+    this.taskType      = taskType;
+    this.eventStatus   = eventStatus;
+    this.employee      = employee;
+    this.eventInstance = eventInstance;
   }
 
   public void setEmployee(Employee employee) {
