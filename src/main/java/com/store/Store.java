@@ -17,7 +17,7 @@ import main.java.com.item.supplies.enums.*;
 
 
 public class Store implements EventObservable {
-  private       Logger logger  = Logger.getLogger(Store.class);
+  public static final        Logger logger = Logger.getInstance();
   private final Object MONITOR = new Object();
   static        State  newDay,
       startDay,
@@ -256,16 +256,21 @@ public class Store implements EventObservable {
   }
 
   public void openStore() {
+    String print = "";
     // Poisson distribution
     int count = attractCustomers(getPoissonValue(3.0));
-    System.out.println(
+    print =
         currentClerk.getName()
         + " opens the store. \nCurrent inventory: "
         + inventory.size()
         + " item(s)\nRegister: "
-        + cash);
-    System.out.println(count + " potential customers enter the store...");
-
+        + cash;
+    System.out.println(print);
+    Logger.LOG(print);
+    
+    print = (count + " potential customers enter the store...");
+    System.out.println(print);
+    
     customers.forEach(
         customer -> {
           boolean selecting = customer.inspectInventory(inventory);

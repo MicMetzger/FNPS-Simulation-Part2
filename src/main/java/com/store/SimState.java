@@ -3,6 +3,8 @@ package main.java.com.store;
 
 import static main.java.com.events.EventStatus.*;
 
+import java.io.*;
+import main.java.com.Logging.*;
 import main.java.com.*;
 import main.java.com.events.*;
 import main.java.com.events.task.*;
@@ -14,10 +16,11 @@ import main.java.com.item.*;
 class NewDay implements State {
   Store       state;
   EventStatus status;
-
+  
   NewDay(Store store) {
     this.state = store;
     this.status = INCOMPLETE;
+    Logger.addLog("NewDay\n");
   }
 
   @Override
@@ -33,6 +36,7 @@ class NewDay implements State {
     state.day++;
     state.selectStaff();
     System.out.println("Day: " + state.day);
+    Logger.LOG("Day: " + state.day);
     nextState();
   }
 
@@ -104,7 +108,7 @@ class StartDay implements State {
       state.setStoreState(state.goVisitBankState());
       state.goEnterState();
     } else {
-      System.out.println("Cash is sufficient.");
+      System.out.println("Cash is sufficient");
     }
 
     nextState();
@@ -191,7 +195,7 @@ class ProcessDelivery implements State {
 
   @Override
   public void nextState() {
-    System.out.println("The employee returns to finish his other activities.");
+    System.out.println("The employee returns t finish his other activities.");
     state.setStoreState(state.goFeedAnimals());
     exitState();
   }
@@ -580,6 +584,8 @@ class EndDay implements State {
 
     System.out.println("\n##################################################");
     System.out.println("The workday comes to an end...");
+    Logger.LOG("\n\n");
+    
     // TODO: 4
     // empty register and store cash in Store
     state.updateCash();
@@ -676,7 +682,11 @@ class GoEndSimulation implements State {
   @Override
   public void exitState() {
     this.status = COMPLETE;
-
+    try {
+      Logger.SAVE();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
     System.out.println("\n\n ~Fin~");
     System.exit(0);
   }

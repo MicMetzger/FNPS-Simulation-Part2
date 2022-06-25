@@ -50,9 +50,7 @@ public class VisitBank implements State {
   }
 
   @Override
-  public void exitState() {
-
-  }
+  public void exitState() {}
 
   @Override
   public void nextState() {

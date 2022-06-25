@@ -5,7 +5,6 @@ import static main.java.com.item.pets.enums.Animal.*;
 import java.security.*;
 import java.text.*;
 import java.util.*;
-import main.java.com.Logging.*;
 import main.java.com.events.*;
 import main.java.com.events.task.*;
 import main.java.com.item.*;
@@ -18,7 +17,6 @@ import main.java.com.store.*;
 
 
 public class Employee implements Individual {
-  private Logger logger = Logger.getLogger(Employee.class);
 
   //  private List<Watcher> watcher = new ArrayList<>();
   ArrayList<Item>            inventory;
@@ -90,7 +88,7 @@ public class Employee implements Individual {
   }
 
   /**
-   * @param aCTIVE the aCTIVE to set
+   * @param ACTIVE the aCTIVE to set
    */
   public void setACTIVE(boolean ACTIVE) {
     this.ACTIVE = ACTIVE;
@@ -402,7 +400,7 @@ public class Employee implements Individual {
     return inventory;
   }
 
-  synchronized private void execute() {
+  /* synchronized  */private void execute() {
     if (task != null && task.getStatus() == EventStatus.INCOMPLETE) {
       state = EmployeeState.OCCUPIED;
       task.run();
@@ -414,7 +412,7 @@ public class Employee implements Individual {
   }
 
   @Override
-  synchronized public void update(EventObservable watched, Object event) {
+ /*  synchronized  */public void update(EventObservable watched, Object event) {
     if (event instanceof State) {
       if (((State) event).hasTask()) {
         if ((((State) event).getStatus() == EventStatus.INCOMPLETE) && !(((State) event).getStatus().isAssigned()) && ACTIVE && getState() == EmployeeState.IDLE) {
