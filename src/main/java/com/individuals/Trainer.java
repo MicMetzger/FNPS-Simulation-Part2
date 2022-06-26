@@ -1,7 +1,7 @@
 package main.java.com.individuals;
 
 
-import static main.java.com.Builders.NAME_TEMPLATE;
+import static main.java.com.utilities.Builders.NAME_TEMPLATE;
 
 import java.security.*;
 import java.util.*;

@@ -1,11 +1,12 @@
 package main.java.com.store;
 
-import static main.java.com.Builders.*;
+import static main.java.com.utilities.Builders.*;
 
 import java.security.*;
 import java.util.*;
 import main.java.com.Logging.*;
 import main.java.com.events.*;
+import main.java.com.events.task.*;
 import main.java.com.individuals.*;
 import main.java.com.item.*;
 import main.java.com.item.addOns.*;
@@ -15,11 +16,10 @@ import main.java.com.item.supplies.*;
 import main.java.com.item.supplies.enums.*;
 
 
-
 public class Store implements EventObservable {
-  public static final        Logger logger = Logger.getInstance();
-  private final Object MONITOR = new Object();
-  static        State  newDay,
+  public static final Logger logger  = Logger.getInstance();
+  private final       Object MONITOR = new Object();
+  static              State  newDay,
       startDay,
       endDay,
       processDelivery,
@@ -34,7 +34,7 @@ public class Store implements EventObservable {
       currentState,
       endState,
       previousState;
-  static List<State> stateList;
+  static List<State> states;
 
   // The store's Inventory.
   ArrayList<Item>            inventory;
@@ -46,12 +46,12 @@ public class Store implements EventObservable {
   ArrayList<Employee>        trainers;
   ArrayList<EventObserver>   observers;
   ArrayList<Item>            soldItems;
-  Employee                   currentClerk;
-  Employee                   currentTrainer;
+  public Employee currentClerk;
+  public Employee currentTrainer;
   // Money + day management
-  double                     bankWithdrawal;
+  public double                     bankWithdrawal;
   double                     cash;
-  int                        day;
+  public int day;
 
 
 
@@ -85,6 +85,10 @@ public class Store implements EventObservable {
     goNewDay();
   }
 
+  public static void stateLogger(State state) {
+    states.add(state);
+  }
+
   /**
    * Initiate starting objects.
    */
@@ -95,7 +99,6 @@ public class Store implements EventObservable {
     trainers.add(new Trainer("Haphazard"));
     trainers.add(new Trainer("Negative"));
     trainers.add(new Trainer("Positive"));
-   
 
     // (size, color, broken, purebred) / (breed, age, health)
     inventory.add(
@@ -148,7 +151,7 @@ public class Store implements EventObservable {
   }
 
   private void initStates() {
-    stateList       = new ArrayList<State>();
+    states          = Collections.synchronizedList(new ArrayList<State>());
     newDay          = new NewDay(this);
     startDay        = new StartDay(this);
     endDay          = new EndDay(this);
@@ -162,15 +165,15 @@ public class Store implements EventObservable {
     goEndSimulation = new GoEndSimulation(this);
     // RUNNING = true;
 
-    stateList.add(startDay);
-    stateList.add(endDay);
-    stateList.add(feedAnimals);
-    stateList.add(visitBank);
-    stateList.add(checkRegister);
-    stateList.add(doInventory);
-    stateList.add(openStore);
-    stateList.add(cleanStore);
-    stateList.add(goEndSimulation);
+    states.add(startDay);
+    states.add(endDay);
+    states.add(feedAnimals);
+    states.add(visitBank);
+    states.add(checkRegister);
+    states.add(doInventory);
+    states.add(openStore);
+    states.add(cleanStore);
+    states.add(goEndSimulation);
   }
 
 
@@ -216,7 +219,7 @@ public class Store implements EventObservable {
     currentTrainer = pickAvailableStaff(trainers);
     currentTrainer.setACTIVE(true);
     currentTrainer.setTask(null);
-    
+
     addObserver(currentClerk);
     addObserver(currentTrainer);
   }
@@ -267,10 +270,10 @@ public class Store implements EventObservable {
         + cash;
     System.out.println(print);
     Logger.LOG(print);
-    
+
     print = (count + " potential customers enter the store...");
     System.out.println(print);
-    
+
     customers.forEach(
         customer -> {
           boolean selecting = customer.inspectInventory(inventory);
@@ -333,15 +336,16 @@ public class Store implements EventObservable {
     return this.mailBox;
   }
 
-  public void goToBank(Employee employee) {
-    employee.goToBank();
-    addWithdrawal();
+  public double goToBank(Employee employee) {
+    double value = employee.goToBank();
+    addWithdrawal(value);
+    return value;
   }
 
-  private void addWithdrawal() {
-    System.out.println("$1000.00 was withdrawn from the bank.\n");
+  private void addWithdrawal(double value) {
+    System.out.println("$" + value + " was withdrawn from the bank.\n");
     cash += currentClerk.getCash();
-    bankWithdrawal += 1000;
+    bankWithdrawal += value;
     System.out.println("Total withdrawal: " + bankWithdrawal);
     System.out.println("Total cash: " + cash);
   }

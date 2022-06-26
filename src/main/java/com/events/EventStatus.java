@@ -3,7 +3,7 @@ package main.java.com.events;
 public enum EventStatus {
   INCOMPLETE("Incomplete"),
   COMPLETE("Complete"),
-  RUNNING("Running"),
+  IN_PROGRESS("In Progress"),
   PAUSED("PAUSED");
   
 

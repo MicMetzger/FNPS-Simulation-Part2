@@ -163,21 +163,24 @@ public class Employee implements Individual {
     sick.removeAll(itemsToBeRemoved);
   }
 
-  public void goToBank(double cashWithdrawal) {
+  public double goToBank(double cashWithdrawal) {
     if (cashWithdrawal <= 0) {cashWithdrawal = 1000;}
     String announcement = " goes to the bank...";
     announce(announcement);
 
     this.cash += 1000;
     cashWithdrawn += 1000;
+    return cashWithdrawal;
+
   }
 
-  public void goToBank() {
+  public double goToBank() {
     String announcement = " goes to the bank, and withdraws $1000.00";
     announce(announcement);
 
     this.cash += 1000;
     cashWithdrawn += 1000;
+    return cashWithdrawn;
   }
 
   public void processDeliveries() {

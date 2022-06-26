@@ -78,8 +78,8 @@ public abstract class EmployeeTask {
 
   protected void statusChange(EventStatus status) {
     switch (status) {
-      case INCOMPLETE -> this.eventStatus = EventStatus.RUNNING;
-      case RUNNING -> this.eventStatus = EventStatus.COMPLETE;
+      case INCOMPLETE -> this.eventStatus = EventStatus.IN_PROGRESS;
+      case IN_PROGRESS -> this.eventStatus = EventStatus.COMPLETE;
 
     }
   }

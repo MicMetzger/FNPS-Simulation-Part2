@@ -3,15 +3,16 @@ package main.java.com.Logging;
 import java.io.*;
 import java.util.*;
 import main.java.com.events.*;
+import main.java.com.events.task.*;
 
 
 
 public class Logger implements EventObserver {
   private static       Logger    logger;  // transient: not serialized (static default
-  private static final String    LOGFILE   = "Logger-n.txt";
-  private static List<Log> LOGS      = new ArrayList<>();
-  private static Log       CURRENTLOG;
-  private static int       LOG_COUNT = 0;
+  private static final String    LOGFILE   = "LOGS/Logger-n.txt";
+  private static       List<Log> LOGS      = new ArrayList<>();
+  private static       Log       LOG;
+  private static       int       LOG_COUNT = 0;
   protected static     int       DAY_TAG   = 0;
   protected static     int       ID_TAG    = 0;
 
@@ -41,13 +42,12 @@ public class Logger implements EventObserver {
         }
       });
       // output.write(data);
-    }
-    catch (IOException ignored) {}
+    } catch (IOException ignored) {}
   }
 
   public static void addLog(String table) {
-    CURRENTLOG = new Log(table);
-    LOGS.add(CURRENTLOG);
+    LOG = new Log(table);
+    LOGS.add(LOG);
   }
 
   public void removeListener(Log table) {
@@ -55,12 +55,19 @@ public class Logger implements EventObserver {
   }
 
   public static void LOG(String line) {
-    CURRENTLOG.write(line + "\n");
+    LOG.write(line + "\n");
+  }
+
+  public static void LOG(EventLog event) {
+    LOG.write(event + "\n");
   }
 
   @Override
   public void update(EventObservable watched, Object event) {
-    
+    if (event instanceof EmployeeTask) {
+      State e = (State) event;
+      // LOG("Event: " + e.getName() + " " + e.getStatus().getName());
+    }
   }
 }
 

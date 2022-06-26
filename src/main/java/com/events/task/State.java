@@ -1,4 +1,4 @@
-package main.java.com.store;
+package main.java.com.events.task;
 
 import main.java.com.events.*;
 import main.java.com.events.task.*;
