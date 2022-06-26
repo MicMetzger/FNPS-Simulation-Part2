@@ -20,6 +20,9 @@ public class VisitBank implements State {
     this.status     = INCOMPLETE;
   }
 
+  /**
+   * The type Banking.
+   */
   // public VisitBank(Employee employee, Store store) {
   class Banking extends EmployeeTask {
     double amount;
@@ -33,6 +36,9 @@ public class VisitBank implements State {
     }
 
 
+    /**
+     * Run the task.
+     */
     @Override
     public void run() {
       if (status == INCOMPLETE) {
@@ -45,8 +51,14 @@ public class VisitBank implements State {
       }
     }
 
+
+    /**
+     * End the task,
+     * and log the completion.
+     */
     public void end() {
       super.statusChange(COMPLETE);
+      
       Logger.LOG(EventLog.bankingEvent(employee, amount, cash));
       super.getStatus().setAssigned(false);
       getEmployee().setTask(null);

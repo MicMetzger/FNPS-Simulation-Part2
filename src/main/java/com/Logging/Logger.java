@@ -1,6 +1,7 @@
 package main.java.com.Logging;
 
 import java.io.*;
+import java.text.*;
 import java.util.*;
 import main.java.com.events.*;
 import main.java.com.events.task.*;
@@ -8,13 +9,15 @@ import main.java.com.events.task.*;
 
 
 public class Logger implements EventObserver {
-  private static       Logger    logger;  // transient: not serialized (static default
-  private static final String    LOGFILE   = "LOGS/Logger-n.txt";
-  private static       List<Log> LOGS      = new ArrayList<>();
-  private static       Log       LOG;
-  private static       int       LOG_COUNT = 0;
-  protected static     int       DAY_TAG   = 0;
-  protected static     int       ID_TAG    = 0;
+  private static       Logger           logger;
+  private static final String           LOGFOLD    = "LOGS/";
+  private static final String           LOGFILE    = "Logger-";
+  static               SimpleDateFormat DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
+  private static       List<Log>        LOGS       = new ArrayList<>();
+  private static       Log              LOG;
+  private static       int              LOG_COUNT  = 0;
+  protected static     int              DAY_TAG    = 0;
+  protected static     int              ID_TAG     = 0;
 
 
   private Logger(/* String logFile */) {
@@ -32,11 +35,36 @@ public class Logger implements EventObserver {
     return logger;
   }
 
+  /**
+   * Save.
+   *
+   * @throws IOException the io exception
+   */
   public static void SAVE() throws IOException {
-    try (FileWriter output = new FileWriter(LOGFILE, true /* StandardCharsets.UTF_8 */)) {
+    File file = new File("");
+    File LOGPATH = new File(LOGFOLD + DATEFORMAT.format(new Date()) + "/");
+    if (!LOGPATH.exists()) {
+      LOGPATH.mkdir();
+    }
+    
+    for (int i = 0; i < 101; i++) {
+      if (i == 101) {
+        System.out.println("Logger: Error: Unable to save logs.");
+        return;
+      }
+      file = new File(LOGFOLD + DATEFORMAT.format(new Date()) + "/" + LOGFILE + i + ".txt");
+
+      if (!file.exists()) {
+        file.createNewFile();
+        break;
+      }
+    }
+
+    try (FileWriter output = new FileWriter(file, true /* StandardCharsets.UTF_8 */)) {
       LOGS.forEach(data -> {
         try {
           output.write(data.toString());
+          output.close();
         } catch (IOException e) {
           throw new RuntimeException(e);
         }
