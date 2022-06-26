@@ -1,10 +1,7 @@
 package main.java.com.events.task;
 
-import static main.java.com.events.EventStatus.COMPLETE;
-import static main.java.com.events.EventStatus.INCOMPLETE;
-import static main.java.com.events.EventStatus.IN_PROGRESS;
+import static main.java.com.events.EventStatus.*;
 
-import main.java.com.Logging.*;
 import main.java.com.events.*;
 import main.java.com.individuals.*;
 import main.java.com.store.*;
@@ -33,7 +30,6 @@ public class EndDay implements State {
 
     System.out.println("\n##################################################");
     System.out.println("The workday comes to an end...");
-    Logger.LOG("\n\n");
 
     // TODO: 4
     // empty register and store cash in Store

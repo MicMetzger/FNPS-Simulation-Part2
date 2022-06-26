@@ -211,7 +211,7 @@ public class Store implements EventObservable {
   /**
    * Select staff to man store for this day.
    */
-  public void selectStaff() {
+  public List<Employee> selectStaff() {
     currentClerk = pickAvailableStaff(clerks);
     currentClerk.setACTIVE(true);
     currentClerk.setTask(null);
@@ -222,6 +222,7 @@ public class Store implements EventObservable {
 
     addObserver(currentClerk);
     addObserver(currentTrainer);
+    return Arrays.asList(currentClerk, currentTrainer);
   }
 
   /* Reference: http://en.wikipedia.org/wiki/Poisson_distribution#Generating_Poisson-distributed_random_variables */
@@ -269,7 +270,6 @@ public class Store implements EventObservable {
         + " item(s)\nRegister: "
         + cash;
     System.out.println(print);
-    Logger.LOG(print);
 
     print = (count + " potential customers enter the store...");
     System.out.println(print);
@@ -336,6 +336,26 @@ public class Store implements EventObservable {
     return this.mailBox;
   }
 
+  public List<Pet> getAnimals() {
+    List<Pet> list = new ArrayList<Pet>();
+    inventory.forEach(item -> {
+      if (item instanceof Pet) {
+       list.add((Pet) item);
+      }
+    });
+    return list;
+  }
+
+  public List<Supplies> getSupplies() {
+    List<Supplies> list = new ArrayList<Supplies>();
+    inventory.forEach(item -> {
+      if (item instanceof Supplies) {
+       list.add((Supplies) item);
+      }
+    });
+    return list;
+  }
+  
   public double goToBank(Employee employee) {
     double value = employee.goToBank();
     addWithdrawal(value);

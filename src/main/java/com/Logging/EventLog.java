@@ -43,87 +43,49 @@ public class EventLog {
 
 
   public static EventLog newDayEvent(int day) {
-
     return new EventLog(EventType.EVENT_NEWDAY, null, null, null, null, null, null, null, null, null, day, null, 0.0, 0.0);
   }
 
 
-  public static EventLog startDayEvent(int day, Employee[] employees, int employeeCount) {
+  public static EventLog startDayEvent(List<Employee> employees, int employeeCount, List<Pet> pets, int petCount, List<Supplies> supplies,
+      int supplyCount) {
     int[] info = new int[1];
     info[0] = employeeCount;
-    return new EventLog(EventType.EVENT_ARRIVE, employees[0], employees[1], null, null, null, null,
-        null, null, null, day, info, 0.0, 0.0);
+    return new EventLog(EventType.EVENT_ARRIVE, employees.get(0), employees.get(1), null, pets, null, supplies,
+        null, null, null, null, null, 0.0, 0.0);
   }
 
   public static EventLog bankingEvent(Employee employee, double withdrawl, double cash) {
-
-    return new EventLog(EventType.EVENT_ARRIVE, employee, null, null, null, null, null,
+    return new EventLog(EventType.EVENT_BANKING, employee, null, null, null, null, null,
         null, null, null, null, null, withdrawl, cash);
   }
 
-  public static EventLog openStoreA(int day, int employeeCount, int petCount, int supplyCount, int customerCount) {
-    int[] info = new int[4];
-    info[0] = employeeCount;
-    info[1] = petCount;
-    info[2] = supplyCount;
-    info[3] = customerCount;
-    return new EventLog(EventType.EVENT_OPENINGA, null, null, null, null, null, null,
-        null, null, null, day, info, 0.0, 0.0);
-  }
-
-  public static EventLog openStoreB(int day, int employeeCount, int petCount, int supplyCount, int customerCount) {
-    int[] info = new int[4];
-    info[0] = day;
-    info[1] = employeeCount;
-    info[2] = petCount;
-    info[3] = supplyCount;
-    info[4] = customerCount;
-    return new EventLog(EventType.EVENT_OPENINGA, null, null, null, null, null, null,
-        null, null, null, day, info, 0.0, 0.0);
-  }
-
-  public static EventLog openStoreC(int day, int employeeCount, int petCount, int supplyCount, int customerCount) {
-    int[] info = new int[1];
-    info[0] = day;
-    info[1] = employeeCount;
-    info[2] = petCount;
-    info[3] = supplyCount;
-    info[4] = customerCount;
-    return new EventLog(EventType.EVENT_OPENINGA, null, null, null, null, null, null,
-        null, null, null, day, info, 0.0, 0.0);
-  }
 
   @Override
   public String toString() {
     switch (EVENTTYPE) {
       case EVENT_NEWDAY -> {
-        return "EventLog {\n" +
+        return "\n" +
                EVENTTYPE +
                "\n Day: " + DAY +
-               '}';
+               "\n";
       }
       case EVENT_ARRIVE -> {
         return "EventLog {\n" +
-               EVENTTYPE +
-               "\n Employee #1: " + EMPLOYEEONE.getName() +
-               ",\n Employee #2: " + EMPLOYEEONE.getName() +
+               "\t" + EVENTTYPE +
+               "\n\t Employee #1: " + EMPLOYEEONE.getName() +
+               "\n\t Employee #2: " + EMPLOYEETWO.getName() +
+/*                "\n Employee Count: " + DATA[0] +
+               ",\n Pet Count: " + DATA[1] +
+               ",\n Supply Count: " + DATA[2] + */
                "\n}";
       }
       case EVENT_BANKING -> {
         return "EventLog {\n" +
-               EVENTTYPE +
-               "\n Employee: " + EMPLOYEEONE +
-               ",\n Withdrawl: " + CASH.first +
-               ",\n Cash: " + CASH.second +
-               "\n}";
-      }
-      case EVENT_OPENINGA -> {
-        return "EventLog {\n" +
-               EVENTTYPE +
-               "\n Employee Count: " + DATA[0] +
-               ",\n Pet Count: " + DATA[1] +
-               ",\n Supply Count: " + DATA[2] +
-               ",\n Customer Count: " + DATA[3] +
+               "\t" + EVENTTYPE +
+               "\n\t Employee: " + EMPLOYEEONE.getName() +
+               "\n\t Withdrawl: " + CASH.first +
+               ",\n\t Cash: " + CASH.second +
                "\n}";
       }
 
@@ -136,9 +98,7 @@ public class EventLog {
     EVENT_SELLING("PlaceAnOrder: "),
     EVENT_NEWDAY("NewDay: "),
     EVENT_ARRIVE("ArriveAtStore: "),
-    EVENT_OPENINGA("[A]: "),
-    EVENT_OPENINGB("[B]: "),
-    EVENT_OPENINGC("[C]: "),
+    EVENT_OPEN("StoreOpen: "),
     EVENT_CLOSING("LeaveTheStore: "),
     EVENT_PROCESSING("ProcessDeliveries: "),
     EVENT_INVENTORY("DoInventory:"),

@@ -1,9 +1,8 @@
 package main.java.com.events.task;
 
-import static main.java.com.events.EventStatus.COMPLETE;
-import static main.java.com.events.EventStatus.INCOMPLETE;
-import static main.java.com.events.EventStatus.IN_PROGRESS;
+import static main.java.com.events.EventStatus.*;
 
+import java.util.*;
 import main.java.com.Logging.*;
 import main.java.com.events.*;
 import main.java.com.individuals.*;
@@ -15,17 +14,19 @@ import main.java.com.utilities.*;
 public class NewDay implements State {
   Store       state;
   EventStatus status;
+  int         Day;
 
   public NewDay(Store store) {
     this.state  = store;
     this.status = INCOMPLETE;
-    Logger.addLog("NewDay\n");
+    Logger.addLog("New Simulation\n" + new Date().toString() + "\n\n");
+
   }
 
   @Override
   public void enterState() {
     this.status = IN_PROGRESS;
-
+    
     System.out.println("\n**************************************************");
     if (state.day == 30) {
       state.goEndSimulation();
@@ -33,16 +34,14 @@ public class NewDay implements State {
     }
 
     state.day++;
-    state.selectStaff();
     System.out.println("Day: " + state.day);
-    Logger.LOG("Day: " + state.day);
     nextState();
   }
 
   @Override
   public void exitState() {
     this.status = COMPLETE;
-
+    Logger.LOG(EventLog.newDayEvent(state.day));
     System.out.println("**************************************************\n");
     Utilities.gapTime();
     state.goEnterState();

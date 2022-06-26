@@ -21,7 +21,6 @@ public class Logger implements EventObserver {
 
 
   private Logger(/* String logFile */) {
-    // LOGFILE = logFile;
     LOGS   = new ArrayList<>();
     logger = this;
   }
@@ -64,7 +63,6 @@ public class Logger implements EventObserver {
       LOGS.forEach(data -> {
         try {
           output.write(data.toString());
-          output.close();
         } catch (IOException e) {
           throw new RuntimeException(e);
         }

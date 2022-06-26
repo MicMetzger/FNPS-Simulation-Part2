@@ -1,11 +1,13 @@
 package main.java.com.events.task;
 
-import static main.java.com.events.EventStatus.COMPLETE;
-import static main.java.com.events.EventStatus.INCOMPLETE;
-import static main.java.com.events.EventStatus.IN_PROGRESS;
+import static main.java.com.events.EventStatus.*;
 
+import java.util.*;
+import main.java.com.Logging.*;
 import main.java.com.events.*;
 import main.java.com.individuals.*;
+import main.java.com.item.*;
+import main.java.com.item.supplies.*;
 import main.java.com.store.*;
 import main.java.com.utilities.*;
 
@@ -17,8 +19,11 @@ import main.java.com.utilities.*;
  * <p>Daily route starting point.
  */
 public class StartDay implements State {
-  Store       state;
-  EventStatus status;
+  Store          state;
+  EventStatus    status;
+  List<Employee> employees;
+  List<Pet>      pets;
+  List<Supplies> supplies;
 
   public StartDay(Store store) {
     this.state  = store;
@@ -29,6 +34,10 @@ public class StartDay implements State {
   public void enterState() {
     this.status = IN_PROGRESS;
 
+    employees = state.selectStaff();
+    pets      = state.getAnimals();
+    supplies  = state.getSupplies();
+    
     System.out.println("\n#################################################");
     if (!state.checkRegister()) {
       System.out.println("Register cash is low... ");
@@ -44,7 +53,7 @@ public class StartDay implements State {
   @Override
   public void exitState() {
     this.status = COMPLETE;
-
+    Logger.LOG(EventLog.startDayEvent(employees, employees.size(), pets, pets.size(), supplies, supplies.size()));
     System.out.println("##################################################\n");
     Utilities.gapTime();
     state.goEnterState();
