@@ -4,7 +4,7 @@
 	<p style="color:#ffc400">Sam Goto</p>
 	<p style="color:red">Java SE 18</p>
 	<br/>
-	<p>*test cases present in concept02 branch</p>
+	<p>*test cases can be found in concept02 branch</p>
 	<h2>Index</h2>
 	<ul>
 		<li style="list-style: none"><a href="PartOne.adoc">Part #1</a></li>
