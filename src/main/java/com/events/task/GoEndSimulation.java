@@ -56,12 +56,15 @@ public class GoEndSimulation implements State {
   @Override
   public void exitState() {
     this.status = COMPLETE;
+
+    System.out.println("\n\n ~Fin~");
+
     try {
       Logger.SAVE();
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-    System.out.println("\n\n ~Fin~");
+    
     System.exit(0);
 
   }
