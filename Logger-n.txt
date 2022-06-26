@@ -1,0 +1,213 @@
+NewDay
+Day: 1
+Michelle, the Clerk, opens the store. 
+Current inventory: 9 item(s)
+Register: 1000.0
+
+
+
+Day: 2
+Michelle, the Clerk, opens the store. 
+Current inventory: 5 item(s)
+Register: 854.0
+
+
+
+Day: 3
+Sarah, the Clerk, opens the store. 
+Current inventory: 4 item(s)
+Register: 621.0
+
+
+
+Day: 4
+Sarah, the Clerk, opens the store. 
+Current inventory: 4 item(s)
+Register: 782.0
+
+
+
+Day: 5
+Michelle, the Clerk, opens the store. 
+Current inventory: 7 item(s)
+Register: 675.0
+
+
+
+Day: 6
+Michelle, the Clerk, opens the store. 
+Current inventory: 6 item(s)
+Register: 902.0
+
+
+
+Day: 7
+Andrew, the Clerk, opens the store. 
+Current inventory: 5 item(s)
+Register: 671.0
+
+
+
+Day: 8
+Sarah, the Clerk, opens the store. 
+Current inventory: 6 item(s)
+Register: 724.0
+
+
+
+Day: 9
+Sarah, the Clerk, opens the store. 
+Current inventory: 5 item(s)
+Register: 757.0
+
+
+
+Day: 10
+Michelle, the Clerk, opens the store. 
+Current inventory: 6 item(s)
+Register: 689.0
+
+
+
+Day: 11
+Andrew, the Clerk, opens the store. 
+Current inventory: 5 item(s)
+Register: 915.0
+
+
+
+Day: 12
+Sarah, the Clerk, opens the store. 
+Current inventory: 6 item(s)
+Register: 1184.0
+
+
+
+Day: 13
+Michelle, the Clerk, opens the store. 
+Current inventory: 5 item(s)
+Register: 1391.0
+
+
+
+Day: 14
+Michelle, the Clerk, opens the store. 
+Current inventory: 9 item(s)
+Register: 1255.0
+
+
+
+Day: 15
+Andrew, the Clerk, opens the store. 
+Current inventory: 9 item(s)
+Register: 1303.0
+
+
+
+Day: 16
+Sarah, the Clerk, opens the store. 
+Current inventory: 6 item(s)
+Register: 1552.0
+
+
+
+Day: 17
+Andrew, the Clerk, opens the store. 
+Current inventory: 5 item(s)
+Register: 1308.0
+
+
+
+Day: 18
+Andrew, the Clerk, opens the store. 
+Current inventory: 8 item(s)
+Register: 1325.0
+
+
+
+Day: 19
+Sarah, the Clerk, opens the store. 
+Current inventory: 6 item(s)
+Register: 1784.0
+
+
+
+Day: 20
+Michelle, the Clerk, opens the store. 
+Current inventory: 4 item(s)
+Register: 2168.0
+
+
+
+Day: 21
+Sarah, the Clerk, opens the store. 
+Current inventory: 4 item(s)
+Register: 1886.0
+
+
+
+Day: 22
+Andrew, the Clerk, opens the store. 
+Current inventory: 2 item(s)
+Register: 1638.0
+
+
+
+Day: 23
+Michelle, the Clerk, opens the store. 
+Current inventory: 6 item(s)
+Register: 1495.0
+
+
+
+Day: 24
+Sarah, the Clerk, opens the store. 
+Current inventory: 6 item(s)
+Register: 1596.0
+
+
+
+Day: 25
+Sarah, the Clerk, opens the store. 
+Current inventory: 8 item(s)
+Register: 1960.0
+
+
+
+Day: 26
+Andrew, the Clerk, opens the store. 
+Current inventory: 8 item(s)
+Register: 1961.0
+
+
+
+Day: 27
+Andrew, the Clerk, opens the store. 
+Current inventory: 4 item(s)
+Register: 1853.0
+
+
+
+Day: 28
+Michelle, the Clerk, opens the store. 
+Current inventory: 4 item(s)
+Register: 1700.0
+
+
+
+Day: 29
+Michelle, the Clerk, opens the store. 
+Current inventory: 7 item(s)
+Register: 1699.0
+
+
+
+Day: 30
+Sarah, the Clerk, opens the store. 
+Current inventory: 5 item(s)
+Register: 1639.0
+
+
+
+
+
