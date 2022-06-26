@@ -9,8 +9,9 @@ import main.java.com.events.task.*;
 
 
 public class Logger implements EventObserver {
-  private static       Logger           logger;
-  private static final String           LOGFOLD    = "LOGS/";
+  private static       Logger logger;
+  private static       String LOGGERNAME;
+  private static final String LOGFOLD    = "LOGS/";
   private static final String           LOGFILE    = "Logger-";
   static               SimpleDateFormat DATEFORMAT = new SimpleDateFormat("yyyy-MM-dd");
   private static       List<Log>        LOGS       = new ArrayList<>();
@@ -20,9 +21,16 @@ public class Logger implements EventObserver {
   protected static     int              ID_TAG     = 0;
 
 
-  private Logger(/* String logFile */) {
+  private Logger() {
     LOGS   = new ArrayList<>();
     logger = this;
+    LOGGERNAME = "GenericLogger";
+  }
+  
+  private Logger(String name) {
+    LOGS   = new ArrayList<>();
+    logger = this;
+    LOGGERNAME = name;
   }
 
   public static Logger getInstance(/* Class<?> clazz */ /* String File */) {
@@ -33,7 +41,8 @@ public class Logger implements EventObserver {
     }
     return logger;
   }
-
+  
+  
   /**
    * Save.
    *
