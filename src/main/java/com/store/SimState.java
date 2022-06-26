@@ -689,6 +689,7 @@ class GoEndSimulation implements State {
     }
     System.out.println("\n\n ~Fin~");
     System.exit(0);
+
   }
 
   @Override
