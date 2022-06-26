@@ -2,10 +2,11 @@ package main.java.com.Logging;
 
 import java.io.*;
 import java.util.*;
+import main.java.com.events.*;
 
 
 
-public class Logger {
+public class Logger implements EventObserver {
   private static       Logger    logger;  // transient: not serialized (static default
   private static final String    LOGFILE   = "Logger-n.txt";
   private static List<Log> LOGS      = new ArrayList<>();
@@ -55,6 +56,11 @@ public class Logger {
 
   public static void LOG(String line) {
     CURRENTLOG.write(line + "\n");
+  }
+
+  @Override
+  public void update(EventObservable watched, Object event) {
+    
   }
 }
 
