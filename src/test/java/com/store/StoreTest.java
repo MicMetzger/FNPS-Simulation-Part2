@@ -46,7 +46,7 @@ class StoreTest {
     } else {
       Assertions.assertTrue(false);
     }
-    tearDown();
+    // tearDown();
   }
 
   @BeforeEach
