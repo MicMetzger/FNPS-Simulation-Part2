@@ -28,7 +28,8 @@ class LoggerTest {
 
 
   /**
-   * Test the getlogger() function call to see if it returns the same instance consistantly over multiple references.
+   * Test the getlogger() function call to see if it returns the same 
+   * instance consistantly over multiple references.
    */
   @Test
   void testMultipleCopiesOfLoggerAreTheSameInstance() {
@@ -52,13 +53,14 @@ class LoggerTest {
     tearDown();
   }
 
+  
   @AfterAll
   static void tearDown() {
     if (TESTLOGPATH.exists()) {
-      TESTLOGPATH.delete();
+      var e = TESTLOGPATH.delete();
     }
     if (new File(LOGINPUTPATH).exists()) {
-      new File(LOGINPUTPATH).delete();
+      var e = new File(LOGINPUTPATH).delete();
     }
   }
 }

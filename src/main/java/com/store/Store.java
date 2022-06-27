@@ -1,6 +1,6 @@
 package main.java.com.store;
 
-import static main.java.com.utilities.Builders.*;
+import static utilities.Builders.*;
 
 import java.security.*;
 import java.util.*;
@@ -353,6 +353,13 @@ public class Store implements EventObservable {
        list.add((Supplies) item);
       }
     });
+    return list;
+  }
+
+  public List<Employee> getEmployees() {
+    List<Employee> list = new ArrayList<Employee>();
+    list.addAll(clerks);
+    list.addAll(trainers);
     return list;
   }
   

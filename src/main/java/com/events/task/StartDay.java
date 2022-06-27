@@ -9,7 +9,7 @@ import main.java.com.individuals.*;
 import main.java.com.item.*;
 import main.java.com.item.supplies.*;
 import main.java.com.store.*;
-import main.java.com.utilities.*;
+import utilities.*;
 
 
 

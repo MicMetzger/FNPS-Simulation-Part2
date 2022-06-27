@@ -1,4 +1,4 @@
-package main.java.com.utilities;
+package utilities;
 
 /**
    * The type Pair.

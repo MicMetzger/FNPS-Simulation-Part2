@@ -7,7 +7,7 @@ import static main.java.com.events.EventStatus.IN_PROGRESS;
 import main.java.com.events.*;
 import main.java.com.individuals.*;
 import main.java.com.store.*;
-import main.java.com.utilities.*;
+import utilities.*;
 
 
 

@@ -1,4 +1,4 @@
-package main.java.com.utilities;
+package utilities;
 
 import java.util.concurrent.*;
 

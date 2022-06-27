@@ -24,6 +24,8 @@ public class Employee implements Individual {
   ArrayList<DeliveryPackage> mailBox;
   Employee                   base;
   double                     cash;
+  double                     earning;
+  int                        sold;
   int                        workedDays;
   double                     cashWithdrawn;
   EmployeeTask               task;
@@ -50,6 +52,8 @@ public class Employee implements Individual {
     this.workedDays = workedDays;
     inventory       = new ArrayList<>();
     cash            = 0;
+    sold            = 0;
+    earning            = 0;
     mailBox         = new ArrayList<>();
     state           = EmployeeState.IDLE;
     ACTIVE          = false;
@@ -59,9 +63,27 @@ public class Employee implements Individual {
     workedDays = 0;
     inventory  = new ArrayList<>();
     cash       = 0;
+    sold       = 0;
+    earning       = 0;
     mailBox    = new ArrayList<>();
     state      = EmployeeState.IDLE;
     ACTIVE     = false;
+  }
+
+  public double getEarning() {
+    return earning;
+  }
+
+  private void setEarning(double earning) {
+    this.earning += earning;
+  }
+
+  public int getSold() {
+    return sold;
+  }
+
+  private void upSold() {
+    this.sold++;
   }
 
   public EmployeeState getState() {
@@ -97,6 +119,11 @@ public class Employee implements Individual {
   @Override
   public String getName() {
     return base.getName();
+  }
+
+  @Override
+  public String getNameSimple() {
+    return base.getNameSimple();
   }
 
   @Override
@@ -403,7 +430,8 @@ public class Employee implements Individual {
     return inventory;
   }
 
-  /* synchronized  */private void execute() {
+  /* synchronized  */
+  private void execute() {
     if (task != null && task.getStatus() == EventStatus.INCOMPLETE) {
       state = EmployeeState.OCCUPIED;
       task.run();
@@ -415,10 +443,11 @@ public class Employee implements Individual {
   }
 
   @Override
- /*  synchronized  */public void update(EventObservable watched, Object event) {
+  /*  synchronized  */ public void update(EventObservable watched, Object event) {
     if (event instanceof State) {
       if (((State) event).hasTask()) {
-        if ((((State) event).getStatus() == EventStatus.INCOMPLETE) && !(((State) event).getStatus().isAssigned()) && ACTIVE && getState() == EmployeeState.IDLE) {
+        if ((((State) event).getStatus() == EventStatus.INCOMPLETE) && !(((State) event).getStatus().isAssigned()) && ACTIVE
+            && getState() == EmployeeState.IDLE) {
           task = ((State) event).getTask(this);
           ((State) event).getStatus().setAssigned(true);
           execute();

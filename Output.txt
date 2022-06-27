@@ -1,0 +1,566 @@
+New Simulation
+Sun Jun 26 18:14:29 CST 2022
+
+
+NewDay: 
+ Day: 1
+
+EventLog {
+	GoToBank: 
+	 Employee: Paul, the Clerk,
+	 Withdrawl: 1000.0,
+	 Cash: 1000.0
+}
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Paul, the Clerk,
+	 Employee #2: Chris, the Trainer,
+}
+EventLog {
+	Tracker: Day #1
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 2
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Alex, the Clerk,
+	 Employee #2: Chris, the Trainer,
+}
+EventLog {
+	Tracker: Day #2
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 3
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Andrew, the Clerk,
+	 Employee #2: Michelle, the Trainer,
+}
+EventLog {
+	Tracker: Day #3
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 4
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Andrew, the Clerk,
+	 Employee #2: Chris, the Trainer,
+}
+EventLog {
+	Tracker: Day #4
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 5
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Alex, the Clerk,
+	 Employee #2: Chris, the Trainer,
+}
+EventLog {
+	Tracker: Day #5
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 6
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Andrew, the Clerk,
+	 Employee #2: David, the Trainer,
+}
+EventLog {
+	Tracker: Day #6
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 7
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Alex, the Clerk,
+	 Employee #2: Chris, the Trainer,
+}
+EventLog {
+	Tracker: Day #7
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 8
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Alex, the Clerk,
+	 Employee #2: Michelle, the Trainer,
+}
+EventLog {
+	Tracker: Day #8
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 9
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Paul, the Clerk,
+	 Employee #2: Chris, the Trainer,
+}
+EventLog {
+	Tracker: Day #9
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 10
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Andrew, the Clerk,
+	 Employee #2: Chris, the Trainer,
+}
+EventLog {
+	Tracker: Day #10
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 11
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Andrew, the Clerk,
+	 Employee #2: David, the Trainer,
+}
+EventLog {
+	Tracker: Day #11
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 12
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Alex, the Clerk,
+	 Employee #2: Michelle, the Trainer,
+}
+EventLog {
+	Tracker: Day #12
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 13
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Paul, the Clerk,
+	 Employee #2: David, the Trainer,
+}
+EventLog {
+	Tracker: Day #13
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 14
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Andrew, the Clerk,
+	 Employee #2: David, the Trainer,
+}
+EventLog {
+	Tracker: Day #14
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 15
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Andrew, the Clerk,
+	 Employee #2: Chris, the Trainer,
+}
+EventLog {
+	Tracker: Day #15
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 16
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Alex, the Clerk,
+	 Employee #2: David, the Trainer,
+}
+EventLog {
+	Tracker: Day #16
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 17
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Andrew, the Clerk,
+	 Employee #2: Michelle, the Trainer,
+}
+EventLog {
+	Tracker: Day #17
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 18
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Andrew, the Clerk,
+	 Employee #2: Chris, the Trainer,
+}
+EventLog {
+	Tracker: Day #18
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 19
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Alex, the Clerk,
+	 Employee #2: Michelle, the Trainer,
+}
+EventLog {
+	Tracker: Day #19
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 20
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Andrew, the Clerk,
+	 Employee #2: David, the Trainer,
+}
+EventLog {
+	Tracker: Day #20
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 21
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Andrew, the Clerk,
+	 Employee #2: David, the Trainer,
+}
+EventLog {
+	Tracker: Day #21
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 22
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Paul, the Clerk,
+	 Employee #2: Michelle, the Trainer,
+}
+EventLog {
+	Tracker: Day #22
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 23
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Andrew, the Clerk,
+	 Employee #2: Chris, the Trainer,
+}
+EventLog {
+	Tracker: Day #23
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 24
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Alex, the Clerk,
+	 Employee #2: Chris, the Trainer,
+}
+EventLog {
+	Tracker: Day #24
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 25
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Alex, the Clerk,
+	 Employee #2: Michelle, the Trainer,
+}
+EventLog {
+	Tracker: Day #25
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 26
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Paul, the Clerk,
+	 Employee #2: Chris, the Trainer,
+}
+EventLog {
+	Tracker: Day #26
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 27
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Paul, the Clerk,
+	 Employee #2: Chris, the Trainer,
+}
+EventLog {
+	Tracker: Day #27
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 28
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Alex, the Clerk,
+	 Employee #2: Michelle, the Trainer,
+}
+EventLog {
+	Tracker: Day #28
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 29
+
+EventLog {
+	ArriveAtStore: 
+	 Employee #1: Alex, the Clerk,
+	 Employee #2: Michelle, the Trainer,
+}
+EventLog {
+	Tracker: Day #29
+	Employee             	Sold                 	Earnings Total      
+	Alex                	0                   	0.0                 
+	Paul                	0                   	0.0                 
+	Andrew              	0                   	0.0                 
+	David               	0                   	0.0                 
+	Michelle            	0                   	0.0                 
+	Chris               	0                   	0.0                 
+
+
+NewDay: 
+ Day: 30
+
+
+

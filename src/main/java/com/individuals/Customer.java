@@ -4,7 +4,6 @@ import static java.lang.Math.*;
 
 import java.security.*;
 import java.util.*;
-import java.util.concurrent.*;
 import main.java.com.events.*;
 import main.java.com.item.*;
 
@@ -65,7 +64,7 @@ public class Customer implements Individual {
     return desire;
   }
   
-  public void Cycle() throws ExecutionException {
+  public void Cycle() {
     try {
       Thread.sleep(new SecureRandom().nextInt(1000));
     } catch (InterruptedException e) {
@@ -77,6 +76,11 @@ public class Customer implements Individual {
   @Override
   public void update(EventObservable watched, Object event) {
     
+  }
+
+  @Override
+  public String getNameSimple() {
+    return null;
   }
 
   @Override

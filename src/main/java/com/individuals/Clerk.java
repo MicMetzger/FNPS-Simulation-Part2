@@ -1,14 +1,14 @@
 package main.java.com.individuals;
 
 
-import static main.java.com.utilities.Builders.NAME_TEMPLATE;
+import static utilities.Builders.NAME_TEMPLATE;
 
 import java.security.*;
 
 
 
 public class Clerk extends Employee {
-  private String name = "";
+  protected String name = "";
   
 
   public Clerk(int workedDays, String name) {
@@ -39,5 +39,10 @@ public class Clerk extends Employee {
   @Override
   public void setName(String name) {
     this.name = name;
+  }
+  
+  @Override
+  public String getNameSimple() {
+    return name;
   }
 }

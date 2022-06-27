@@ -1,7 +1,7 @@
 package main.java.com.individuals;
 
 
-import static main.java.com.utilities.Builders.NAME_TEMPLATE;
+import static utilities.Builders.NAME_TEMPLATE;
 
 import java.security.*;
 import java.util.*;
@@ -31,6 +31,11 @@ public class Trainer extends Employee {
     return name + ", the Trainer,";
   }
 
+  @Override
+  public String getNameSimple() {
+    return name;
+  }
+  
   @Override
   public void setName(String name) {
     this.name = name;

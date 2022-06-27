@@ -7,25 +7,27 @@ import main.java.com.Logging.*;
 import main.java.com.events.*;
 import main.java.com.individuals.*;
 import main.java.com.store.*;
-import main.java.com.utilities.*;
+import utilities.*;
 
 
 
 public class NewDay implements State {
-  Store       state;
-  EventStatus status;
-  int         Day;
+  Store                       state;
+  EventStatus                 status;
+  
+  
 
   public NewDay(Store store) {
     this.state  = store;
     this.status = INCOMPLETE;
-    Logger.addLog("New Simulation\n" + new Date().toString() + "\n\n");
-
+    Logger.addLog("New Simulation\n" + new Date() + "\n\n");
   }
 
   @Override
   public void enterState() {
     this.status = IN_PROGRESS;
+    state.day++;
+    
     
     System.out.println("\n**************************************************");
     if (state.day == 30) {
@@ -33,7 +35,6 @@ public class NewDay implements State {
       exitState();
     }
 
-    state.day++;
     System.out.println("Day: " + state.day);
     nextState();
   }

@@ -1,4 +1,4 @@
-package main.java.com.Logging;
+package main.java.com.individuals.track;
 
 public class Scheme {
   private static final String NAME_TEMPLATE = "DEFAULT";
