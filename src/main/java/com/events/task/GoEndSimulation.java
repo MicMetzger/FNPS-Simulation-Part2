@@ -25,7 +25,7 @@ public class GoEndSimulation implements State {
 
     System.out.println("\n\n_______________ STATS _______________\n" +
                        "Total Cash: $" + state.getCash() + "\n" +
-                       "Total withdrawal: $" + state.bankWithdrawal + "\n" +
+                       "Total withdrawal: $" + state.getBankWithdrawal() + "\n" +
                        "_______________________________________________" + "\n\n" +
                        "\n\n_______________ Items Sold _______________" + "\n");
     state.getSoldItems().forEach(item -> System.out.println(item.getName() + " $" + item.getSalePrice() + ", Sold on: DAY " + item.getDaySold()));

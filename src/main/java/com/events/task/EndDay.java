@@ -36,7 +36,7 @@ public class EndDay implements State {
     employeeLog      = new ArrayList<Employee>(state.getEmployees());
     employeeEarnings = new ArrayList<Pair<Integer, Double>>();
     employeeLog.forEach(employee -> employeeEarnings.add(new Pair<Integer, Double>(employee.getSold(), employee.getEarning())));
-    Logger.LOG(EventLog.tracking(employeeLog, employeeEarnings, state.day));
+    Logger.LOG(EventLog.tracking(employeeLog, employeeEarnings, state.getDay()));
     // Logger.LOG(EventLog.tracking(employeeLog, employeeEarnings, state.day));
 
     System.out.println("\n##################################################");

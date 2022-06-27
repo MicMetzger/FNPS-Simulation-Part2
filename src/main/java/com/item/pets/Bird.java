@@ -83,6 +83,7 @@ public class Bird extends Pet {
       boolean exotic,
       boolean papers) {
     super(animal, age, healthy);
+    super.setName("Bird");
     this.size    = size;
     this.mimicry = mimicry;
     this.exotic  = exotic;
@@ -106,6 +107,17 @@ public class Bird extends Pet {
     this.mimicry = mimicry;
     this.exotic  = exotic;
     this.papers  = papers;
+    super.animal = BIRDS.get(new SecureRandom().nextInt(4));
+  }
+  
+  public Bird() {
+    super();
+    super.setDayArrived(0);
+    super.setName("Bird");
+    this.size    = 0;
+    this.mimicry = false;
+    this.exotic  = false;
+    this.papers  = false;
     super.animal = BIRDS.get(new SecureRandom().nextInt(4));
   }
 

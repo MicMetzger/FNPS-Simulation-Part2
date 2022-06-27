@@ -48,6 +48,7 @@ public class Cat extends Pet {
       boolean housebroken,
       boolean purebred) {
     super(name, dayArrived, daySold, purchasePrice, listPrice, salePrice, animal, age, healthy);
+    super.setName("Cat");
     this.color       = color;
     this.housebroken = housebroken;
     this.purebred    = purebred;
@@ -66,6 +67,7 @@ public class Cat extends Pet {
    */
   public Cat(Animal animal, int age, boolean healthy, String color, boolean housebroken, boolean purebred) {
     super(animal, age, healthy);
+    super.setName("Cat");
     this.color       = color;
     this.housebroken = housebroken;
     this.purebred    = purebred;
@@ -106,8 +108,12 @@ public class Cat extends Pet {
    */
   public Cat() {
     super();
-    super.setAnimal(AnimalType.Cat);
-    super.setBreed(CATS.get(new SecureRandom().nextInt(4)).getType());
+    super.setDayArrived(0);
+    super.setName("Cat");
+    this.color       = "";
+    this.housebroken = false;
+    this.purebred    = false;
+    super.animal     = CATS.get(new SecureRandom().nextInt(4));
   }
 
   @Override

@@ -8,7 +8,7 @@ import utilities.*;
 
 
 public class TrackerRepository {
-  private static final Object mutex       = new Object();
+  // private static final Object mutex       = new Object();
   private static final File   trackerFile = new File("tracker.txt");
   private static final String DELIMITER   = ",";
   private static final String NEW_LINE    = "\n";
@@ -24,7 +24,6 @@ public class TrackerRepository {
   }
 
   private static final class InstanceHolder {
-
     private static final TrackerRepository instance = new TrackerRepository();
   }
 
@@ -32,7 +31,7 @@ public class TrackerRepository {
     return InstanceHolder.instance;
   }
 
-  public void LOG(Employee employee, double price) { 
+  public void write(Employee employee, double price) { 
     if (employeeHistory.containsKey(employee)) {
       Pair<Integer, Double> history = employeeHistory.get(employee);
       history.first++;

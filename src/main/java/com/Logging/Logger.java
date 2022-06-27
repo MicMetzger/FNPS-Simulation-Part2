@@ -10,15 +10,14 @@ import main.java.com.events.task.*;
 
 public class Logger implements EventObserver {
   private static      Logger           logger;
+  private static      Log              LOG;
   private static      String           LOGGERNAME;
   public static final String           LOGFOLD      = "LOGS/";
   public static final String           LOGFILE      = "Logger-";
   public static       String           LOGINPUTPATH = "";
   public static       SimpleDateFormat DATEFORMAT   = new SimpleDateFormat("yyyy-MM-dd");
   private static      List<Log>        LOGS         = new ArrayList<>();
-  private static      Log              LOG;
   private static      int              LOG_COUNT    = 0;
-  protected static    int              DAY_TAG      = 0;
   protected static    int              ID_TAG       = 0;
 
 
@@ -52,13 +51,13 @@ public class Logger implements EventObserver {
   public static void SAVE() throws IOException {
     File file = new File("");
     if (!new File(LOGFOLD).exists()) {
-      new File(LOGFOLD).mkdir();
+      var e = new File(LOGFOLD).mkdir();
     }
     File LOGPATH = new File(LOGFOLD + DATEFORMAT.format(new Date()) + "/");
     if (!LOGPATH.exists()) {
-      LOGPATH.mkdir();
+      var e = LOGPATH.mkdir();
     }
-      
+
     if (LOGINPUTPATH.equals("")) {
       for (int i = 0; i < 101; i++) {
         if (i == 101) {
@@ -68,7 +67,7 @@ public class Logger implements EventObserver {
         file = new File(LOGFOLD + DATEFORMAT.format(new Date()) + "/" + LOGFILE + i + ".txt");
 
         if (!file.exists()) {
-          file.createNewFile();
+          var e =  file.createNewFile();
           break;
         }
       }

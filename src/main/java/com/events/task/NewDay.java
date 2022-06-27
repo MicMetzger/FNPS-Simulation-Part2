@@ -26,23 +26,23 @@ public class NewDay implements State {
   @Override
   public void enterState() {
     this.status = IN_PROGRESS;
-    state.day++;
+    state.incrementDay();
     
     
     System.out.println("\n**************************************************");
-    if (state.day == 30) {
+    if (state.getDay() == 30) {
       state.goEndSimulation();
       exitState();
     }
 
-    System.out.println("Day: " + state.day);
+    System.out.println("Day: " + state.getDay());
     nextState();
   }
 
   @Override
   public void exitState() {
     this.status = COMPLETE;
-    Logger.LOG(EventLog.newDayEvent(state.day));
+    Logger.LOG(EventLog.newDayEvent(state.getDay()));
     System.out.println("**************************************************\n");
     Utilities.gapTime();
     state.goEnterState();

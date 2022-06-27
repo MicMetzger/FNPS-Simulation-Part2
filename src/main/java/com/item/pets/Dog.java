@@ -107,6 +107,7 @@ public class Dog extends Pet {
       int age,
       boolean healthy) {
     super(name, dayArrived, daySold, purchasePrice, listPrice, salePrice, animal, age, healthy);
+    super.setName("Dog");
   }
 
   /**
@@ -118,11 +119,14 @@ public class Dog extends Pet {
    */
   public Dog(Animal animal, int age, boolean healthy) {
     super(animal, age, healthy);
+    super.setName("Dog");
   }
 
   /** Instantiates a new Dog. */
   public Dog() {
     super();
+    super.setDayArrived(0);
+    super.setName("Dog");
   }
 
   /**

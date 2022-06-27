@@ -16,6 +16,7 @@ import main.java.com.item.supplies.*;
 import main.java.com.item.supplies.enums.*;
 
 
+
 public class Store implements EventObservable {
   public static final Logger logger  = Logger.getInstance();
   private final       Object MONITOR = new Object();
@@ -46,15 +47,14 @@ public class Store implements EventObservable {
   ArrayList<Employee>        trainers;
   ArrayList<EventObserver>   observers;
   ArrayList<Item>            soldItems;
-  public Employee currentClerk;
-  public Employee currentTrainer;
+  public  Employee currentClerk;
+  public  Employee currentTrainer;
   // Money + day management
-  public double                     bankWithdrawal;
-  double                     cash;
-  public int day;
+  private double   bankWithdrawal;
+  private double   cash;
+  private Integer      day;
 
-
-
+  
   private static final class InstanceHolder {
     private static final Store instance = new Store();
   }
@@ -79,27 +79,22 @@ public class Store implements EventObservable {
     bankWithdrawal = 0;
     cash           = 0;
     day            = 0;
-
-    initItemsAndStaff();
-    initStates();
-    goNewDay();
   }
 
-  public static void stateLogger(State state) {
-    states.add(state);
-  }
 
   /**
    * Initiate starting objects.
    */
-  public void initItemsAndStaff() {
+  public void initiateStaff() {
     clerks.add(new Clerk());
     clerks.add(new Clerk());
     clerks.add(new Clerk());
     trainers.add(new Trainer("Haphazard"));
     trainers.add(new Trainer("Negative"));
     trainers.add(new Trainer("Positive"));
+  }
 
+  public void initiateAnimals() {
     // (size, color, broken, purebred) / (breed, age, health)
     inventory.add(
         new Dog(
@@ -137,20 +132,22 @@ public class Store implements EventObservable {
 
     // (size) / (breed, age, health)
     inventory.add(new Snake(Double.parseDouble(sizeFormat.format(new Random().nextDouble(8)))));
+  }
 
+  public void initiateSupplies() {
     inventory.add(
         new Food(
             new Random().nextInt(100),
             AnimalType.values()[new Random().nextInt(AnimalType.values().length)],
             Type.values()[new Random().nextInt(Type.values().length)]));
     inventory.add(new CatLitter(new Random().nextInt(100)));
-    //    inventory.add(new Toy(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
+    inventory.add(new Toy(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
     inventory.add(new Leash(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
     inventory.add(new Treat(AnimalType.values()[new Random().nextInt(AnimalType.values().length)]));
 
   }
 
-  private void initStates() {
+  public void initStates() {
     states          = Collections.synchronizedList(new ArrayList<State>());
     newDay          = new NewDay(this);
     startDay        = new StartDay(this);
@@ -176,10 +173,17 @@ public class Store implements EventObservable {
     states.add(goEndSimulation);
   }
 
+  public ArrayList<State> getStates() {
+    return (ArrayList<State>) states;
+  }
 
   Employee pickAvailableStaff(ArrayList<Employee> staffList) {
     SecureRandom rand           = new SecureRandom();
     boolean      isSick         = rand.nextInt(100) < 10;
+    // TEST #1: Add a check for noo employees.
+    if (staffList.size() == 0) {
+      initiateStaff();
+    }
     Employee     potentialStaff = staffList.get(rand.nextInt(3));
     if (potentialStaff.getWorkDays() <= 3) {
       if (isSick) {
@@ -340,7 +344,7 @@ public class Store implements EventObservable {
     List<Pet> list = new ArrayList<Pet>();
     inventory.forEach(item -> {
       if (item instanceof Pet) {
-       list.add((Pet) item);
+        list.add((Pet) item);
       }
     });
     return list;
@@ -350,7 +354,7 @@ public class Store implements EventObservable {
     List<Supplies> list = new ArrayList<Supplies>();
     inventory.forEach(item -> {
       if (item instanceof Supplies) {
-       list.add((Supplies) item);
+        list.add((Supplies) item);
       }
     });
     return list;
@@ -362,7 +366,7 @@ public class Store implements EventObservable {
     list.addAll(trainers);
     return list;
   }
-  
+
   public double goToBank(Employee employee) {
     double value = employee.goToBank();
     addWithdrawal(value);
@@ -379,6 +383,7 @@ public class Store implements EventObservable {
 
   public double getCash() {
     return cash;
+
   }
 
   public void addCash(double cash) {
@@ -388,6 +393,10 @@ public class Store implements EventObservable {
     } else {
       System.out.println("$" + cash + " was added to the register.");
     }
+  }
+
+  public double getBankWithdrawal() {
+    return bankWithdrawal;
   }
 
   public boolean checkRegister() {
@@ -427,6 +436,18 @@ public class Store implements EventObservable {
   public void setStoreState(State state) {
     previousState = currentState;
     currentState  = state;
+  }
+
+  public Integer getDay() {
+    return day;
+  }
+
+  public void resetDay() {
+    this.day = 0;
+  }
+
+  public void incrementDay() {
+    day++;
   }
 
   public void goNewDay() {
